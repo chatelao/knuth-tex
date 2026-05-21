@@ -1,0 +1,8 @@
+# Traceability Matrix
+# Schema:
+# - hlr_id: HLR-ID-XXX
+#   llr_ids:
+#     - LLR-ID-XXX
+#   test_case_ids:
+#     - TC-ID-XXX
+[]

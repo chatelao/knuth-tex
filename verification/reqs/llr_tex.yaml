@@ -1,0 +1,8 @@
+# Low-Level Requirements (LLR) for TeX
+# Schema:
+# - id: LLR-TEX-SEC-XXX
+#   web_section: <integer>
+#   description: "Requirement description"
+#   parent_hlr:
+#     - HLR-ID-XXX
+[]

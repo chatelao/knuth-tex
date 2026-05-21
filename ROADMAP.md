@@ -13,17 +13,17 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 
 ## Phase 2: Requirements Definition & Traceability
 - [ ] **High-Level Requirements (HLR)**:
-  - [ ] Initialize `verification/reqs/hlr.yaml` with schema and metadata.
+  - [x] Initialize `verification/reqs/hlr.yaml` with schema and metadata.
   - [ ] Extract and formalize pilot HLRs (Functional, Output, Resource).
   - [ ] Complete HLR extraction for *The TeXbook*.
   - [ ] Complete HLR extraction for *The Metafontbook*.
 - [ ] **Low-Level Requirements (LLR)**:
-  - [ ] Initialize `verification/reqs/llr_tex.yaml` and `verification/reqs/llr_mf.yaml`.
+  - [x] Initialize `verification/reqs/llr_tex.yaml` and `verification/reqs/llr_mf.yaml`.
   - [ ] Map pilot WEB sections to LLRs (e.g., Introduction, Global Variables).
   - [ ] Complete LLR mapping for TeX (`tex.web`).
   - [ ] Complete LLR mapping for Metafont (`mf.web`).
 - [ ] **Traceability Matrix**:
-  - [ ] Initialize `verification/trace/matrix.yaml` with bi-directional schema.
+  - [x] Initialize `verification/trace/matrix.yaml` with bi-directional schema.
   - [ ] Establish HLR-to-LLR traces for pilot requirements.
   - [ ] Ensure all HLRs trace to LLRs and vice versa for the full set.
 
@@ -37,7 +37,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [ ] Implement `Compile` wrapper (Pascal to executable).
   - [ ] Implement `Execute` wrapper with environment isolation.
   - [ ] Implement `Normalize` utility for text-based outputs (Log, Terminal).
-  - [ ] Implement `Compare` module for automated pass/fail determination.
+  - [ ] Implement `Compare` module for automated pass/fail determination:
+    - [ ] Implement core comparison logic and reporting.
+    - [ ] Implement floating-point tolerance handling for numerical outputs.
+    - [ ] Implement delegation to symbolic comparators for binary formats.
 - [ ] **Symbolic Comparators**:
   - [ ] Develop DVI comparator (using `DVItype`).
   - [ ] Develop GF/PK comparator (using `GFtype`).
@@ -57,8 +60,13 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 
 ## Phase 5: Structural Coverage & MC/DC Analysis
 - [ ] **Instrumentation**:
-  - [ ] Develop the Pascal parser/instrumenter for `TANGLE` output.
-  - [ ] Implement the `record_mcdc` runtime library.
+  - [ ] Develop the Pascal parser/instrumenter for `TANGLE` output:
+    - [ ] Implement basic Pascal statement parsing and probe insertion.
+    - [ ] Implement robust boolean expression parsing.
+    - [ ] Implement decision and condition identification logic.
+  - [ ] Implement the `record_mcdc` runtime library:
+    - [ ] Develop the runtime library for bit-mask recording.
+    - [ ] Implement coverage data persistence and export.
 - [ ] **Execution & Analysis**:
   - [ ] Run RBT suite with instrumentation enabled.
   - [ ] Perform MC/DC analysis on collected data.
