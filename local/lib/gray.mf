@@ -1,0 +1,1 @@
+input graylj % `standard' gray font is for the laserjet

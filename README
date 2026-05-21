@@ -1,0 +1,14 @@
+These directories contain the files distributed by Donald Knuth from
+ftp.cs.stanford.edu:pub/tex. They have been updated by him for his
+2021 tune-up of TeX and Metafont.
+
+The dist/ subdirectory contains the files that he considers part of
+the official TeX system.
+
+The local/ subdirectory, on the other hand, contains some
+supplementary files written by him (which are mostly copied into the
+main TeX distributions), as well as old versions of files created by
+other people, parts of an old Unix TeX installation, derived files,
+and other miscellany. Don't take the conglomeration too seriously.
+
+For more links, see https://ctan.org/pkg/knuth-dist.
