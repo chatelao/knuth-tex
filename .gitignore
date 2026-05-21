@@ -1,0 +1,35 @@
+# Build artifacts
+*.o
+*.fmt
+*.base
+*.pool
+*.tfm
+*.dvi
+*.gf
+*.pk
+
+# Generated Pascal and C files (from TANGLE or Pascal-to-C)
+*.p
+*.c
+*.h
+
+# Except for specific source files in local/ if they are intended to be tracked
+# (Actually, gitignore only affects untracked files, so existing files stay)
+
+# Executables
+tex
+mf
+tangle
+weave
+initex
+inimf
+
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
+requirements.txt.log
+
+# Verification results
+verification/results/*
+!verification/results/.gitkeep
