@@ -1,0 +1,7 @@
+# High-Level Requirements (HLR)
+# Schema:
+# - id: HLR-ID-XXX
+#   description: "Requirement description"
+#   category: [Functional|Output|Resource]
+#   source: "Source reference (e.g., The TeXbook, p. X)"
+[]
