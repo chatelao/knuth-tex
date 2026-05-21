@@ -3,7 +3,7 @@
 This roadmap outlines the steps required to achieve DO-178B Level A certification for the TeX and Metafont systems, as derived from the Test Concept and Test Design documents.
 
 ## Phase 1: Verification Infrastructure Setup
-- [ ] Establish the `verification/` directory structure:
+- [x] Establish the `verification/` directory structure:
   - `verification/reqs/`
   - `verification/tests/`
   - `verification/trace/`
