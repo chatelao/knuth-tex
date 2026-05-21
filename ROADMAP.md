@@ -30,7 +30,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 ## Phase 3: Test Harness & Automation Development
 - [ ] **Harness Core Architecture**:
   - [x] Create `verification/harness/runner.py` skeleton with CLI (argparse).
-  - [ ] Implement configuration loading (YAML).
+  - [x] Implement configuration loading (YAML).
   - [ ] Implement logging and result reporting infrastructure.
 - [ ] **Automated Workflow Modules**:
   - [ ] Implement `Tangle` wrapper (WEB to Pascal).
