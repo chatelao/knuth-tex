@@ -13,23 +13,35 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 
 ## Phase 2: Requirements Definition & Traceability
 - [ ] **High-Level Requirements (HLR)**:
-  - [ ] Extract HLRs from *The TeXbook* and *The Metafontbook*.
-  - [ ] Formalize HLRs into `verification/reqs/hlr.yaml`.
+  - [ ] Initialize `verification/reqs/hlr.yaml` with schema and metadata.
+  - [ ] Extract and formalize pilot HLRs (Functional, Output, Resource).
+  - [ ] Complete HLR extraction for *The TeXbook*.
+  - [ ] Complete HLR extraction for *The Metafontbook*.
 - [ ] **Low-Level Requirements (LLR)**:
-  - [ ] Map WEB sections to LLRs.
-  - [ ] Formalize LLRs into `verification/reqs/llr_tex.yaml` and `verification/reqs/llr_mf.yaml`.
+  - [ ] Initialize `verification/reqs/llr_tex.yaml` and `verification/reqs/llr_mf.yaml`.
+  - [ ] Map pilot WEB sections to LLRs (e.g., Introduction, Global Variables).
+  - [ ] Complete LLR mapping for TeX (`tex.web`).
+  - [ ] Complete LLR mapping for Metafont (`mf.web`).
 - [ ] **Traceability Matrix**:
-  - [ ] Create the bi-directional traceability matrix in `verification/trace/matrix.yaml`.
-  - [ ] Ensure all HLRs trace to LLRs and vice versa.
+  - [ ] Initialize `verification/trace/matrix.yaml` with bi-directional schema.
+  - [ ] Establish HLR-to-LLR traces for pilot requirements.
+  - [ ] Ensure all HLRs trace to LLRs and vice versa for the full set.
 
 ## Phase 3: Test Harness & Automation Development
-- [ ] Develop the Python-based test harness (`verification/harness/runner.py`).
-- [ ] Implement the automated workflow:
-  - [ ] Tangle (WEB to Pascal).
-  - [ ] Compile (Pascal to executable).
-  - [ ] Execute with test inputs.
-  - [ ] Normalize and compare outputs (Log, DVI, GF, TFM, Terminal).
-- [ ] Develop symbolic comparators for binary outputs (utilizing `DVItype`, `GFtype`, etc.).
+- [ ] **Harness Core Architecture**:
+  - [ ] Create `verification/harness/runner.py` skeleton with CLI (argparse).
+  - [ ] Implement configuration loading (YAML).
+  - [ ] Implement logging and result reporting infrastructure.
+- [ ] **Automated Workflow Modules**:
+  - [ ] Implement `Tangle` wrapper (WEB to Pascal).
+  - [ ] Implement `Compile` wrapper (Pascal to executable).
+  - [ ] Implement `Execute` wrapper with environment isolation.
+  - [ ] Implement `Normalize` utility for text-based outputs (Log, Terminal).
+  - [ ] Implement `Compare` module for automated pass/fail determination.
+- [ ] **Symbolic Comparators**:
+  - [ ] Develop DVI comparator (using `DVItype`).
+  - [ ] Develop GF/PK comparator (using `GFtype`).
+  - [ ] Develop TFM comparator (using `TFtoPL`).
 
 ## Phase 4: Requirements-Based Testing (RBT) Implementation
 - [ ] **Baseline Integration**:
