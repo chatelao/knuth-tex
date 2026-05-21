@@ -1,0 +1,7 @@
+# Sample configuration for the TeX and Metafont Verification Test Harness
+tangle_path: "path/to/tangle"
+weave_path: "path/to/weave"
+pascal_compiler: "gpc"
+tex_source_dir: "dist/tex"
+mf_source_dir: "dist/mf"
+output_dir: "verification/results"
