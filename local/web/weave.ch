@@ -23,9 +23,9 @@
 % [1] Change banner message
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
-@d banner=='This is WEAVE, Version 4.4'
+@d banner=='This is WEAVE, Version 4.5'
 @y
-@d banner=='This is WEAVE, Version 4.4 for Linux'
+@d banner=='This is WEAVE, Version 4.5 for Linux'
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

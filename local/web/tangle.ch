@@ -23,9 +23,9 @@
 % [1] Change banner message
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
-@d banner=='This is TANGLE, Version 4.5'
+@d banner=='This is TANGLE, Version 4.6'
 @y
-@d banner=='This is TANGLE, Version 4.5 for Linux'
+@d banner=='This is TANGLE, Version 4.6 for Linux'
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

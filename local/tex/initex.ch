@@ -26,9 +26,9 @@
 % [1.2] banner line
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
-@d banner=='This is TeX, Version 3.14159' {printed when \TeX\ starts}
+@d banner=='This is TeX, Version 3.1415926532653' {printed when \TeX\ starts}
 @y
-@d banner=='This is TeX, Version 3.14159 for Linux' {printed when \TeX\ starts}
+@d banner=='This is TeX, Version 3.1415926532653 for Linux' {printed when \TeX\ starts}
 @z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -38,9 +38,14 @@
 Actually the heading shown here is not quite normal: The |program| line
 does not mention any |output| file, because \ph\ would ask the \TeX\ user
 to specify a file name if |output| were specified here.
+@:PASCAL H}{\ph@>
 @^system dependencies@>
 
 @d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
+@f mtype==type {`\&{mtype}' will be equivalent to `\&{type}'}
+@f type==true {but `|type|' will not be treated as a reserved word}
+
+@p @t\4@>@<Compiler directives@>@/
 @y
 @d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
 @d standard_input==i@&n@&p@&u@&t {and another}

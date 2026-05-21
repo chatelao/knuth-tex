@@ -99,9 +99,9 @@
 % [1.2] banner line
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @x
-@d banner=='This is METAFONT, Version 2.7182' {printed when \MF\ starts}
+@d banner=='This is METAFONT, Version 2.718281828182' {printed when \MF\ starts}
 @y
-@d banner=='This is METAFONT, Version 2.7182 for SunOS'
+@d banner=='This is METAFONT, Version 2.718281828182 for SunOS'
                                                  {printed when \MF\ starts}
 @z
 
@@ -112,9 +112,14 @@
 Actually the heading shown here is not quite normal: The |program| line
 does not mention any |output| file, because \ph\ would ask the \MF\ user
 to specify a file name if |output| were specified here.
+@:PASCAL H}{\ph@>
 @^system dependencies@>
 
 @d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
+@f mtype==type {`\&{mtype}' will be equivalent to `\&{type}'}
+@f type==true {but `|type|' will not be treated as a reserved word}
+
+@p @t\4@>@<Compiler directives@>@/
 @y
 @d mtype==t@&y@&p@&e {this is a \.{WEB} coding trick:}
 @d standard_input==i@&n@&p@&u@&t {and another}
@@ -829,7 +834,7 @@ not been commented out.
 @d edit_file==input_stack[file_ptr]
 @z
 @x
-"E": if file_ptr>0 then
+"E": if file_ptr>0 then if input_stack[file_ptr].name_field>=256 then
   begin print_nl("You want to edit file ");
 @.You want to edit file x@>
   slow_print(input_stack[file_ptr].name_field);
