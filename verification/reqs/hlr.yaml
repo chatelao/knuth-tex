@@ -16,3 +16,7 @@
   description: "The TeX system shall manage memory dynamically using the WEB memory-word structure to store data and instructions."
   category: Resource
   source: "The TeXbook, Appendix B"
+- id: HLR-TEX-FUN-002
+  description: "The TeX system shall perform platform-independent arithmetic using scaled integers to ensure identical output across different computers."
+  category: Functional
+  source: "The TeXbook, p. 38"

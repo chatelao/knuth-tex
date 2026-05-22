@@ -29,6 +29,16 @@
   web_section: 6
   description: "TeX shall implement error reporting and four interaction modes: batch, nonstop, scroll, and error_stop."
   parent_hlr: []
+- id: LLR-TEX-SEC-007
+  web_section: 7
+  description: "TeX shall implement fixed-point arithmetic using scaled integers to represent dimensions."
+  parent_hlr:
+    - HLR-TEX-FUN-002
+- id: LLR-TEX-SEC-008
+  web_section: 8
+  description: "TeX shall implement packed data structures using the 'memory_word' type to optimize storage."
+  parent_hlr:
+    - HLR-TEX-RES-001
 - id: LLR-TEX-SEC-009
   web_section: 9
   description: "TeX shall implement dynamic memory allocation for its internal data structures."
@@ -39,6 +49,11 @@
   description: "TeX shall implement the 'ship_out' procedure to translate a box into commands for the DVI file."
   parent_hlr:
     - HLR-TEX-OUT-001
+- id: LLR-TEX-SEC-010
+  web_section: 10
+  description: "TeX shall implement data structures for boxes, glue, penalties and other nodes using linked lists in dynamic memory."
+  parent_hlr:
+    - HLR-TEX-RES-001
 - id: LLR-TEX-SEC-038
   web_section: 38
   description: "TeX shall implement the line-breaking algorithm to convert a horizontal list into a series of broken lines."

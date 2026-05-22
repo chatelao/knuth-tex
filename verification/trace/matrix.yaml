@@ -15,5 +15,11 @@
   test_case_ids: []
 - hlr_id: HLR-TEX-RES-001
   llr_ids:
+    - LLR-TEX-SEC-008
     - LLR-TEX-SEC-009
+    - LLR-TEX-SEC-010
+  test_case_ids: []
+- hlr_id: HLR-TEX-FUN-002
+  llr_ids:
+    - LLR-TEX-SEC-007
   test_case_ids: []
