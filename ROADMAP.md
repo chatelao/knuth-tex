@@ -33,7 +33,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Parts 6-10 (Error reporting, Arithmetic, Algebraic functions, Packed data, Dynamic memory).
     - [x] Parts 11-20 (Memory layout, Command codes, Hash table, Token lists, Variables, Saving/Restoring, Paths, Control points, Discrete moves, Edge structures).
     - [x] Parts 21-30 (Octants, Filling contour, Polygonal pens, Filling envelope, Elliptical pens, Direction/Intersection, Online graphic, Linear/Nonlinear equations, Syntactic routines).
-    - [ ] Parts 31-40 (Input stacks, Next token, Macro definitions, Expansion, Conditionals, Iterations, File names, Parsing routines/expressions).
+    - [x] Parts 31-40 (Input stacks, Next token, Macro definitions, Expansion, Conditionals, Iterations, File names, Parsing routines/expressions).
     - [ ] Parts 41-52 (Parsing continued, Statements, Commands, Font metric data, Shipping out, GF format, Online display, CM fonts, Initializing, Dumping, Main program, Debugging, System-dependent).
 - [ ] **Traceability Matrix**:
   - [x] Initialize `verification/trace/matrix.yaml` with bi-directional schema.

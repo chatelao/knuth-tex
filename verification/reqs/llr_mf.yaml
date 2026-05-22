@@ -125,3 +125,43 @@
   web_section: 30
   description: "Metafont shall implement the top-level structure for syntactic routines to parse user input and deliver it to semantic routines."
   parent_hlr: []
+- id: LLR-MF-SEC-031
+  web_section: 31
+  description: "Metafont shall implement input stacks and states to manage nested levels of input from files and token lists."
+  parent_hlr: []
+- id: LLR-MF-SEC-032
+  web_section: 32
+  description: "Metafont shall implement procedures for maintaining the input stacks, including pushing and popping input states."
+  parent_hlr: []
+- id: LLR-MF-SEC-033
+  web_section: 33
+  description: "Metafont shall implement the process of getting the next token from the current input source, handling expansion as necessary."
+  parent_hlr: []
+- id: LLR-MF-SEC-034
+  web_section: 34
+  description: "Metafont shall implement routines for scanning and storing macro definitions."
+  parent_hlr: []
+- id: LLR-MF-SEC-035
+  web_section: 35
+  description: "Metafont shall implement the logic for expanding the next token when it is a macro or a primitive requiring expansion."
+  parent_hlr: []
+- id: LLR-MF-SEC-036
+  web_section: 36
+  description: "Metafont shall implement conditional processing of input using if, else, and fi commands."
+  parent_hlr: []
+- id: LLR-MF-SEC-037
+  web_section: 37
+  description: "Metafont shall implement iteration mechanisms such as for and forever loops."
+  parent_hlr: []
+- id: LLR-MF-SEC-038
+  web_section: 38
+  description: "Metafont shall implement routines for handling file names, including parsing and formatting."
+  parent_hlr: []
+- id: LLR-MF-SEC-039
+  web_section: 39
+  description: "Metafont shall implement an introduction to the parsing routines that handle the grammatical structure of the language."
+  parent_hlr: []
+- id: LLR-MF-SEC-040
+  web_section: 40
+  description: "Metafont shall implement the parsing of primary expressions, which are the basic building blocks of expressions."
+  parent_hlr: []
