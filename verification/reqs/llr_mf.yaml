@@ -85,3 +85,43 @@
   web_section: 20
   description: "Metafont shall implement edge structures to represent the pixels of a graphic by storing nonzero edge weights for each row."
   parent_hlr: []
+- id: LLR-MF-SEC-021
+  web_section: 21
+  description: "Metafont shall implement procedures to subdivide cubic paths into segments that travel in first-octant directions (0 <= y' <= x')."
+  parent_hlr: []
+- id: LLR-MF-SEC-022
+  web_section: 22
+  description: "Metafont shall implement a high-level routine to fill a digitized path by walking through its cycle specification and generating rook moves."
+  parent_hlr: []
+- id: LLR-MF-SEC-023
+  web_section: 23
+  description: "Metafont shall implement data structures and algorithms for polygonal pens, based on the kinetic framework for computational geometry."
+  parent_hlr: []
+- id: LLR-MF-SEC-024
+  web_section: 24
+  description: "Metafont shall implement procedures to fill the envelope of a cyclic path with respect to a given pen polygon."
+  parent_hlr: []
+- id: LLR-MF-SEC-025
+  web_section: 25
+  description: "Metafont shall implement elliptical pens by approximating them with polygons to counteract digitization artifacts."
+  parent_hlr: []
+- id: LLR-MF-SEC-026
+  web_section: 26
+  description: "Metafont shall implement operations to determine special times on a path, such as when it travels in a specific direction or when two paths intersect."
+  parent_hlr: []
+- id: LLR-MF-SEC-027
+  web_section: 27
+  description: "Metafont shall provide primitive operations for online graphic output, including screen initialization, pixel plotting, and screen updates."
+  parent_hlr: []
+- id: LLR-MF-SEC-028
+  web_section: 28
+  description: "Metafont shall maintain and solve systems of linear equations between numeric variables, distinguishing between independent, dependent, and known values."
+  parent_hlr: []
+- id: LLR-MF-SEC-029
+  web_section: 29
+  description: "Metafont shall handle simple equations between nonlinear quantities such as booleans, strings, pens, paths, and pictures."
+  parent_hlr: []
+- id: LLR-MF-SEC-030
+  web_section: 30
+  description: "Metafont shall implement the top-level structure for syntactic routines to parse user input and deliver it to semantic routines."
+  parent_hlr: []
