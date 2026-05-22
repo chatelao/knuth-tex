@@ -19,9 +19,21 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [ ] Complete HLR extraction for *The Metafontbook*.
 - [ ] **Low-Level Requirements (LLR)**:
   - [x] Initialize `verification/reqs/llr_tex.yaml` and `verification/reqs/llr_mf.yaml`.
-  - [x] Map pilot WEB sections to LLRs (e.g., Introduction, Global Variables).
-  - [ ] Complete LLR mapping for TeX (`tex.web`).
-  - [ ] Complete LLR mapping for Metafont (`mf.web`).
+  - [x] Map pilot WEB sections to LLRs (Introduction, Char Set, I/O, Strings).
+  - [ ] Complete LLR mapping for TeX (`tex.web`):
+    - [x] Parts 1-4 (Introduction, Character set, I/O, Strings).
+    - [x] Parts 5-6 (Printing, Error reporting).
+    - [ ] Parts 7-10 (Arithmetic, Packed data, Dynamic memory, Box data structures).
+    - [ ] Parts 11-20 (Memory layout, Displaying/Destroying/Copying boxes, Command codes, Semantic nest, Equivalents, Hash table, Saving/Restoring, Token lists).
+    - [ ] Parts 21-30 (Syntactic routines, Input stacks, Next token, Expansion, Scanning, Building token lists, Conditionals, File names, Font metric data).
+    - [ ] Parts 31-40 (Device-independent file format, Shipping out, Hyphenation, Initializing, Breaking paragraphs, Alignment).
+    - [ ] Parts 41-55 (Breaking pages, Output routines, Paragraphs, Math, Finishing up, Main program, Debugging, Extensions, System-dependent).
+  - [ ] Complete LLR mapping for Metafont (`mf.web`):
+    - [ ] Parts 1-10 (Introduction, Character set, I/O, Strings, Printing, Error reporting, Arithmetic, Algebraic functions, Packed data, Dynamic memory).
+    - [ ] Parts 11-20 (Memory layout, Command codes, Hash table, Token lists, Variables, Saving/Restoring, Paths, Control points, Discrete moves, Edge structures).
+    - [ ] Parts 21-30 (Octants, Filling contour, Polygonal pens, Filling envelope, Elliptical pens, Direction/Intersection, Online graphic, Linear/Nonlinear equations, Syntactic routines).
+    - [ ] Parts 31-40 (Input stacks, Next token, Expansion, Scanning subroutines, Expressions, Statements, Commands, Font metric data, Shipping out).
+    - [ ] Parts 41-52 (Generic font file format, Online display, Computer Modern fonts, Initializing, Dumping/Undumping, Main program, Debugging, System-dependent).
 - [ ] **Traceability Matrix**:
   - [x] Initialize `verification/trace/matrix.yaml` with bi-directional schema.
   - [x] Establish HLR-to-LLR traces for pilot requirements.

@@ -21,6 +21,14 @@
   web_section: 4
   description: "TeX shall implement string handling using a string pool (str_pool) and a starting index array (str_start)."
   parent_hlr: []
+- id: LLR-TEX-SEC-005
+  web_section: 5
+  description: "TeX shall implement output redirection to the terminal, log file, or other destinations based on the 'selector' variable."
+  parent_hlr: []
+- id: LLR-TEX-SEC-006
+  web_section: 6
+  description: "TeX shall implement error reporting and four interaction modes: batch, nonstop, scroll, and error_stop."
+  parent_hlr: []
 - id: LLR-TEX-SEC-009
   web_section: 9
   description: "TeX shall implement dynamic memory allocation for its internal data structures."
