@@ -25,3 +25,23 @@
   web_section: 5
   description: "Metafont shall implement output redirection to the terminal, log file, or other destinations based on the 'selector' variable."
   parent_hlr: []
+- id: LLR-MF-SEC-006
+  web_section: 6
+  description: "Metafont shall implement error reporting and four interaction modes: batch, nonstop, scroll, and error_stop."
+  parent_hlr: []
+- id: LLR-MF-SEC-007
+  web_section: 7
+  description: "Metafont shall implement fixed-point arithmetic using scaled integers to ensure identical output across different computers."
+  parent_hlr: []
+- id: LLR-MF-SEC-008
+  web_section: 8
+  description: "Metafont shall implement algebraic and transcendental functions (e.g., square root, sine, cosine) using integer-based iterative methods without relying on system real arithmetic."
+  parent_hlr: []
+- id: LLR-MF-SEC-009
+  web_section: 9
+  description: "Metafont shall implement packed data structures using the 'memory_word' type to optimize storage."
+  parent_hlr: []
+- id: LLR-MF-SEC-010
+  web_section: 10
+  description: "Metafont shall implement dynamic memory allocation using a large 'mem' array to manage blocks of nodes."
+  parent_hlr: []
