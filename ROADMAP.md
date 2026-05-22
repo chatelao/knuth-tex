@@ -30,7 +30,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [ ] Parts 41-55 (Breaking pages, Output routines, Paragraphs, Math, Finishing up, Main program, Debugging, Extensions, System-dependent).
   - [ ] Complete LLR mapping for Metafont (`mf.web`):
     - [x] Parts 1-5 (Introduction, Character set, I/O, Strings, Printing).
-    - [ ] Parts 6-10 (Error reporting, Arithmetic, Algebraic functions, Packed data, Dynamic memory).
+    - [x] Parts 6-10 (Error reporting, Arithmetic, Algebraic functions, Packed data, Dynamic memory).
     - [ ] Parts 11-20 (Memory layout, Command codes, Hash table, Token lists, Variables, Saving/Restoring, Paths, Control points, Discrete moves, Edge structures).
     - [ ] Parts 21-30 (Octants, Filling contour, Polygonal pens, Filling envelope, Elliptical pens, Direction/Intersection, Online graphic, Linear/Nonlinear equations, Syntactic routines).
     - [ ] Parts 31-40 (Input stacks, Next token, Expansion, Scanning subroutines, Expressions, Statements, Commands, Font metric data, Shipping out).
