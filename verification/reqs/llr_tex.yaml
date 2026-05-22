@@ -176,3 +176,15 @@
   web_section: 40
   description: "TeX shall implement pre-hyphenation procedures to prepare words for the hyphenation algorithm."
   parent_hlr: []
+- id: LLR-TEX-SEC-041
+  web_section: 41
+  description: "TeX shall implement post-hyphenation procedures to insert discretionary hyphens into the word and reconstruct the horizontal list, preserving ligatures and kerning."
+  parent_hlr: []
+- id: LLR-TEX-SEC-042
+  web_section: 42
+  description: "TeX shall implement Liang's hyphenation algorithm, using patterns and exception dictionaries to find candidate hyphenation points."
+  parent_hlr: []
+- id: LLR-TEX-SEC-043
+  web_section: 43
+  description: "TeX shall implement procedures for building, compressing, and packing hyphenation tries from patterns in INITEX."
+  parent_hlr: []
