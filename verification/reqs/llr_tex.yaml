@@ -9,6 +9,18 @@
   web_section: 1
   description: "TeX shall be initialized and identify itself as TeX82."
   parent_hlr: []
+- id: LLR-TEX-SEC-002
+  web_section: 2
+  description: "TeX shall convert all input text into an internal eight-bit code (standard ASCII)."
+  parent_hlr: []
+- id: LLR-TEX-SEC-003
+  web_section: 3
+  description: "TeX shall implement basic I/O operations for text (alpha_file) and bytes (byte_file), including opening, closing, and testing for end-of-file."
+  parent_hlr: []
+- id: LLR-TEX-SEC-004
+  web_section: 4
+  description: "TeX shall implement string handling using a string pool (str_pool) and a starting index array (str_start)."
+  parent_hlr: []
 - id: LLR-TEX-SEC-009
   web_section: 9
   description: "TeX shall implement dynamic memory allocation for its internal data structures."
