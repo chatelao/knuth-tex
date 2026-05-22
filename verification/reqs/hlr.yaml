@@ -4,4 +4,15 @@
 #   description: "Requirement description"
 #   category: [Functional|Output|Resource]
 #   source: "Source reference (e.g., The TeXbook, p. X)"
-[]
+- id: HLR-TEX-FUN-001
+  description: "The TeX system shall implement the line breaking algorithm as specified in The TeXbook, Part 14."
+  category: Functional
+  source: "The TeXbook, p. 94"
+- id: HLR-TEX-OUT-001
+  description: "The TeX system shall produce a Device Independent (DVI) file as its primary output format."
+  category: Output
+  source: "The TeXbook, p. 23"
+- id: HLR-TEX-RES-001
+  description: "The TeX system shall manage memory dynamically using the WEB memory-word structure to store data and instructions."
+  category: Resource
+  source: "The TeXbook, Appendix B"

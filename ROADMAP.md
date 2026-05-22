@@ -14,7 +14,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 ## Phase 2: Requirements Definition & Traceability
 - [ ] **High-Level Requirements (HLR)**:
   - [x] Initialize `verification/reqs/hlr.yaml` with schema and metadata.
-  - [ ] Extract and formalize pilot HLRs (Functional, Output, Resource).
+  - [x] Extract and formalize pilot HLRs (Functional, Output, Resource).
   - [ ] Complete HLR extraction for *The TeXbook*.
   - [ ] Complete HLR extraction for *The Metafontbook*.
 - [ ] **Low-Level Requirements (LLR)**:
