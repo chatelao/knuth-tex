@@ -33,7 +33,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [x] Implement configuration loading (YAML).
   - [x] Implement logging and result reporting infrastructure.
 - [ ] **Automated Workflow Modules**:
-  - [ ] Implement `Tangle` wrapper (WEB to Pascal).
+  - [x] Implement `Tangle` wrapper (WEB to Pascal).
   - [ ] Implement `Compile` wrapper (Pascal to executable).
   - [ ] Implement `Execute` wrapper with environment isolation.
   - [ ] Implement `Normalize` utility for text-based outputs (Log, Terminal).
