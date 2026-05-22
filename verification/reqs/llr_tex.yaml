@@ -102,3 +102,43 @@
   web_section: 20
   description: "TeX shall implement data structures and procedures for creating, manipulating, and scanning token lists."
   parent_hlr: []
+- id: LLR-TEX-SEC-021
+  web_section: 21
+  description: "TeX shall implement the main control loop and provide an introduction to the syntactic routines."
+  parent_hlr: []
+- id: LLR-TEX-SEC-022
+  web_section: 22
+  description: "TeX shall maintain input stacks and states to manage nested input sources including files and token lists."
+  parent_hlr: []
+- id: LLR-TEX-SEC-023
+  web_section: 23
+  description: "TeX shall implement procedures for maintaining, pushing, and popping the input stacks."
+  parent_hlr: []
+- id: LLR-TEX-SEC-024
+  web_section: 24
+  description: "TeX shall implement the 'get_next' procedure to fetch the next token from the current input source."
+  parent_hlr: []
+- id: LLR-TEX-SEC-025
+  web_section: 25
+  description: "TeX shall implement the 'expand' procedure to expand macros and other expandable tokens."
+  parent_hlr: []
+- id: LLR-TEX-SEC-026
+  web_section: 26
+  description: "TeX shall implement basic scanning subroutines to parse integers, dimensions, and other primitives."
+  parent_hlr: []
+- id: LLR-TEX-SEC-027
+  web_section: 27
+  description: "TeX shall implement procedures for building token lists from input, handling macro definitions and other token-based structures."
+  parent_hlr: []
+- id: LLR-TEX-SEC-028
+  web_section: 28
+  description: "TeX shall implement conditional processing to handle \\if, \\else, and \\fi constructs."
+  parent_hlr: []
+- id: LLR-TEX-SEC-029
+  web_section: 29
+  description: "TeX shall implement procedures for handling file names, including parsing and formatting for the host system."
+  parent_hlr: []
+- id: LLR-TEX-SEC-030
+  web_section: 30
+  description: "TeX shall implement procedures for reading and processing Font Metric (TFM) files."
+  parent_hlr: []

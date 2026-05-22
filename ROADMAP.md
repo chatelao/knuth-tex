@@ -25,7 +25,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Parts 5-6 (Printing, Error reporting).
     - [x] Parts 7-10 (Arithmetic, Packed data, Dynamic memory, Box data structures).
     - [x] Parts 11-20 (Memory layout, Displaying/Destroying/Copying boxes, Command codes, Semantic nest, Equivalents, Hash table, Saving/Restoring, Token lists).
-    - [ ] Parts 21-30 (Syntactic routines, Input stacks, Next token, Expansion, Scanning, Building token lists, Conditionals, File names, Font metric data).
+    - [x] Parts 21-30 (Syntactic routines, Input stacks, Next token, Expansion, Scanning, Building token lists, Conditionals, File names, Font metric data).
     - [ ] Parts 31-40 (Device-independent file format, Shipping out, Hyphenation, Initializing, Breaking paragraphs, Alignment).
     - [ ] Parts 41-55 (Breaking pages, Output routines, Paragraphs, Math, Finishing up, Main program, Debugging, Extensions, System-dependent).
   - [ ] Complete LLR mapping for Metafont (`mf.web`):
