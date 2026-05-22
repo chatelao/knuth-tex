@@ -8,9 +8,11 @@
 - hlr_id: HLR-TEX-FUN-001
   llr_ids:
     - LLR-TEX-SEC-038
+    - LLR-TEX-SEC-039
   test_case_ids: []
 - hlr_id: HLR-TEX-OUT-001
   llr_ids:
+    - LLR-TEX-SEC-031
     - LLR-TEX-SEC-032
   test_case_ids: []
 - hlr_id: HLR-TEX-RES-001
