@@ -5,4 +5,23 @@
 #   description: "Requirement description"
 #   parent_hlr:
 #     - HLR-ID-XXX
-[]
+- id: LLR-MF-SEC-001
+  web_section: 1
+  description: "Metafont shall be initialized and identify itself as MF84."
+  parent_hlr: []
+- id: LLR-MF-SEC-002
+  web_section: 2
+  description: "Metafont shall convert all input text into an internal eight-bit code (standard ASCII)."
+  parent_hlr: []
+- id: LLR-MF-SEC-003
+  web_section: 3
+  description: "Metafont shall implement basic I/O operations for text (alpha_file) and bytes (byte_file), including opening, closing, and testing for end-of-file."
+  parent_hlr: []
+- id: LLR-MF-SEC-004
+  web_section: 4
+  description: "Metafont shall implement string handling using a string pool (str_pool) and a starting index array (str_start)."
+  parent_hlr: []
+- id: LLR-MF-SEC-005
+  web_section: 5
+  description: "Metafont shall implement output redirection to the terminal, log file, or other destinations based on the 'selector' variable."
+  parent_hlr: []
