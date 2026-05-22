@@ -36,7 +36,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [x] Implement `Tangle` wrapper (WEB to Pascal).
   - [x] Implement `Compile` wrapper (Pascal to executable).
   - [x] Implement `Execute` wrapper with environment isolation.
-  - [ ] Implement `Normalize` utility for text-based outputs (Log, Terminal).
+  - [x] Implement `Normalize` utility for text-based outputs (Log, Terminal).
   - [ ] Implement `Compare` module for automated pass/fail determination:
     - [ ] Implement core comparison logic and reporting.
     - [ ] Implement floating-point tolerance handling for numerical outputs.
