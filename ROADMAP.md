@@ -19,12 +19,12 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [ ] Complete HLR extraction for *The Metafontbook*.
 - [ ] **Low-Level Requirements (LLR)**:
   - [x] Initialize `verification/reqs/llr_tex.yaml` and `verification/reqs/llr_mf.yaml`.
-  - [ ] Map pilot WEB sections to LLRs (e.g., Introduction, Global Variables).
+  - [x] Map pilot WEB sections to LLRs (e.g., Introduction, Global Variables).
   - [ ] Complete LLR mapping for TeX (`tex.web`).
   - [ ] Complete LLR mapping for Metafont (`mf.web`).
 - [ ] **Traceability Matrix**:
   - [x] Initialize `verification/trace/matrix.yaml` with bi-directional schema.
-  - [ ] Establish HLR-to-LLR traces for pilot requirements.
+  - [x] Establish HLR-to-LLR traces for pilot requirements.
   - [ ] Ensure all HLRs trace to LLRs and vice versa for the full set.
 
 ## Phase 3: Test Harness & Automation Development
