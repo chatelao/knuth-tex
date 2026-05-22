@@ -26,15 +26,15 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Parts 7-10 (Arithmetic, Packed data, Dynamic memory, Box data structures).
     - [x] Parts 11-20 (Memory layout, Displaying/Destroying/Copying boxes, Command codes, Semantic nest, Equivalents, Hash table, Saving/Restoring, Token lists).
     - [x] Parts 21-30 (Syntactic routines, Input stacks, Next token, Expansion, Scanning, Building token lists, Conditionals, File names, Font metric data).
-    - [ ] Parts 31-40 (Device-independent file format, Shipping out, Hyphenation, Initializing, Breaking paragraphs, Alignment).
-    - [ ] Parts 41-55 (Breaking pages, Output routines, Paragraphs, Math, Finishing up, Main program, Debugging, Extensions, System-dependent).
+    - [x] Parts 31-40 (DVI format, Shipping pages out, Packaging, Math mode data structures/subroutines/formulas, Alignment, Breaking paragraphs, Pre-hyphenation).
+    - [ ] Parts 41-55 (Hyphenation, Breaking vertical lists into pages, Page builder, Chief executive, Building boxes/math lists, Mode-independent processing, Dumping, Main program, Debugging, Extensions, System-dependent).
   - [ ] Complete LLR mapping for Metafont (`mf.web`):
     - [x] Parts 1-5 (Introduction, Character set, I/O, Strings, Printing).
     - [x] Parts 6-10 (Error reporting, Arithmetic, Algebraic functions, Packed data, Dynamic memory).
     - [x] Parts 11-20 (Memory layout, Command codes, Hash table, Token lists, Variables, Saving/Restoring, Paths, Control points, Discrete moves, Edge structures).
     - [x] Parts 21-30 (Octants, Filling contour, Polygonal pens, Filling envelope, Elliptical pens, Direction/Intersection, Online graphic, Linear/Nonlinear equations, Syntactic routines).
-    - [ ] Parts 31-40 (Input stacks, Next token, Expansion, Scanning subroutines, Expressions, Statements, Commands, Font metric data, Shipping out).
-    - [ ] Parts 41-52 (Generic font file format, Online display, Computer Modern fonts, Initializing, Dumping/Undumping, Main program, Debugging, System-dependent).
+    - [ ] Parts 31-40 (Input stacks, Next token, Macro definitions, Expansion, Conditionals, Iterations, File names, Parsing routines/expressions).
+    - [ ] Parts 41-52 (Parsing continued, Statements, Commands, Font metric data, Shipping out, GF format, Online display, CM fonts, Initializing, Dumping, Main program, Debugging, System-dependent).
 - [ ] **Traceability Matrix**:
   - [x] Initialize `verification/trace/matrix.yaml` with bi-directional schema.
   - [x] Establish HLR-to-LLR traces for pilot requirements.

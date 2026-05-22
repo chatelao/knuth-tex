@@ -142,3 +142,37 @@
   web_section: 30
   description: "TeX shall implement procedures for reading and processing Font Metric (TFM) files."
   parent_hlr: []
+- id: LLR-TEX-SEC-031
+  web_section: 31
+  description: "TeX shall implement the device-independent (DVI) file format, including all opcodes and the structure of preamble, postamble, and page definitions."
+  parent_hlr:
+    - HLR-TEX-OUT-001
+- id: LLR-TEX-SEC-033
+  web_section: 33
+  description: "TeX shall implement packaging procedures to create horizontal and vertical boxes, including calculations for glue setting and dimensions."
+  parent_hlr: []
+- id: LLR-TEX-SEC-034
+  web_section: 34
+  description: "TeX shall define data structures for math mode, including nodes for fractions, radicals, and various math symbols."
+  parent_hlr: []
+- id: LLR-TEX-SEC-035
+  web_section: 35
+  description: "TeX shall implement subroutines for math mode processing, including atom alignment and style management."
+  parent_hlr: []
+- id: LLR-TEX-SEC-036
+  web_section: 36
+  description: "TeX shall implement procedures for typesetting math formulas, including the positioning of nuclei, superscripts, and subscripts."
+  parent_hlr: []
+- id: LLR-TEX-SEC-037
+  web_section: 37
+  description: "TeX shall implement alignment procedures for handling \\halign and \\valign structures."
+  parent_hlr: []
+- id: LLR-TEX-SEC-039
+  web_section: 39
+  description: "TeX shall implement advanced line-breaking features including handling of discretionary hyphens and delta branches."
+  parent_hlr:
+    - HLR-TEX-FUN-001
+- id: LLR-TEX-SEC-040
+  web_section: 40
+  description: "TeX shall implement pre-hyphenation procedures to prepare words for the hyphenation algorithm."
+  parent_hlr: []
