@@ -5,4 +5,15 @@
 #     - LLR-ID-XXX
 #   test_case_ids:
 #     - TC-ID-XXX
-[]
+- hlr_id: HLR-TEX-FUN-001
+  llr_ids:
+    - LLR-TEX-SEC-038
+  test_case_ids: []
+- hlr_id: HLR-TEX-OUT-001
+  llr_ids:
+    - LLR-TEX-SEC-032
+  test_case_ids: []
+- hlr_id: HLR-TEX-RES-001
+  llr_ids:
+    - LLR-TEX-SEC-009
+  test_case_ids: []

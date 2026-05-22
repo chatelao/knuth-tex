@@ -5,4 +5,22 @@
 #   description: "Requirement description"
 #   parent_hlr:
 #     - HLR-ID-XXX
-[]
+- id: LLR-TEX-SEC-001
+  web_section: 1
+  description: "TeX shall be initialized and identify itself as TeX82."
+  parent_hlr: []
+- id: LLR-TEX-SEC-009
+  web_section: 9
+  description: "TeX shall implement dynamic memory allocation for its internal data structures."
+  parent_hlr:
+    - HLR-TEX-RES-001
+- id: LLR-TEX-SEC-032
+  web_section: 32
+  description: "TeX shall implement the 'ship_out' procedure to translate a box into commands for the DVI file."
+  parent_hlr:
+    - HLR-TEX-OUT-001
+- id: LLR-TEX-SEC-038
+  web_section: 38
+  description: "TeX shall implement the line-breaking algorithm to convert a horizontal list into a series of broken lines."
+  parent_hlr:
+    - HLR-TEX-FUN-001
