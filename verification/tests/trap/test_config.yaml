@@ -3,22 +3,24 @@ test_id: "TC-MF-TRAP-001"
 description: "Metafont TRAP torture test"
 source_web: "dist/mf/mf.web"
 change_file: "verification/tests/trap/trap.ch"
-test_input: "dist/mf/trap.mf"
-expected_outputs:
-  log: "dist/mf/trap.log"
-  gf: "dist/mf/trap.72270gf"
-  tfm: "dist/mf/trap.tfm"
-  terminal: "dist/mf/trap.fot"
-  pl: "dist/mf/trap.pl"
-  typ: "dist/mf/trap.typ"
-  trapin_log: "dist/mf/trapin.log"
-  trapin_fot: "dist/mf/trapin.fot"
+setup_files:
+  - "dist/mf/trap.mf"
+stages:
+  - id: "init"
+    description: "Initial run to generate trap.base"
+    test_input_data: "\n\\input trap\n"
+    expected_outputs:
+      log: "dist/mf/trapin.log"
+      terminal: "dist/mf/trapin.fot"
+  - id: "main"
+    description: "Main torture test run"
+    test_input_data: " &trap  trap \n"
+    expected_outputs:
+      log: "dist/mf/trap.log"
+      gf: "dist/mf/trap.72270gf"
+      tfm: "dist/mf/trap.tfm"
+      terminal: "dist/mf/trap.fot"
+      pl: "dist/mf/trap.pl"
+      typ: "dist/mf/trap.typ"
 settings:
-  mem_max: 3000
-  error_line: 64
-  half_error_line: 32
-  max_print_line: 72
-  screen_width: 100
-  screen_depth: 200
-  gf_buf_size: 8
-  interaction: "batchmode"
+  tolerance: 0.1

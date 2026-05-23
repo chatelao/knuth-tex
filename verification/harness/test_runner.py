@@ -338,3 +338,47 @@ def test_verification_test_runner_full_run_success(tmp_path):
         mock_compile.assert_called_once_with("test.p")
         mock_execute.assert_called_once_with("test_exe")
         mock_compare.assert_called_once()
+
+def test_verification_test_runner_multi_stage_success(tmp_path):
+    """Test full workflow with multiple stages."""
+    harness_config = {
+        'tangle_path': 'tangle',
+        'pascal_compiler': 'pc',
+        'output_dir': str(tmp_path / "results")
+    }
+    test_dir = tmp_path / "mytest"
+    test_dir.mkdir()
+    test_config_path = test_dir / "test_config.yaml"
+    test_config_data = {
+        'test_id': 'TC-001',
+        'source_web': 'test.web',
+        'stages': [
+            {'id': 's1', 'test_input_data': 'in1', 'expected_outputs': {'log': 'exp1'}},
+            {'id': 's2', 'test_input_data': 'in2', 'expected_outputs': {'log': 'exp2'}}
+        ]
+    }
+    with open(test_config_path, 'w') as f:
+        yaml.dump(test_config_data, f)
+
+    runner = VerificationTestRunner(harness_config, str(test_config_path))
+
+    with patch.object(runner, 'run_tangle') as mock_tangle, \
+         patch.object(runner, 'run_compile') as mock_compile, \
+         patch.object(runner, 'run_execute') as mock_execute, \
+         patch.object(runner, 'run_compare') as mock_compare:
+
+        mock_tangle.return_value = ("test.p", "test.pool")
+        mock_compile.return_value = "test_exe"
+        mock_execute.return_value = MagicMock(returncode=0)
+        mock_compare.return_value = True
+
+        assert runner.run() is True
+
+        assert mock_tangle.call_count == 1
+        assert mock_compile.call_count == 1
+        assert mock_execute.call_count == 2
+        assert mock_compare.call_count == 2
+
+        # Check stage-specific calls
+        mock_execute.assert_any_call("test_exe", stage_config=test_config_data['stages'][0])
+        mock_execute.assert_any_call("test_exe", stage_config=test_config_data['stages'][1])

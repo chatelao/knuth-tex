@@ -3,6 +3,7 @@ import argparse
 import sys
 import yaml
 import os
+import shutil
 import logging
 from pathlib import Path
 from verification.harness.tangle import TangleWrapper
@@ -98,20 +99,45 @@ class VerificationTestRunner:
             output_exe=str(output_exe)
         )
 
-    def run_execute(self, exe_file):
+    def run_setup(self):
+        """Copies required files to the test execution directory."""
+        setup_files = self.test_config.get('setup_files', [])
+        if not setup_files:
+            return
+
+        logging.info(f"[{self.test_id}] Running setup step (copying files)...")
+        for src in setup_files:
+            src_path = Path(src)
+            if not src_path.exists():
+                logging.warning(f"[{self.test_id}] Setup file not found: {src}")
+                continue
+            dest_path = self.output_dir / src_path.name
+            logging.info(f"[{self.test_id}] Copying {src} to {dest_path}")
+            shutil.copy2(src, dest_path)
+
+    def run_execute(self, exe_file, stage_config=None):
         """Executes the compiled program."""
+        config = stage_config if stage_config else self.test_config
         logging.info(f"[{self.test_id}] Starting Execute step...")
 
         wrapper = ExecuteWrapper(exe_file)
 
-        args = self.test_config.get('test_args', [])
-        input_data = self.test_config.get('test_input_data', "")
+        args = config.get('test_args', [])
+        input_data = config.get('test_input_data', "")
 
         # If test_input is a path to a file, read it
-        test_input_file = self.test_config.get('test_input')
-        if test_input_file and os.path.exists(test_input_file):
-            with open(test_input_file, 'r') as f:
-                input_data = f.read()
+        test_input_file = config.get('test_input')
+        if test_input_file:
+            # Check if it exists relative to root or test directory
+            input_path = Path(test_input_file)
+            if not input_path.exists():
+                input_path = self.test_dir / test_input_file
+
+            if input_path.exists():
+                with open(input_path, 'r') as f:
+                    input_data = f.read()
+            else:
+                logging.warning(f"[{self.test_id}] Test input file not found: {test_input_file}")
 
         return wrapper.run(
             args=args,
@@ -119,11 +145,12 @@ class VerificationTestRunner:
             cwd=str(self.output_dir)
         )
 
-    def run_compare(self, execution_result):
+    def run_compare(self, execution_result, stage_config=None):
         """Compares the actual outputs with the expected ones."""
+        config = stage_config if stage_config else self.test_config
         logging.info(f"[{self.test_id}] Starting Compare step...")
 
-        expected_outputs = self.test_config.get('expected_outputs', {})
+        expected_outputs = config.get('expected_outputs', {})
         if not expected_outputs:
             logging.warning(f"[{self.test_id}] No expected outputs specified.")
             return True
@@ -177,23 +204,36 @@ class VerificationTestRunner:
         """Runs the full verification workflow for this test."""
         logging.info(f"--- Running Test: {self.test_id} ---")
         try:
+            self.run_setup()
+
             pascal_file, pool_file = self.run_tangle()
             logging.info(f"[{self.test_id}] Tangle step completed: {pascal_file}, {pool_file}")
 
             exe_file = self.run_compile(pascal_file)
             logging.info(f"[{self.test_id}] Compile step completed: {exe_file}")
 
-            result = self.run_execute(exe_file)
-            logging.info(f"[{self.test_id}] Execute step completed with exit code {result.returncode}")
+            stages = self.test_config.get('stages')
+            if stages:
+                for stage in stages:
+                    stage_id = stage.get('id', 'unnamed stage')
+                    logging.info(f"[{self.test_id}] Executing stage: {stage_id}")
+                    result = self.run_execute(exe_file, stage_config=stage)
+                    if not self.run_compare(result, stage_config=stage):
+                        return False
+            else:
+                result = self.run_execute(exe_file)
+                logging.info(f"[{self.test_id}] Execute step completed with exit code {result.returncode}")
 
-            if not self.run_compare(result):
-                logging.error(f"[{self.test_id}] Compare step failed.")
-                return False
+                if not self.run_compare(result):
+                    logging.error(f"[{self.test_id}] Compare step failed.")
+                    return False
 
             logging.info(f"[{self.test_id}] Test completed successfully.")
             return True
         except Exception as e:
             logging.error(f"[{self.test_id}] Test failed: {e}")
+            import traceback
+            logging.error(traceback.format_exc())
             return False
 
 def discover_tests(tests_base_dir):
