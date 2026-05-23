@@ -165,3 +165,11 @@
   web_section: 40
   description: "Metafont shall implement the parsing of primary expressions, which are the basic building blocks of expressions."
   parent_hlr: []
+- id: LLR-MF-SEC-041
+  web_section: 41
+  description: "Metafont shall implement parsing for secondary, tertiary, and higher-level expressions, respecting operator precedence and handling macro-defined operators."
+  parent_hlr: []
+- id: LLR-MF-SEC-042
+  web_section: 42
+  description: "Metafont shall implement the semantic routines for nullary, unary, and binary operations, mapping tokens and modifiers to their respective action procedures."
+  parent_hlr: []
