@@ -45,6 +45,31 @@ class ProcedureCall(Node):
         args_str = ", ".join(repr(arg) for arg in self.args)
         return f"ProcedureCall({self.name}({args_str}))"
 
+class Block(Node):
+    """Represents a BEGIN...END block."""
+    def __init__(self, statements):
+        self.statements = statements
+    def __repr__(self):
+        stmts_str = "; ".join(repr(s) for s in self.statements)
+        return f"Block(BEGIN {stmts_str} END)"
+
+class IfStatement(Node):
+    """Represents an IF...THEN...ELSE statement."""
+    def __init__(self, condition, then_branch, else_branch=None):
+        self.condition = condition
+        self.then_branch = then_branch
+        self.else_branch = else_branch
+    def __repr__(self):
+        res = f"If({self.condition}) THEN {self.then_branch}"
+        if self.else_branch:
+            res += f" ELSE {self.else_branch}"
+        return res
+
+class EmptyStatement(Node):
+    """Represents an empty statement (e.g., between two semicolons)."""
+    def __repr__(self):
+        return "EmptyStmt"
+
 class ParserError(Exception):
     def __init__(self, message, token):
         if token:
@@ -156,8 +181,37 @@ class Parser:
             # nxt must be ','
         return args
 
+    def parse_block(self):
+        """Parses a BEGIN...END block."""
+        self.consume('BEGIN')
+        statements = []
+        while self.peek() and self.peek().type != 'END':
+            last_pos = self.pos
+            stmt = self.parse_statement()
+            if stmt:
+                statements.append(stmt)
+            if self.peek() and self.peek().value == ';':
+                self.consume()
+
+            if self.pos == last_pos:
+                raise ParserError("Parser failed to progress in BEGIN...END block", self.peek())
+        self.consume('END')
+        return Block(statements)
+
+    def parse_if_statement(self):
+        """Parses an IF...THEN...ELSE statement."""
+        self.consume('IF')
+        condition = self.parse_expression(['THEN'])
+        self.consume('THEN')
+        then_branch = self.parse_statement()
+        else_branch = None
+        if self.peek() and self.peek().type == 'ELSE':
+            self.consume('ELSE')
+            else_branch = self.parse_statement()
+        return IfStatement(condition, then_branch, else_branch)
+
     def parse_statement(self):
-        """Parses a single statement (Assignment or ProcedureCall)."""
+        """Parses a single statement."""
         # Skip labels
         while self.peek() and self.peek().type == 'NUMBER' and self.peek(1) and self.peek(1).value == ':':
             self.consume() # number
@@ -166,7 +220,16 @@ class Parser:
         token = self.peek()
         if token is None: return None
 
-        if token.type == 'ID':
+        if token.type == 'BEGIN':
+            return self.parse_block()
+        elif token.type == 'IF':
+            return self.parse_if_statement()
+        elif token.value == ';':
+            return EmptyStatement()
+        elif token.type == 'END' or token.type == 'ELSE' or token.type == 'UNTIL':
+             # Statements can be empty before these tokens
+             return EmptyStatement()
+        elif token.type == 'ID':
             # Lookahead to distinguish assignment and call
             # We need to parse identifier first because of subscripts/dots
             start_pos = self.pos
