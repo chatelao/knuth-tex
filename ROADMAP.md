@@ -62,8 +62,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Implement delegation to symbolic comparators for binary formats.
 - [ ] **Symbolic Comparators**:
   - [x] Develop DVI comparator (using `DVItype`).
-  - [ ] Develop GF/PK comparator (using `GFtype`).
-  - [ ] Develop TFM comparator (using `TFtoPL`).
+  - [x] Develop GF/PK comparators (using `GFtype` and `PKtype`).
+  - [x] Develop TFM comparator (using `TFtoPL`).
 
 ## Phase 4: Requirements-Based Testing (RBT) Implementation
 - [ ] **Baseline Integration**:
