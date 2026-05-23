@@ -12,7 +12,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 - [x] Initialize repository-level configurations for the verification environment.
 
 ## Phase 2: Requirements Definition & Traceability
-- [ ] **High-Level Requirements (HLR)**:
+- [x] **High-Level Requirements (HLR)**:
   - [x] Initialize `verification/reqs/hlr.yaml` with schema and metadata.
   - [x] Extract and formalize pilot HLRs (Functional, Output, Resource).
   - [x] Complete HLR extraction for *The TeXbook*.
@@ -41,17 +41,17 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Parts 43-45 (Statements and commands, Commands, Font metric data).
     - [x] Parts 46-48 (GF format, Shipping characters out, Dumping).
     - [x] Parts 49-52 (Main program, Debugging, System-dependent).
-- [ ] **Traceability Matrix**:
+- [x] **Traceability Matrix**:
   - [x] Initialize `verification/trace/matrix.yaml` with bi-directional schema.
   - [x] Establish HLR-to-LLR traces for pilot requirements.
   - [x] Ensure all HLRs trace to LLRs and vice versa for the full set.
 
 ## Phase 3: Test Harness & Automation Development
-- [ ] **Harness Core Architecture**:
+- [x] **Harness Core Architecture**:
   - [x] Create `verification/harness/runner.py` skeleton with CLI (argparse).
   - [x] Implement configuration loading (YAML).
   - [x] Implement logging and result reporting infrastructure.
-- [ ] **Automated Workflow Modules**:
+- [x] **Automated Workflow Modules**:
   - [x] Implement `Tangle` wrapper (WEB to Pascal).
   - [x] Implement `Compile` wrapper (Pascal to executable).
   - [x] Implement `Execute` wrapper with environment isolation.
@@ -60,7 +60,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Implement core comparison logic and reporting.
     - [x] Implement floating-point tolerance handling for numerical outputs.
     - [x] Implement delegation to symbolic comparators for binary formats.
-- [ ] **Symbolic Comparators**:
+- [x] **Symbolic Comparators**:
   - [x] Develop DVI comparator (using `DVItype`).
   - [x] Develop GF/PK comparators (using `GFtype` and `PKtype`).
   - [x] Develop TFM comparator (using `TFtoPL`).
@@ -84,8 +84,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 - [ ] **Robustness Testing**:
   - [ ] Implement Boundary Value Analysis (BVA) tests.
   - [ ] Implement Error Handling and Resource Exhaustion tests.
-- [ ] **Traceability**:
-  - [ ] Map all test cases to HLRs and LLRs in the traceability matrix.
+- [x] **Traceability**:
+  - [x] Map all test cases to HLRs and LLRs in the traceability matrix.
 
 ## Phase 5: Structural Coverage & MC/DC Analysis
 - [ ] **Instrumentation**:
