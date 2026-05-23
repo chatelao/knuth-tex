@@ -1,0 +1,23 @@
+# TRIP Torture Test Configuration for TeX
+test_id: "TC-TEX-TRIP-001"
+description: "TeX TRIP torture test"
+source_web: "dist/tex/tex.web"
+change_file: "verification/tests/trip/trip.ch"
+test_input: "dist/tex/trip.tex"
+expected_outputs:
+  log: "dist/tex/trip.log"
+  dvi: "dist/tex/trip.dvi"
+  tfm: "dist/tex/trip.tfm"
+  terminal: "dist/tex/trip.fot"
+  pl: "dist/tex/trip.pl"
+  typ: "dist/tex/trip.typ"
+  tripos: "dist/tex/tripos.tex"
+  tripin_log: "dist/tex/tripin.log"
+  tripin_fot: "dist/tex/tripin.fot"
+settings:
+  mem_min: 1
+  mem_max: 3000
+  error_line: 64
+  half_error_line: 32
+  max_print_line: 72
+  interaction: "batchmode"
