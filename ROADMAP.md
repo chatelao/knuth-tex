@@ -15,8 +15,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 - [ ] **High-Level Requirements (HLR)**:
   - [x] Initialize `verification/reqs/hlr.yaml` with schema and metadata.
   - [x] Extract and formalize pilot HLRs (Functional, Output, Resource).
-  - [ ] Complete HLR extraction for *The TeXbook*.
-  - [ ] Complete HLR extraction for *The Metafontbook*.
+  - [x] Complete HLR extraction for *The TeXbook*.
+  - [x] Complete HLR extraction for *The Metafontbook*.
 - [x] **Low-Level Requirements (LLR)**:
   - [x] Initialize `verification/reqs/llr_tex.yaml` and `verification/reqs/llr_mf.yaml`.
   - [x] Map pilot WEB sections to LLRs (Introduction, Char Set, I/O, Strings).
@@ -44,7 +44,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 - [ ] **Traceability Matrix**:
   - [x] Initialize `verification/trace/matrix.yaml` with bi-directional schema.
   - [x] Establish HLR-to-LLR traces for pilot requirements.
-  - [ ] Ensure all HLRs trace to LLRs and vice versa for the full set.
+  - [x] Ensure all HLRs trace to LLRs and vice versa for the full set.
 
 ## Phase 3: Test Harness & Automation Development
 - [ ] **Harness Core Architecture**:

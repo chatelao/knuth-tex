@@ -44,21 +44,11 @@
   description: "TeX shall implement dynamic memory allocation for its internal data structures."
   parent_hlr:
     - HLR-TEX-RES-001
-- id: LLR-TEX-SEC-032
-  web_section: 32
-  description: "TeX shall implement the 'ship_out' procedure to translate a box into commands for the DVI file."
-  parent_hlr:
-    - HLR-TEX-OUT-001
 - id: LLR-TEX-SEC-010
   web_section: 10
   description: "TeX shall implement data structures for boxes, glue, penalties and other nodes using linked lists in dynamic memory."
   parent_hlr:
     - HLR-TEX-RES-001
-- id: LLR-TEX-SEC-038
-  web_section: 38
-  description: "TeX shall implement the line-breaking algorithm to convert a horizontal list into a series of broken lines."
-  parent_hlr:
-    - HLR-TEX-FUN-001
 - id: LLR-TEX-SEC-011
   web_section: 11
   description: "TeX shall define the memory layout for static and dynamic nodes, including reserved locations for special constants."
@@ -81,7 +71,8 @@
 - id: LLR-TEX-SEC-015
   web_section: 15
   description: "TeX shall define internal command codes that represent the various categories of input tokens and primitives."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-016
   web_section: 16
   description: "TeX shall maintain a semantic nest to track the state of nested horizontal, vertical, and math modes."
@@ -93,58 +84,76 @@
 - id: LLR-TEX-SEC-018
   web_section: 18
   description: "TeX shall implement a hash table to efficiently look up and manage control sequences."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-RES-001
 - id: LLR-TEX-SEC-019
   web_section: 19
   description: "TeX shall implement a save stack to handle group-based scoping, allowing for the saving and restoration of values."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-RES-001
 - id: LLR-TEX-SEC-020
   web_section: 20
   description: "TeX shall implement data structures and procedures for creating, manipulating, and scanning token lists."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-021
   web_section: 21
   description: "TeX shall implement the main control loop and provide an introduction to the syntactic routines."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-022
   web_section: 22
   description: "TeX shall maintain input stacks and states to manage nested input sources including files and token lists."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-023
   web_section: 23
   description: "TeX shall implement procedures for maintaining, pushing, and popping the input stacks."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-024
   web_section: 24
   description: "TeX shall implement the 'get_next' procedure to fetch the next token from the current input source."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-025
   web_section: 25
   description: "TeX shall implement the 'expand' procedure to expand macros and other expandable tokens."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-026
   web_section: 26
   description: "TeX shall implement basic scanning subroutines to parse integers, dimensions, and other primitives."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-027
   web_section: 27
   description: "TeX shall implement procedures for building token lists from input, handling macro definitions and other token-based structures."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-028
   web_section: 28
   description: "TeX shall implement conditional processing to handle \\if, \\else, and \\fi constructs."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-029
   web_section: 29
   description: "TeX shall implement procedures for handling file names, including parsing and formatting for the host system."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-030
   web_section: 30
   description: "TeX shall implement procedures for reading and processing Font Metric (TFM) files."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-OUT-002
 - id: LLR-TEX-SEC-031
   web_section: 31
   description: "TeX shall implement the device-independent (DVI) file format, including all opcodes and the structure of preamble, postamble, and page definitions."
+  parent_hlr:
+    - HLR-TEX-OUT-001
+- id: LLR-TEX-SEC-032
+  web_section: 32
+  description: "TeX shall implement the 'ship_out' procedure to translate a box into commands for the DVI file."
   parent_hlr:
     - HLR-TEX-OUT-001
 - id: LLR-TEX-SEC-033
@@ -154,19 +163,28 @@
 - id: LLR-TEX-SEC-034
   web_section: 34
   description: "TeX shall define data structures for math mode, including nodes for fractions, radicals, and various math symbols."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-003
 - id: LLR-TEX-SEC-035
   web_section: 35
   description: "TeX shall implement subroutines for math mode processing, including atom alignment and style management."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-003
 - id: LLR-TEX-SEC-036
   web_section: 36
   description: "TeX shall implement procedures for typesetting math formulas, including the positioning of nuclei, superscripts, and subscripts."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-003
 - id: LLR-TEX-SEC-037
   web_section: 37
   description: "TeX shall implement alignment procedures for handling \\halign and \\valign structures."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
+- id: LLR-TEX-SEC-038
+  web_section: 38
+  description: "TeX shall implement the line-breaking algorithm to convert a horizontal list into a series of broken lines."
+  parent_hlr:
+    - HLR-TEX-FUN-001
 - id: LLR-TEX-SEC-039
   web_section: 39
   description: "TeX shall implement advanced line-breaking features including handling of discretionary hyphens and delta branches."
@@ -175,43 +193,53 @@
 - id: LLR-TEX-SEC-040
   web_section: 40
   description: "TeX shall implement pre-hyphenation procedures to prepare words for the hyphenation algorithm."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-004
 - id: LLR-TEX-SEC-041
   web_section: 41
   description: "TeX shall implement post-hyphenation procedures to insert discretionary hyphens into the word and reconstruct the horizontal list, preserving ligatures and kerning."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-004
 - id: LLR-TEX-SEC-042
   web_section: 42
   description: "TeX shall implement Liang's hyphenation algorithm, using patterns and exception dictionaries to find candidate hyphenation points."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-004
 - id: LLR-TEX-SEC-043
   web_section: 43
   description: "TeX shall implement procedures for building, compressing, and packing hyphenation tries from patterns in INITEX."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-004
 - id: LLR-TEX-SEC-044
   web_section: 44
   description: "TeX shall implement the 'vsplit' procedure to break vertical lists into smaller boxes of a specified height."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-005
 - id: LLR-TEX-SEC-045
   web_section: 45
   description: "TeX shall implement the page builder to append material to the main vertical list and determine optimal page breaks, including handling of insertions."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-005
 - id: LLR-TEX-SEC-046
   web_section: 46
   description: "TeX shall implement the 'main_control' routine as the central state machine to process tokens and execute associated commands."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-047
   web_section: 47
   description: "TeX shall implement procedures for building boxes and lists, including horizontal and vertical rules and mode-dependent activities."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-048
   web_section: 48
   description: "TeX shall implement procedures for building math lists (mlists) using 'noads' and other math mode data structures."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-003
 - id: LLR-TEX-SEC-049
   web_section: 49
   description: "TeX shall implement mode-independent processing, including assignments to the table of equivalents (eqtb) and other global state changes."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-006
 - id: LLR-TEX-SEC-050
   web_section: 50
   description: "TeX shall implement procedures for dumping and undumping its internal tables into format files for high-speed initialization."
