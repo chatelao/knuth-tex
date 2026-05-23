@@ -6,6 +6,7 @@ import os
 import logging
 from pathlib import Path
 from verification.harness.tangle import TangleWrapper
+from verification.harness.compiler import CompileWrapper
 
 class VerificationTestRunner:
     """Orchestrates the execution of a single verification test."""
@@ -59,13 +60,33 @@ class VerificationTestRunner:
             pool_file=str(pool_file)
         )
 
+    def run_compile(self, pascal_file):
+        """Executes the Compile step for the test."""
+        logging.info(f"[{self.test_id}] Starting Compile step...")
+
+        compiler_exe = self.harness_config.get('pascal_compiler')
+        if not compiler_exe:
+            raise ValueError("pascal_compiler not specified in harness configuration.")
+
+        wrapper = CompileWrapper(compiler_exe)
+        output_exe = self.output_dir / self.test_id
+
+        return wrapper.run(
+            pascal_file=pascal_file,
+            output_exe=str(output_exe)
+        )
+
     def run(self):
         """Runs the full verification workflow for this test."""
         logging.info(f"--- Running Test: {self.test_id} ---")
         try:
             pascal_file, pool_file = self.run_tangle()
             logging.info(f"[{self.test_id}] Tangle step completed: {pascal_file}, {pool_file}")
-            # Other steps (Compile, Execute, Compare) will be added here later
+
+            exe_file = self.run_compile(pascal_file)
+            logging.info(f"[{self.test_id}] Compile step completed: {exe_file}")
+
+            # Other steps (Execute, Compare) will be added here later
             return True
         except Exception as e:
             logging.error(f"[{self.test_id}] Test failed: {e}")
