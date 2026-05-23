@@ -74,7 +74,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [ ] Automate `INITEX` run to generate `trip.fmt`.
     - [ ] Automate `TRIP` execution and comparison of `.log`, `.typ`, and `.tfm` files.
   - [ ] Automate the TRAP (Metafont) torture test:
-    - [ ] Create `TRAP` test configuration and directory.
+    - [x] Create `TRAP` test configuration and directory.
     - [ ] Automate `TANGLE` on `mf.web` with `trap.ch`.
     - [ ] Automate compilation of `trap.p`.
     - [ ] Automate `INIMF` run to generate `trap.base`.
