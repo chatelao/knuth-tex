@@ -1,6 +1,8 @@
 import pytest
 from verification.harness.mcdc.lexer import Lexer
-from verification.harness.mcdc.parser import Parser, Assignment, ProcedureCall
+from verification.harness.mcdc.parser import (
+    Parser, Assignment, ProcedureCall, Block, IfStatement, EmptyStatement, ParserError
+)
 
 def test_parse_simple_assignment():
     code = "x := 1;"
@@ -94,3 +96,83 @@ def test_parse_pointer_deref():
     assert stmt.target.modifiers[0] == ('pointer', None)
     assert stmt.target.modifiers[1] == ('dot', 'link')
     assert repr(stmt.target) == "p^.link"
+
+def test_parse_block():
+    code = "BEGIN x := 1; y := 2 END"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, Block)
+    assert len(stmt.statements) == 2
+    assert stmt.statements[0].target.name == "x"
+    assert stmt.statements[1].target.name == "y"
+
+def test_parse_if_then():
+    code = "IF x > 0 THEN x := 1;"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, IfStatement)
+    assert "x > 0" in repr(stmt.condition)
+    assert stmt.then_branch.target.name == "x"
+    assert stmt.else_branch is None
+
+def test_parse_if_then_else():
+    code = "IF x > 0 THEN x := 1 ELSE x := 0;"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, IfStatement)
+    assert stmt.then_branch.target.name == "x"
+    assert stmt.else_branch.target.name == "x"
+
+def test_parse_nested_if():
+    code = "IF x > 0 THEN IF y > 0 THEN z := 1 ELSE z := 0;"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, IfStatement)
+    assert isinstance(stmt.then_branch, IfStatement)
+    assert stmt.then_branch.else_branch.target.name == "z"
+
+def test_parse_block_with_semicolons():
+    code = "BEGIN ; ; END"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, Block)
+    # Empty statements might or might not be counted depending on how parse_block handles them
+    # Current implementation: while peek != END: parse_statement; if peek == ';': consume
+    # BEGIN ; (EmptyStmt) ; (EmptyStmt) END
+    assert len(stmt.statements) >= 2
+
+def test_parse_block_infinite_loop_prevention():
+    # 'ELSE' outside of IF is not handled by parse_statement except as EmptyStatement,
+    # but in a block it needs to progress.
+    code = "BEGIN ELSE END"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+
+    # In the current implementation, ELSE in a block returns EmptyStatement.
+    # So it should progress. Let's try something that truly doesn't progress.
+    # Actually, almost everything in parse_statement either consumes or returns EmptyStatement.
+    # EmptyStatement is returned for END, ELSE, UNTIL, and ';'.
+    # If it is END, the loop in parse_block terminates.
+    # If it is ELSE, UNTIL or ';', the loop continues.
+    # If it is ';', it is consumed in parse_block.
+    # If it is ELSE or UNTIL, it is NOT consumed in parse_block and WOULD loop
+    # if not for the progress check.
+
+    with pytest.raises(ParserError, match="Parser failed to progress"):
+        parser.parse_statement()
