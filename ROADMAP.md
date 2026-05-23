@@ -68,7 +68,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 ## Phase 4: Requirements-Based Testing (RBT) Implementation
 - [ ] **Baseline Integration**:
   - [ ] Automate the TRIP (TeX) torture test:
-    - [ ] Create `TRIP` test configuration and directory.
+    - [x] Create `TRIP` test configuration and directory.
     - [ ] Automate `TANGLE` on `tex.web` with `trip.ch`.
     - [ ] Automate compilation of `trip.p`.
     - [ ] Automate `INITEX` run to generate `trip.fmt`.
