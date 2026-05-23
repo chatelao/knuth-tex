@@ -7,6 +7,13 @@ import logging
 from pathlib import Path
 from verification.harness.tangle import TangleWrapper
 from verification.harness.compiler import CompileWrapper
+from verification.harness.executor import ExecuteWrapper
+from verification.harness.comparer import Comparer
+from verification.harness.normalizer import Normalizer
+from verification.harness.dvitype import DVItypeWrapper
+from verification.harness.gftype import GFtypeWrapper
+from verification.harness.pktype import PKtypeWrapper
+from verification.harness.tftopl import TFtoPLWrapper
 
 class VerificationTestRunner:
     """Orchestrates the execution of a single verification test."""
@@ -28,6 +35,21 @@ class VerificationTestRunner:
         base_output_dir = Path(harness_config.get('output_dir', 'verification/results'))
         self.output_dir = base_output_dir / self.test_id
         self.output_dir.mkdir(parents=True, exist_ok=True)
+
+        # Initialize core utilities
+        self.comparer = Comparer()
+        self.normalizer = Normalizer()
+
+        # Initialize symbolic comparators from harness config
+        self.symbolic_comparators = {}
+        if 'dvitype_path' in harness_config:
+            self.symbolic_comparators['dvi'] = DVItypeWrapper(harness_config['dvitype_path'])
+        if 'gftype_path' in harness_config:
+            self.symbolic_comparators['gf'] = GFtypeWrapper(harness_config['gftype_path'])
+        if 'pktype_path' in harness_config:
+            self.symbolic_comparators['pk'] = PKtypeWrapper(harness_config['pktype_path'])
+        if 'tftopl_path' in harness_config:
+            self.symbolic_comparators['tfm'] = TFtoPLWrapper(harness_config['tftopl_path'])
 
     def load_test_config(self):
         """Loads the test-specific configuration."""
@@ -76,6 +98,81 @@ class VerificationTestRunner:
             output_exe=str(output_exe)
         )
 
+    def run_execute(self, exe_file):
+        """Executes the compiled program."""
+        logging.info(f"[{self.test_id}] Starting Execute step...")
+
+        wrapper = ExecuteWrapper(exe_file)
+
+        args = self.test_config.get('test_args', [])
+        input_data = self.test_config.get('test_input_data', "")
+
+        # If test_input is a path to a file, read it
+        test_input_file = self.test_config.get('test_input')
+        if test_input_file and os.path.exists(test_input_file):
+            with open(test_input_file, 'r') as f:
+                input_data = f.read()
+
+        return wrapper.run(
+            args=args,
+            input_data=input_data,
+            cwd=str(self.output_dir)
+        )
+
+    def run_compare(self, execution_result):
+        """Compares the actual outputs with the expected ones."""
+        logging.info(f"[{self.test_id}] Starting Compare step...")
+
+        expected_outputs = self.test_config.get('expected_outputs', {})
+        if not expected_outputs:
+            logging.warning(f"[{self.test_id}] No expected outputs specified.")
+            return True
+
+        # Capture terminal/log output if requested
+        if 'terminal' in expected_outputs:
+            terminal_output_path = self.output_dir / "terminal.out"
+            with open(terminal_output_path, "w") as f:
+                f.write(execution_result.stdout)
+                f.write(execution_result.stderr)
+
+        all_match = True
+        tolerance = self.test_config.get('settings', {}).get('tolerance')
+
+        for output_type, expected_path in expected_outputs.items():
+            if output_type == 'terminal':
+                actual_path = self.output_dir / "terminal.out"
+            else:
+                actual_path = self.output_dir / Path(expected_path).name
+
+            logging.info(f"[{self.test_id}] Comparing {output_type}: {actual_path} vs {expected_path}")
+
+            match = False
+            diff = ""
+
+            if output_type in self.symbolic_comparators:
+                # Binary comparison using symbolic converter
+                converter = self.symbolic_comparators[output_type]
+                match, diff = self.comparer.compare_binary_files(
+                    expected_path, actual_path, converter,
+                    normalizer=self.normalizer, tolerance=tolerance
+                )
+            else:
+                # Direct text comparison
+                match, diff = self.comparer.compare_text_files(
+                    expected_path, actual_path,
+                    normalizer=self.normalizer, tolerance=tolerance
+                )
+
+            if match:
+                logging.info(f"[{self.test_id}] {output_type} match: OK")
+            else:
+                logging.error(f"[{self.test_id}] {output_type} mismatch!")
+                if diff:
+                    logging.error(f"Diff:\n{diff}")
+                all_match = False
+
+        return all_match
+
     def run(self):
         """Runs the full verification workflow for this test."""
         logging.info(f"--- Running Test: {self.test_id} ---")
@@ -86,7 +183,14 @@ class VerificationTestRunner:
             exe_file = self.run_compile(pascal_file)
             logging.info(f"[{self.test_id}] Compile step completed: {exe_file}")
 
-            # Other steps (Execute, Compare) will be added here later
+            result = self.run_execute(exe_file)
+            logging.info(f"[{self.test_id}] Execute step completed with exit code {result.returncode}")
+
+            if not self.run_compare(result):
+                logging.error(f"[{self.test_id}] Compare step failed.")
+                return False
+
+            logging.info(f"[{self.test_id}] Test completed successfully.")
             return True
         except Exception as e:
             logging.error(f"[{self.test_id}] Test failed: {e}")

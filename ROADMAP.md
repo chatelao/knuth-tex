@@ -56,7 +56,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [x] Implement `Compile` wrapper (Pascal to executable).
   - [x] Implement `Execute` wrapper with environment isolation.
   - [x] Implement `Normalize` utility for text-based outputs (Log, Terminal).
-  - [ ] Implement `Compare` module for automated pass/fail determination:
+  - [x] Implement `Compare` module for automated pass/fail determination:
     - [x] Implement core comparison logic and reporting.
     - [x] Implement floating-point tolerance handling for numerical outputs.
     - [x] Implement delegation to symbolic comparators for binary formats.
