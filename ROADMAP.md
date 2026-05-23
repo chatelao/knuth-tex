@@ -80,16 +80,25 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Automate `INIMF` run to generate `trap.base`.
     - [x] Automate `TRAP` execution and comparison of `.log`, `.typ`, and `.tfm` files.
 - [ ] **Normal Range Testing**:
-  - [ ] Develop test cases for standard compilation and font generation.
+  - [ ] Develop test cases for standard compilation and font generation:
+    - [ ] Implement `STORY` test case (Basic TeX paragraph breaking).
+    - [ ] Implement `HELLO` test case (Basic TeX macro expansion).
+    - [ ] Implement `LOGO` test case (Metafont character generation).
 - [ ] **Robustness Testing**:
-  - [ ] Implement Boundary Value Analysis (BVA) tests.
-  - [ ] Implement Error Handling and Resource Exhaustion tests.
+  - [ ] Implement Boundary Value Analysis (BVA) tests:
+    - [ ] Develop BVA tests for TeX integer registers (max/min values).
+    - [ ] Develop BVA tests for Metafont coordinate ranges.
+  - [ ] Implement Error Handling and Resource Exhaustion tests:
+    - [ ] Develop tests for TeX stack overflow (macro recursion).
+    - [ ] Develop tests for Metafont memory exhaustion (complex paths).
+    - [ ] Develop tests for file-not-found and invalid input syntax.
 - [x] **Traceability**:
   - [x] Map all test cases to HLRs and LLRs in the traceability matrix.
 
 ## Phase 5: Structural Coverage & MC/DC Analysis
 - [ ] **Instrumentation**:
   - [ ] Develop the Pascal parser/instrumenter for `TANGLE` output:
+    - [ ] Implement Lexer for Pascal subset used by TANGLE.
     - [ ] Implement basic Pascal statement parsing and probe insertion.
     - [ ] Implement robust boolean expression parsing.
     - [ ] Implement decision and condition identification logic.
@@ -106,8 +115,14 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 
 ## Phase 6: Tool Qualification & Final Certification
 - [ ] **Tool Qualification**:
-  - [ ] Perform qualification for the Test Harness and Comparators.
-  - [ ] Perform qualification for the MC/DC Instrumenter.
+  - [ ] Perform qualification for the Test Harness and Comparators:
+    - [ ] Define Tool Operational Requirements (TOR).
+    - [ ] Develop Qualification Test Suite (QTS) for Harness.
+    - [ ] Execute QTS and generate Tool Qualification Report (TQR).
+  - [ ] Perform qualification for the MC/DC Instrumenter:
+    - [ ] Define TOR for Instrumenter.
+    - [ ] Develop QTS for Instrumenter (MC/DC validation).
+    - [ ] Execute QTS and generate TQR for Instrumenter.
   - [ ] Verify `TANGLE` and the Pascal compiler or their outputs.
 - [ ] **Final Documentation**:
   - [ ] Generate the final Traceability Report.
