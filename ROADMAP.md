@@ -106,7 +106,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Implement parser for Pascal assignment and procedure call statements.
       - [x] Implement parser for compound statements (BEGIN...END).
       - [x] Implement parser for conditional statements (IF...THEN...ELSE).
-      - [ ] Implement parser for iterative statements (WHILE, REPEAT, FOR).
+      - [x] Implement parser for iterative statements (WHILE, REPEAT, FOR).
       - [ ] Develop logic for inserting unique probe IDs before each decision point.
       - [ ] Verify probe insertion on simple Pascal programs.
     - [ ] Implement robust boolean expression parsing.

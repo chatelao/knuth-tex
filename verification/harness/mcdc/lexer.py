@@ -17,7 +17,7 @@ class Lexer:
         'BEGIN', 'END', 'RECORD', 'IF', 'THEN', 'ELSE', 'WHILE', 'DO',
         'REPEAT', 'UNTIL', 'GOTO', 'CASE', 'OF', 'OTHERWISE', 'EXTERNAL',
         'ARRAY', 'PACKED', 'FILE', 'TEXT', 'FORWARD', 'IN', 'DIV', 'MOD',
-        'AND', 'OR', 'NOT'
+        'AND', 'OR', 'NOT', 'TO', 'DOWNTO', 'FOR'
     }
 
     TOKEN_SPECIFICATION = [

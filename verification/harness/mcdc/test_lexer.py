@@ -85,3 +85,12 @@ def test_tangle_snippet():
     assert tokens[11].type == "LABEL"
     assert tokens[14].type == "CONST"
     assert tokens[15].type == "COMMENT"
+
+def test_for_loop_keywords():
+    code = "FOR i := 1 TO 10 DO DOWNTO"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    assert tokens[0].type == "FOR"
+    assert tokens[4].type == "TO"
+    assert tokens[6].type == "DO"
+    assert tokens[7].type == "DOWNTO"
