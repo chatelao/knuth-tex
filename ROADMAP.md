@@ -98,10 +98,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 ## Phase 5: Structural Coverage & MC/DC Analysis
 - [ ] **Instrumentation**:
   - [ ] Develop the Pascal parser/instrumenter for `TANGLE` output:
-    - [ ] Implement Lexer for Pascal subset:
-      - [ ] Define Pascal tokens and regular expressions for TANGLE subset.
-      - [ ] Implement token scanning and error handling.
-      - [ ] Develop unit tests for the Lexer with sample TANGLE output.
+    - [x] Implement Lexer for Pascal subset:
+      - [x] Define Pascal tokens and regular expressions for TANGLE subset.
+      - [x] Implement token scanning and error handling.
+      - [x] Develop unit tests for the Lexer with sample TANGLE output.
     - [ ] Implement basic Pascal statement parsing and probe insertion:
       - [ ] Implement parser for Pascal assignment and procedure call statements.
       - [ ] Develop logic for inserting unique probe IDs before each decision point.
