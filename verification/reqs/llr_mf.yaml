@@ -32,83 +32,103 @@
 - id: LLR-MF-SEC-007
   web_section: 7
   description: "Metafont shall implement fixed-point arithmetic using scaled integers to ensure identical output across different computers."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-004
 - id: LLR-MF-SEC-008
   web_section: 8
   description: "Metafont shall implement algebraic and transcendental functions (e.g., square root, sine, cosine) using integer-based iterative methods without relying on system real arithmetic."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-004
 - id: LLR-MF-SEC-009
   web_section: 9
   description: "Metafont shall implement packed data structures using the 'memory_word' type to optimize storage."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-RES-001
 - id: LLR-MF-SEC-010
   web_section: 10
   description: "Metafont shall implement dynamic memory allocation using a large 'mem' array to manage blocks of nodes."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-RES-001
 - id: LLR-MF-SEC-011
   web_section: 11
   description: "Metafont shall define the memory layout for static and dynamic nodes, including reserved locations for special constants like null pen coordinates."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-RES-001
 - id: LLR-MF-SEC-012
   web_section: 12
   description: "Metafont shall define symbolic names for internal command codes representing various commands and expression types."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-013
   web_section: 13
   description: "Metafont shall implement a hash table using coalesced lists to store and retrieve symbolic tokens efficiently."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-RES-001
 - id: LLR-MF-SEC-014
   web_section: 14
   description: "Metafont shall implement data structures for tokens, representing symbolic, numeric, string, macro parameter, or capsule types."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-015
   web_section: 15
   description: "Metafont shall implement data structures for variables, supporting simple, array, and record-like structures using two-word value nodes."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-016
   web_section: 16
   description: "Metafont shall implement a save stack to allow for saving and restoring equivalents during nested group processing."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-RES-001
 - id: LLR-MF-SEC-017
   web_section: 17
   description: "Metafont shall implement data structures for paths, representing knots and control points for cubic spline curves."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-002
 - id: LLR-MF-SEC-018
   web_section: 18
   description: "Metafont shall implement a procedure for choosing angles and control points for splines when not explicitly specified by the user."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-002
 - id: LLR-MF-SEC-019
   web_section: 19
   description: "Metafont shall implement subroutines for computing discrete approximations to cubic spline curves using bisection methods."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-002
 - id: LLR-MF-SEC-020
   web_section: 20
   description: "Metafont shall implement edge structures to represent the pixels of a graphic by storing nonzero edge weights for each row."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-003
 - id: LLR-MF-SEC-021
   web_section: 21
   description: "Metafont shall implement procedures to subdivide cubic paths into segments that travel in first-octant directions (0 <= y' <= x')."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-003
 - id: LLR-MF-SEC-022
   web_section: 22
   description: "Metafont shall implement a high-level routine to fill a digitized path by walking through its cycle specification and generating rook moves."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-003
 - id: LLR-MF-SEC-023
   web_section: 23
   description: "Metafont shall implement data structures and algorithms for polygonal pens, based on the kinetic framework for computational geometry."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-003
 - id: LLR-MF-SEC-024
   web_section: 24
   description: "Metafont shall implement procedures to fill the envelope of a cyclic path with respect to a given pen polygon."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-003
 - id: LLR-MF-SEC-025
   web_section: 25
   description: "Metafont shall implement elliptical pens by approximating them with polygons to counteract digitization artifacts."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-003
 - id: LLR-MF-SEC-026
   web_section: 26
   description: "Metafont shall implement operations to determine special times on a path, such as when it travels in a specific direction or when two paths intersect."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-003
 - id: LLR-MF-SEC-027
   web_section: 27
   description: "Metafont shall provide primitive operations for online graphic output, including screen initialization, pixel plotting, and screen updates."
@@ -116,87 +136,108 @@
 - id: LLR-MF-SEC-028
   web_section: 28
   description: "Metafont shall maintain and solve systems of linear equations between numeric variables, distinguishing between independent, dependent, and known values."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-001
 - id: LLR-MF-SEC-029
   web_section: 29
   description: "Metafont shall handle simple equations between nonlinear quantities such as booleans, strings, pens, paths, and pictures."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-001
 - id: LLR-MF-SEC-030
   web_section: 30
   description: "Metafont shall implement the top-level structure for syntactic routines to parse user input and deliver it to semantic routines."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-031
   web_section: 31
   description: "Metafont shall implement input stacks and states to manage nested levels of input from files and token lists."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-032
   web_section: 32
   description: "Metafont shall implement procedures for maintaining the input stacks, including pushing and popping input states."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-033
   web_section: 33
   description: "Metafont shall implement the process of getting the next token from the current input source, handling expansion as necessary."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-034
   web_section: 34
   description: "Metafont shall implement routines for scanning and storing macro definitions."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-035
   web_section: 35
   description: "Metafont shall implement the logic for expanding the next token when it is a macro or a primitive requiring expansion."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-036
   web_section: 36
   description: "Metafont shall implement conditional processing of input using if, else, and fi commands."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-037
   web_section: 37
   description: "Metafont shall implement iteration mechanisms such as for and forever loops."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-038
   web_section: 38
   description: "Metafont shall implement routines for handling file names, including parsing and formatting."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-039
   web_section: 39
   description: "Metafont shall implement an introduction to the parsing routines that handle the grammatical structure of the language."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-040
   web_section: 40
   description: "Metafont shall implement the parsing of primary expressions, which are the basic building blocks of expressions."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-041
   web_section: 41
   description: "Metafont shall implement parsing for secondary, tertiary, and higher-level expressions, respecting operator precedence and handling macro-defined operators."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-042
   web_section: 42
   description: "Metafont shall implement the semantic routines for nullary, unary, and binary operations, mapping tokens and modifiers to their respective action procedures."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-043
   web_section: 43
   description: "Metafont shall implement the 'do_statement' routine as the central state machine to process tokens and execute associated commands."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-044
   web_section: 44
   description: "Metafont shall implement action procedures for imperative commands such as 'randomseed' and other non-expression statements."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-005
 - id: LLR-MF-SEC-045
   web_section: 45
   description: "Metafont shall implement procedures for generating and writing Font Metric (TFM) files."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-OUT-002
 - id: LLR-MF-SEC-046
   web_section: 46
   description: "Metafont shall implement the generic font (GF) file format, including all opcodes and the structure of character definitions and postambles."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-OUT-001
 - id: LLR-MF-SEC-047
   web_section: 47
   description: "Metafont shall implement the 'ship_out' procedure to translate an edge structure into commands for the GF file."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-OUT-001
 - id: LLR-MF-SEC-048
   web_section: 48
   description: "Metafont shall implement procedures for dumping and undumping its internal tables into base files for high-speed initialization."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-RES-001
 - id: LLR-MF-SEC-049
   web_section: 49
   description: "Metafont shall implement the main program that initializes the system and enters the main control loop."
