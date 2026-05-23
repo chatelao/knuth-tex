@@ -65,6 +65,34 @@ class IfStatement(Node):
             res += f" ELSE {self.else_branch}"
         return res
 
+class WhileStatement(Node):
+    """Represents a WHILE...DO statement."""
+    def __init__(self, condition, body):
+        self.condition = condition
+        self.body = body
+    def __repr__(self):
+        return f"While({self.condition}) DO {self.body}"
+
+class RepeatStatement(Node):
+    """Represents a REPEAT...UNTIL statement."""
+    def __init__(self, statements, condition):
+        self.statements = statements
+        self.condition = condition
+    def __repr__(self):
+        stmts_str = "; ".join(repr(s) for s in self.statements)
+        return f"Repeat({stmts_str}) UNTIL {self.condition}"
+
+class ForStatement(Node):
+    """Represents a FOR statement."""
+    def __init__(self, variable, start_expr, direction, end_expr, body):
+        self.variable = variable
+        self.start_expr = start_expr
+        self.direction = direction # 'TO' or 'DOWNTO'
+        self.end_expr = end_expr
+        self.body = body
+    def __repr__(self):
+        return f"For({self.variable} := {self.start_expr} {self.direction} {self.end_expr}) DO {self.body}"
+
 class EmptyStatement(Node):
     """Represents an empty statement (e.g., between two semicolons)."""
     def __repr__(self):
@@ -210,6 +238,43 @@ class Parser:
             else_branch = self.parse_statement()
         return IfStatement(condition, then_branch, else_branch)
 
+    def parse_while_statement(self):
+        """Parses a WHILE...DO statement."""
+        self.consume('WHILE')
+        condition = self.parse_expression(['DO'])
+        self.consume('DO')
+        body = self.parse_statement()
+        return WhileStatement(condition, body)
+
+    def parse_repeat_statement(self):
+        """Parses a REPEAT...UNTIL statement."""
+        self.consume('REPEAT')
+        statements = []
+        while self.peek() and self.peek().type != 'UNTIL':
+            last_pos = self.pos
+            stmt = self.parse_statement()
+            if stmt:
+                statements.append(stmt)
+            if self.peek() and self.peek().value == ';':
+                self.consume()
+            if self.pos == last_pos:
+                 raise ParserError("Parser failed to progress in REPEAT...UNTIL block", self.peek())
+        self.consume('UNTIL')
+        condition = self.parse_expression([';', 'END', 'ELSE', 'UNTIL'])
+        return RepeatStatement(statements, condition)
+
+    def parse_for_statement(self):
+        """Parses a FOR statement."""
+        self.consume('FOR')
+        variable = self.parse_identifier()
+        self.consume('ASSIGN')
+        start_expr = self.parse_expression(['TO', 'DOWNTO'])
+        direction = self.consume(['TO', 'DOWNTO']).type
+        end_expr = self.parse_expression(['DO'])
+        self.consume('DO')
+        body = self.parse_statement()
+        return ForStatement(variable, start_expr, direction, end_expr, body)
+
     def parse_statement(self):
         """Parses a single statement."""
         # Skip labels
@@ -224,6 +289,12 @@ class Parser:
             return self.parse_block()
         elif token.type == 'IF':
             return self.parse_if_statement()
+        elif token.type == 'WHILE':
+            return self.parse_while_statement()
+        elif token.type == 'REPEAT':
+            return self.parse_repeat_statement()
+        elif token.type == 'FOR':
+            return self.parse_for_statement()
         elif token.value == ';':
             return EmptyStatement()
         elif token.type == 'END' or token.type == 'ELSE' or token.type == 'UNTIL':

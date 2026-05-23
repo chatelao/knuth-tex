@@ -1,7 +1,8 @@
 import pytest
 from verification.harness.mcdc.lexer import Lexer
 from verification.harness.mcdc.parser import (
-    Parser, Assignment, ProcedureCall, Block, IfStatement, EmptyStatement, ParserError
+    Parser, Assignment, ProcedureCall, Block, IfStatement, EmptyStatement, ParserError,
+    WhileStatement, RepeatStatement, ForStatement
 )
 
 def test_parse_simple_assignment():
@@ -176,3 +177,67 @@ def test_parse_block_infinite_loop_prevention():
 
     with pytest.raises(ParserError, match="Parser failed to progress"):
         parser.parse_statement()
+
+def test_parse_while():
+    code = "WHILE x > 0 DO x := x - 1;"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, WhileStatement)
+    assert "x > 0" in repr(stmt.condition)
+    assert isinstance(stmt.body, Assignment)
+    assert stmt.body.target.name == "x"
+
+def test_parse_repeat():
+    code = "REPEAT x := x + 1; y := y - 1 UNTIL x > 10;"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, RepeatStatement)
+    assert len(stmt.statements) == 2
+    assert "x > 10" in repr(stmt.condition)
+
+def test_parse_for_to():
+    code = "FOR i := 1 TO 10 DO write(i);"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, ForStatement)
+    assert stmt.variable.name == "i"
+    assert "1" in repr(stmt.start_expr)
+    assert stmt.direction == "TO"
+    assert "10" in repr(stmt.end_expr)
+    assert isinstance(stmt.body, ProcedureCall)
+
+def test_parse_for_downto():
+    code = "FOR i := 10 DOWNTO 1 DO write(i);"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, ForStatement)
+    assert stmt.direction == "DOWNTO"
+
+def test_nested_loops():
+    code = """
+    FOR i := 1 TO 10 DO
+        WHILE j < 5 DO
+            REPEAT
+                j := j + 1
+            UNTIL j = 5;
+    """
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, ForStatement)
+    assert isinstance(stmt.body, WhileStatement)
+    assert isinstance(stmt.body.body, RepeatStatement)
