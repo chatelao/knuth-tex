@@ -109,7 +109,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Implement parser for iterative statements (WHILE, REPEAT, FOR).
       - [ ] Develop logic for inserting unique probe IDs before each decision point.
       - [ ] Verify probe insertion on simple Pascal programs.
-    - [ ] Implement robust boolean expression parsing.
+    - [x] Implement robust boolean expression parsing.
     - [ ] Implement decision and condition identification logic.
   - [ ] Implement the `record_mcdc` runtime library:
     - [ ] Develop the runtime library for bit-mask recording:
