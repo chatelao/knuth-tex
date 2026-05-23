@@ -69,7 +69,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 - [ ] **Baseline Integration**:
   - [ ] Automate the TRIP (TeX) torture test:
     - [x] Create `TRIP` test configuration and directory.
-    - [ ] Automate `TANGLE` on `tex.web` with `trip.ch`.
+    - [x] Automate `TANGLE` on `tex.web` with `trip.ch`.
     - [ ] Automate compilation of `trip.p`.
     - [ ] Automate `INITEX` run to generate `trip.fmt`.
     - [ ] Automate `TRIP` execution and comparison of `.log`, `.typ`, and `.tfm` files.
