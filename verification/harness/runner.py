@@ -5,6 +5,77 @@ import yaml
 import os
 import logging
 from pathlib import Path
+from verification.harness.tangle import TangleWrapper
+
+class VerificationTestRunner:
+    """Orchestrates the execution of a single verification test."""
+
+    def __init__(self, harness_config, test_config_path):
+        """
+        Initialize the TestRunner.
+
+        :param harness_config: Parsed harness configuration (dict).
+        :param test_config_path: Path to the test's test_config.yaml.
+        """
+        self.harness_config = harness_config
+        self.test_config_path = Path(test_config_path)
+        self.test_dir = self.test_config_path.parent
+        self.test_config = self.load_test_config()
+        self.test_id = self.test_config.get('test_id', self.test_dir.name)
+
+        # Setup output directory for this specific test
+        base_output_dir = Path(harness_config.get('output_dir', 'verification/results'))
+        self.output_dir = base_output_dir / self.test_id
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+
+    def load_test_config(self):
+        """Loads the test-specific configuration."""
+        with open(self.test_config_path, 'r') as f:
+            return yaml.safe_load(f)
+
+    def run_tangle(self):
+        """Executes the Tangle step for the test."""
+        logging.info(f"[{self.test_id}] Starting Tangle step...")
+
+        tangle_exe = self.harness_config.get('tangle_path')
+        if not tangle_exe:
+            raise ValueError("tangle_path not specified in harness configuration.")
+
+        wrapper = TangleWrapper(tangle_exe)
+
+        source_web = self.test_config.get('source_web')
+        change_file = self.test_config.get('change_file')
+
+        if not source_web:
+            raise ValueError(f"source_web not specified in test config: {self.test_config_path}")
+
+        pascal_file = self.output_dir / f"{self.test_id}.p"
+        pool_file = self.output_dir / f"{self.test_id}.pool"
+
+        return wrapper.run(
+            web_file=source_web,
+            change_file=change_file,
+            pascal_file=str(pascal_file),
+            pool_file=str(pool_file)
+        )
+
+    def run(self):
+        """Runs the full verification workflow for this test."""
+        logging.info(f"--- Running Test: {self.test_id} ---")
+        try:
+            pascal_file, pool_file = self.run_tangle()
+            logging.info(f"[{self.test_id}] Tangle step completed: {pascal_file}, {pool_file}")
+            # Other steps (Compile, Execute, Compare) will be added here later
+            return True
+        except Exception as e:
+            logging.error(f"[{self.test_id}] Test failed: {e}")
+            return False
+
+def discover_tests(tests_base_dir):
+    """Discovers all tests by looking for test_config.yaml files."""
+    test_configs = list(Path(tests_base_dir).rglob("test_config.yaml"))
+    logging.info(f"Discovered {len(test_configs)} tests in {tests_base_dir}")
+    return test_configs
 
 def setup_logging(output_dir):
     """Configures logging to both console and a file."""
@@ -84,10 +155,27 @@ def main():
 
     logging.info(f"Harness initialized with config from: {args.config}")
 
+    # Discover tests
+    tests_base_dir = config.get('tests_dir', 'verification/tests')
+    test_config_paths = discover_tests(tests_base_dir)
+
     if args.test_id:
         logging.info(f"Targeting specific tests: {', '.join(args.test_id)}")
-    else:
-        logging.info("No specific tests specified; running all applicable tests.")
+        test_config_paths = [p for p in test_config_paths if any(tid in str(p) for tid in args.test_id)]
+        logging.info(f"Filtered to {len(test_config_paths)} tests.")
+
+    success_count = 0
+    total_count = len(test_config_paths)
+
+    for config_path in test_config_paths:
+        runner = VerificationTestRunner(config, config_path)
+        if runner.run():
+            success_count += 1
+
+    logging.info(f"Verification process completed. {success_count}/{total_count} tests passed.")
+
+    if success_count < total_count:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
