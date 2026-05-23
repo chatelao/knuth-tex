@@ -38,7 +38,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Parts 21-30 (Octants, Filling contour, Polygonal pens, Filling envelope, Elliptical pens, Direction/Intersection, Online graphic, Linear/Nonlinear equations, Syntactic routines).
     - [x] Parts 31-40 (Input stacks, Next token, Macro definitions, Expansion, Conditionals, Iterations, File names, Parsing routines/expressions).
     - [x] Parts 41-42 (Parsing expressions, Doing the operations).
-    - [ ] Parts 43-45 (Statements and commands, Commands, Font metric data).
+    - [x] Parts 43-45 (Statements and commands, Commands, Font metric data).
     - [ ] Parts 46-48 (GF format, Shipping characters out, Dumping).
     - [ ] Parts 49-52 (Main program, Debugging, System-dependent).
 - [ ] **Traceability Matrix**:
