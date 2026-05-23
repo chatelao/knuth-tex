@@ -1,0 +1,13 @@
+# Hello World TeX Test Configuration
+test_id: "TC-TEX-HELLO-001"
+description: "Basic TeX macro expansion test"
+source_web: "dist/tex/tex.web"
+setup_files:
+  - "dist/lib/plain.tex"
+  - "verification/tests/hello/hello.tex"
+test_input_data: "\n\\input hello\n"
+expected_outputs:
+  log: "hello.log"
+  terminal: "hello.fot"
+settings:
+  tolerance: 0.1

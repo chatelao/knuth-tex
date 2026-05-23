@@ -82,7 +82,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 - [ ] **Normal Range Testing**:
   - [ ] Develop test cases for standard compilation and font generation:
     - [ ] Implement `STORY` test case (Basic TeX paragraph breaking).
-    - [ ] Implement `HELLO` test case (Basic TeX macro expansion).
+    - [x] Implement `HELLO` test case (Basic TeX macro expansion).
     - [ ] Implement `LOGO` test case (Metafont character generation).
 - [ ] **Robustness Testing**:
   - [ ] Implement Boundary Value Analysis (BVA) tests:
@@ -98,13 +98,23 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 ## Phase 5: Structural Coverage & MC/DC Analysis
 - [ ] **Instrumentation**:
   - [ ] Develop the Pascal parser/instrumenter for `TANGLE` output:
-    - [ ] Implement Lexer for Pascal subset used by TANGLE.
-    - [ ] Implement basic Pascal statement parsing and probe insertion.
+    - [ ] Implement Lexer for Pascal subset:
+      - [ ] Define Pascal tokens and regular expressions for TANGLE subset.
+      - [ ] Implement token scanning and error handling.
+      - [ ] Develop unit tests for the Lexer with sample TANGLE output.
+    - [ ] Implement basic Pascal statement parsing and probe insertion:
+      - [ ] Implement parser for Pascal assignment and procedure call statements.
+      - [ ] Develop logic for inserting unique probe IDs before each decision point.
+      - [ ] Verify probe insertion on simple Pascal programs.
     - [ ] Implement robust boolean expression parsing.
     - [ ] Implement decision and condition identification logic.
   - [ ] Implement the `record_mcdc` runtime library:
-    - [ ] Develop the runtime library for bit-mask recording.
-    - [ ] Implement coverage data persistence and export.
+    - [ ] Develop the runtime library for bit-mask recording:
+      - [ ] Define data structures for efficient bit-mask storage.
+      - [ ] Implement thread-safe (if necessary) recording functions.
+    - [ ] Implement coverage data persistence and export:
+      - [ ] Develop routines to write coverage data to disk upon program termination.
+      - [ ] Implement a post-processor to convert raw masks to a human-readable format.
 - [ ] **Execution & Analysis**:
   - [ ] Run RBT suite with instrumentation enabled.
   - [ ] Perform MC/DC analysis on collected data.
