@@ -185,3 +185,27 @@
   web_section: 45
   description: "Metafont shall implement procedures for generating and writing Font Metric (TFM) files."
   parent_hlr: []
+- id: LLR-MF-SEC-046
+  web_section: 46
+  description: "Metafont shall implement the generic font (GF) file format, including all opcodes and the structure of character definitions and postambles."
+  parent_hlr: []
+- id: LLR-MF-SEC-047
+  web_section: 47
+  description: "Metafont shall implement the 'ship_out' procedure to translate an edge structure into commands for the GF file."
+  parent_hlr: []
+- id: LLR-MF-SEC-048
+  web_section: 48
+  description: "Metafont shall implement procedures for dumping and undumping its internal tables into base files for high-speed initialization."
+  parent_hlr: []
+- id: LLR-MF-SEC-049
+  web_section: 49
+  description: "Metafont shall implement the main program that initializes the system and enters the main control loop."
+  parent_hlr: []
+- id: LLR-MF-SEC-050
+  web_section: 50
+  description: "Metafont shall provide debugging aids, including the 'debug_help' routine, to diagnose errors and inspect internal states."
+  parent_hlr: []
+- id: LLR-MF-SEC-051
+  web_section: 51
+  description: "Metafont shall allow for system-dependent changes to be integrated via change files to adapt to different host environments."
+  parent_hlr: []

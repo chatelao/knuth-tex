@@ -23,6 +23,7 @@
     - LLR-TEX-SEC-011
     - LLR-TEX-SEC-013
     - LLR-TEX-SEC-014
+    - LLR-TEX-SEC-050
   test_case_ids: []
 - hlr_id: HLR-TEX-FUN-002
   llr_ids:
