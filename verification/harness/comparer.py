@@ -1,5 +1,6 @@
 import difflib
 import re
+import tempfile
 from pathlib import Path
 
 class Comparer:
@@ -96,3 +97,25 @@ class Comparer:
             tofile=str(actual_path)
         )
         return False, "".join(diff)
+
+    def compare_binary_files(self, expected_path, actual_path, converter, **kwargs):
+        """
+        Compares two binary files by converting them to symbolic text format.
+
+        :param expected_path: Path to the expected binary file.
+        :param actual_path: Path to the actual binary file.
+        :param converter: A callable that takes (binary_path, text_output_path).
+        :param kwargs: Additional arguments for compare_text_files (normalizer, tolerance).
+        :return: (bool, str) - (True if match, "" if match else diff string)
+        """
+        with tempfile.TemporaryDirectory() as tmpdir:
+            expected_text = Path(tmpdir) / "expected.typ"
+            actual_text = Path(tmpdir) / "actual.typ"
+
+            try:
+                converter(expected_path, expected_text)
+                converter(actual_path, actual_text)
+            except Exception as e:
+                return False, f"Conversion failed: {e}"
+
+            return self.compare_text_files(expected_text, actual_text, **kwargs)
