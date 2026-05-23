@@ -200,3 +200,15 @@
   web_section: 46
   description: "TeX shall implement the 'main_control' routine as the central state machine to process tokens and execute associated commands."
   parent_hlr: []
+- id: LLR-TEX-SEC-047
+  web_section: 47
+  description: "TeX shall implement procedures for building boxes and lists, including horizontal and vertical rules and mode-dependent activities."
+  parent_hlr: []
+- id: LLR-TEX-SEC-048
+  web_section: 48
+  description: "TeX shall implement procedures for building math lists (mlists) using 'noads' and other math mode data structures."
+  parent_hlr: []
+- id: LLR-TEX-SEC-049
+  web_section: 49
+  description: "TeX shall implement mode-independent processing, including assignments to the table of equivalents (eqtb) and other global state changes."
+  parent_hlr: []
