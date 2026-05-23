@@ -188,3 +188,15 @@
   web_section: 43
   description: "TeX shall implement procedures for building, compressing, and packing hyphenation tries from patterns in INITEX."
   parent_hlr: []
+- id: LLR-TEX-SEC-044
+  web_section: 44
+  description: "TeX shall implement the 'vsplit' procedure to break vertical lists into smaller boxes of a specified height."
+  parent_hlr: []
+- id: LLR-TEX-SEC-045
+  web_section: 45
+  description: "TeX shall implement the page builder to append material to the main vertical list and determine optimal page breaks, including handling of insertions."
+  parent_hlr: []
+- id: LLR-TEX-SEC-046
+  web_section: 46
+  description: "TeX shall implement the 'main_control' routine as the central state machine to process tokens and execute associated commands."
+  parent_hlr: []
