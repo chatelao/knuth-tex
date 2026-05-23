@@ -132,3 +132,42 @@ def test_verification_test_runner_run_tangle_missing_config(tmp_path):
     runner = VerificationTestRunner(harness_config, str(test_config_path))
     with pytest.raises(ValueError, match="tangle_path not specified"):
         runner.run_tangle()
+
+def test_verification_test_runner_run_compile_success(tmp_path):
+    """Test successful compilation execution via VerificationTestRunner."""
+    harness_config = {
+        'pascal_compiler': 'pc_exe',
+        'output_dir': str(tmp_path / "results")
+    }
+    test_dir = tmp_path / "mytest"
+    test_dir.mkdir()
+    test_config_path = test_dir / "test_config.yaml"
+    test_config_path.write_text("test_id: TC-001\nsource_web: test.web")
+
+    runner = VerificationTestRunner(harness_config, str(test_config_path))
+
+    with patch("verification.harness.runner.CompileWrapper") as MockWrapper:
+        mock_instance = MockWrapper.return_value
+        mock_instance.run.return_value = "out_exe"
+
+        exe = runner.run_compile("test.p")
+
+        assert exe == "out_exe"
+
+        MockWrapper.assert_called_once_with('pc_exe')
+        mock_instance.run.assert_called_once_with(
+            pascal_file="test.p",
+            output_exe=str(runner.output_dir / "TC-001")
+        )
+
+def test_verification_test_runner_run_compile_missing_config(tmp_path):
+    """Test VerificationTestRunner.run_compile with missing configuration."""
+    harness_config = {'output_dir': str(tmp_path / "results")} # Missing pascal_compiler
+    test_dir = tmp_path / "mytest"
+    test_dir.mkdir()
+    test_config_path = test_dir / "test_config.yaml"
+    test_config_path.write_text("test_id: TC-001\nsource_web: test.web")
+
+    runner = VerificationTestRunner(harness_config, str(test_config_path))
+    with pytest.raises(ValueError, match="pascal_compiler not specified"):
+        runner.run_compile("test.p")
