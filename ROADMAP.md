@@ -28,7 +28,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Parts 21-30 (Syntactic routines, Input stacks, Next token, Expansion, Scanning, Building token lists, Conditionals, File names, Font metric data).
     - [x] Parts 31-40 (DVI format, Shipping pages out, Packaging, Math mode data structures/subroutines/formulas, Alignment, Breaking paragraphs, Pre-hyphenation).
     - [x] Parts 41-43 (Post-hyphenation, Hyphenation, Initializing hyphenation tables).
-    - [ ] Parts 44-46 (Breaking vertical lists into pages, Page builder, Chief executive).
+    - [x] Parts 44-46 (Breaking vertical lists into pages, Page builder, Chief executive).
     - [ ] Parts 47-49 (Building boxes and lists, Building math lists, Mode-independent processing).
     - [ ] Parts 50-55 (Dumping, Main program, Debugging, Extensions, System-dependent).
   - [ ] Complete LLR mapping for Metafont (`mf.web`):
