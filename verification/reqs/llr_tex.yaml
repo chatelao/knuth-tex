@@ -212,3 +212,24 @@
   web_section: 49
   description: "TeX shall implement mode-independent processing, including assignments to the table of equivalents (eqtb) and other global state changes."
   parent_hlr: []
+- id: LLR-TEX-SEC-050
+  web_section: 50
+  description: "TeX shall implement procedures for dumping and undumping its internal tables into format files for high-speed initialization."
+  parent_hlr:
+    - HLR-TEX-RES-001
+- id: LLR-TEX-SEC-051
+  web_section: 51
+  description: "TeX shall implement the main program that initializes the system and enters the main control loop."
+  parent_hlr: []
+- id: LLR-TEX-SEC-052
+  web_section: 52
+  description: "TeX shall provide debugging aids, including the 'debug_help' routine, to diagnose errors and inspect internal states."
+  parent_hlr: []
+- id: LLR-TEX-SEC-053
+  web_section: 53
+  description: "TeX shall provide 'hooks' for extensions, including support for 'whatsit' nodes and associated procedures for special purposes like file output."
+  parent_hlr: []
+- id: LLR-TEX-SEC-054
+  web_section: 54
+  description: "TeX shall allow for system-dependent changes to be integrated via change files to adapt to different host environments."
+  parent_hlr: []

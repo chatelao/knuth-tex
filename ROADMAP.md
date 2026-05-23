@@ -30,7 +30,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Parts 41-43 (Post-hyphenation, Hyphenation, Initializing hyphenation tables).
     - [x] Parts 44-46 (Breaking vertical lists into pages, Page builder, Chief executive).
     - [x] Parts 47-49 (Building boxes and lists, Building math lists, Mode-independent processing).
-    - [ ] Parts 50-55 (Dumping, Main program, Debugging, Extensions, System-dependent).
+    - [x] Parts 50-55 (Dumping, Main program, Debugging, Extensions, System-dependent).
   - [ ] Complete LLR mapping for Metafont (`mf.web`):
     - [x] Parts 1-5 (Introduction, Character set, I/O, Strings, Printing).
     - [x] Parts 6-10 (Error reporting, Arithmetic, Algebraic functions, Packed data, Dynamic memory).
@@ -39,8 +39,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Parts 31-40 (Input stacks, Next token, Macro definitions, Expansion, Conditionals, Iterations, File names, Parsing routines/expressions).
     - [x] Parts 41-42 (Parsing expressions, Doing the operations).
     - [x] Parts 43-45 (Statements and commands, Commands, Font metric data).
-    - [ ] Parts 46-48 (GF format, Shipping characters out, Dumping).
-    - [ ] Parts 49-52 (Main program, Debugging, System-dependent).
+    - [x] Parts 46-48 (GF format, Shipping characters out, Dumping).
+    - [x] Parts 49-52 (Main program, Debugging, System-dependent).
 - [ ] **Traceability Matrix**:
   - [x] Initialize `verification/trace/matrix.yaml` with bi-directional schema.
   - [x] Establish HLR-to-LLR traces for pilot requirements.
