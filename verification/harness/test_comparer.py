@@ -78,3 +78,53 @@ def test_missing_files(temp_files):
     match, msg = comparer.compare_text_files(f1, f2)
     assert match is False
     assert "Actual file not found" in msg
+
+def test_compare_tolerance_match(temp_files):
+    f1, f2 = temp_files
+    # Difference of 0.0001
+    f1.write_text("Value: 12.3456\n")
+    f2.write_text("Value: 12.3457\n")
+
+    comparer = Comparer()
+    # Fails without tolerance
+    match, _ = comparer.compare_text_files(f1, f2)
+    assert match is False
+
+    # Passes with 0.001 tolerance
+    match, diff = comparer.compare_text_files(f1, f2, tolerance=0.001)
+    assert match is True
+    assert diff == ""
+
+def test_compare_tolerance_mismatch(temp_files):
+    f1, f2 = temp_files
+    # Difference of 0.1
+    f1.write_text("Value: 12.3\n")
+    f2.write_text("Value: 12.4\n")
+
+    comparer = Comparer()
+    # Fails even with 0.01 tolerance
+    match, diff = comparer.compare_text_files(f1, f2, tolerance=0.01)
+    assert match is False
+    assert "-Value: 12.3" in diff
+    assert "+Value: 12.4" in diff
+
+def test_compare_tolerance_non_numeric_mismatch(temp_files):
+    f1, f2 = temp_files
+    # Numbers match but labels don't
+    f1.write_text("Width: 10.0\n")
+    f2.write_text("Height: 10.0\n")
+
+    comparer = Comparer()
+    match, diff = comparer.compare_text_files(f1, f2, tolerance=0.1)
+    assert match is False
+    assert "-Width: 10.0" in diff
+    assert "+Height: 10.0" in diff
+
+def test_compare_tolerance_multiple_numbers(temp_files):
+    f1, f2 = temp_files
+    f1.write_text("Coords: 10.0, 20.0, 30.0\n")
+    f2.write_text("Coords: 10.05, 19.95, 30.0\n")
+
+    comparer = Comparer()
+    match, diff = comparer.compare_text_files(f1, f2, tolerance=0.1)
+    assert match is True
