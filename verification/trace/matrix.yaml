@@ -81,6 +81,7 @@
     - LLR-TEX-SEC-049
   test_case_ids:
     - TC-TEX-TRIP-001
+    - TC-TEX-HELLO-001
 - hlr_id: HLR-MF-FUN-001
   llr_ids:
     - LLR-MF-SEC-028
