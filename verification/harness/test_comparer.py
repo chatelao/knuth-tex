@@ -128,3 +128,50 @@ def test_compare_tolerance_multiple_numbers(temp_files):
     comparer = Comparer()
     match, diff = comparer.compare_text_files(f1, f2, tolerance=0.1)
     assert match is True
+
+def test_compare_binary_match(temp_files):
+    f1, f2 = temp_files
+    # "Binary" files (we'll mock the converter anyway)
+    f1.write_text("binary1")
+    f2.write_text("binary2")
+
+    def mock_converter(binary_path, text_path):
+        # Always output the same text for both
+        with open(text_path, 'w') as f:
+            f.write("symbolic representation")
+
+    comparer = Comparer()
+    match, diff = comparer.compare_binary_files(f1, f2, mock_converter)
+    assert match is True
+    assert diff == ""
+
+def test_compare_binary_mismatch(temp_files):
+    f1, f2 = temp_files
+    f1.write_text("binary1")
+    f2.write_text("binary2")
+
+    def mock_converter(binary_path, text_path):
+        # Output different text based on the "binary" content
+        with open(binary_path, 'r') as f_in:
+            content = f_in.read()
+        with open(text_path, 'w') as f_out:
+            f_out.write(f"symbolic {content}")
+
+    comparer = Comparer()
+    match, diff = comparer.compare_binary_files(f1, f2, mock_converter)
+    assert match is False
+    assert "symbolic binary1" in diff
+    assert "symbolic binary2" in diff
+
+def test_compare_binary_conversion_failure(temp_files):
+    f1, f2 = temp_files
+    f1.write_text("binary1")
+    f2.write_text("binary2")
+
+    def failing_converter(binary_path, text_path):
+        raise RuntimeError("Something went wrong")
+
+    comparer = Comparer()
+    match, diff = comparer.compare_binary_files(f1, f2, failing_converter)
+    assert match is False
+    assert "Conversion failed: Something went wrong" in diff

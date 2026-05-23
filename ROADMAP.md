@@ -17,10 +17,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [x] Extract and formalize pilot HLRs (Functional, Output, Resource).
   - [ ] Complete HLR extraction for *The TeXbook*.
   - [ ] Complete HLR extraction for *The Metafontbook*.
-- [ ] **Low-Level Requirements (LLR)**:
+- [x] **Low-Level Requirements (LLR)**:
   - [x] Initialize `verification/reqs/llr_tex.yaml` and `verification/reqs/llr_mf.yaml`.
   - [x] Map pilot WEB sections to LLRs (Introduction, Char Set, I/O, Strings).
-  - [ ] Complete LLR mapping for TeX (`tex.web`):
+  - [x] Complete LLR mapping for TeX (`tex.web`):
     - [x] Parts 1-4 (Introduction, Character set, I/O, Strings).
     - [x] Parts 5-6 (Printing, Error reporting).
     - [x] Parts 7-10 (Arithmetic, Packed data, Dynamic memory, Box data structures).
@@ -31,7 +31,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Parts 44-46 (Breaking vertical lists into pages, Page builder, Chief executive).
     - [x] Parts 47-49 (Building boxes and lists, Building math lists, Mode-independent processing).
     - [x] Parts 50-55 (Dumping, Main program, Debugging, Extensions, System-dependent).
-  - [ ] Complete LLR mapping for Metafont (`mf.web`):
+  - [x] Complete LLR mapping for Metafont (`mf.web`):
     - [x] Parts 1-5 (Introduction, Character set, I/O, Strings, Printing).
     - [x] Parts 6-10 (Error reporting, Arithmetic, Algebraic functions, Packed data, Dynamic memory).
     - [x] Parts 11-20 (Memory layout, Command codes, Hash table, Token lists, Variables, Saving/Restoring, Paths, Control points, Discrete moves, Edge structures).
@@ -59,7 +59,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [ ] Implement `Compare` module for automated pass/fail determination:
     - [x] Implement core comparison logic and reporting.
     - [x] Implement floating-point tolerance handling for numerical outputs.
-    - [ ] Implement delegation to symbolic comparators for binary formats.
+    - [x] Implement delegation to symbolic comparators for binary formats.
 - [ ] **Symbolic Comparators**:
   - [ ] Develop DVI comparator (using `DVItype`).
   - [ ] Develop GF/PK comparator (using `GFtype`).
