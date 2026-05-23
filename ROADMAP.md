@@ -67,18 +67,18 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 
 ## Phase 4: Requirements-Based Testing (RBT) Implementation
 - [ ] **Baseline Integration**:
-  - [ ] Automate the TRIP (TeX) torture test:
+  - [x] Automate the TRIP (TeX) torture test:
     - [x] Create `TRIP` test configuration and directory.
     - [x] Automate `TANGLE` on `tex.web` with `trip.ch`.
     - [x] Automate compilation of `trip.p`.
-    - [ ] Automate `INITEX` run to generate `trip.fmt`.
-    - [ ] Automate `TRIP` execution and comparison of `.log`, `.typ`, and `.tfm` files.
-  - [ ] Automate the TRAP (Metafont) torture test:
+    - [x] Automate `INITEX` run to generate `trip.fmt`.
+    - [x] Automate `TRIP` execution and comparison of `.log`, `.typ`, and `.tfm` files.
+  - [x] Automate the TRAP (Metafont) torture test:
     - [x] Create `TRAP` test configuration and directory.
     - [x] Automate `TANGLE` on `mf.web` with `trap.ch`.
     - [x] Automate compilation of `trap.p`.
-    - [ ] Automate `INIMF` run to generate `trap.base`.
-    - [ ] Automate `TRAP` execution and comparison of `.log`, `.typ`, and `.tfm` files.
+    - [x] Automate `INIMF` run to generate `trap.base`.
+    - [x] Automate `TRAP` execution and comparison of `.log`, `.typ`, and `.tfm` files.
 - [ ] **Normal Range Testing**:
   - [ ] Develop test cases for standard compilation and font generation.
 - [ ] **Robustness Testing**:
