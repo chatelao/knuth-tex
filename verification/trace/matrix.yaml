@@ -9,16 +9,19 @@
   llr_ids:
     - LLR-TEX-SEC-038
     - LLR-TEX-SEC-039
-  test_case_ids: []
+  test_case_ids:
+    - TC-TEX-TRIP-001
 - hlr_id: HLR-TEX-OUT-001
   llr_ids:
     - LLR-TEX-SEC-031
     - LLR-TEX-SEC-032
-  test_case_ids: []
+  test_case_ids:
+    - TC-TEX-TRIP-001
 - hlr_id: HLR-TEX-OUT-002
   llr_ids:
     - LLR-TEX-SEC-030
-  test_case_ids: []
+  test_case_ids:
+    - TC-TEX-TRIP-001
 - hlr_id: HLR-TEX-RES-001
   llr_ids:
     - LLR-TEX-SEC-008
@@ -30,30 +33,35 @@
     - LLR-TEX-SEC-018
     - LLR-TEX-SEC-019
     - LLR-TEX-SEC-050
-  test_case_ids: []
+  test_case_ids:
+    - TC-TEX-TRIP-001
 - hlr_id: HLR-TEX-FUN-002
   llr_ids:
     - LLR-TEX-SEC-007
-  test_case_ids: []
+  test_case_ids:
+    - TC-TEX-TRIP-001
 - hlr_id: HLR-TEX-FUN-003
   llr_ids:
     - LLR-TEX-SEC-034
     - LLR-TEX-SEC-035
     - LLR-TEX-SEC-036
     - LLR-TEX-SEC-048
-  test_case_ids: []
+  test_case_ids:
+    - TC-TEX-TRIP-001
 - hlr_id: HLR-TEX-FUN-004
   llr_ids:
     - LLR-TEX-SEC-040
     - LLR-TEX-SEC-041
     - LLR-TEX-SEC-042
     - LLR-TEX-SEC-043
-  test_case_ids: []
+  test_case_ids:
+    - TC-TEX-TRIP-001
 - hlr_id: HLR-TEX-FUN-005
   llr_ids:
     - LLR-TEX-SEC-044
     - LLR-TEX-SEC-045
-  test_case_ids: []
+  test_case_ids:
+    - TC-TEX-TRIP-001
 - hlr_id: HLR-TEX-FUN-006
   llr_ids:
     - LLR-TEX-SEC-015
@@ -71,18 +79,21 @@
     - LLR-TEX-SEC-046
     - LLR-TEX-SEC-047
     - LLR-TEX-SEC-049
-  test_case_ids: []
+  test_case_ids:
+    - TC-TEX-TRIP-001
 - hlr_id: HLR-MF-FUN-001
   llr_ids:
     - LLR-MF-SEC-028
     - LLR-MF-SEC-029
-  test_case_ids: []
+  test_case_ids:
+    - TC-MF-TRAP-001
 - hlr_id: HLR-MF-FUN-002
   llr_ids:
     - LLR-MF-SEC-017
     - LLR-MF-SEC-018
     - LLR-MF-SEC-019
-  test_case_ids: []
+  test_case_ids:
+    - TC-MF-TRAP-001
 - hlr_id: HLR-MF-FUN-003
   llr_ids:
     - LLR-MF-SEC-020
@@ -92,12 +103,14 @@
     - LLR-MF-SEC-024
     - LLR-MF-SEC-025
     - LLR-MF-SEC-026
-  test_case_ids: []
+  test_case_ids:
+    - TC-MF-TRAP-001
 - hlr_id: HLR-MF-FUN-004
   llr_ids:
     - LLR-MF-SEC-007
     - LLR-MF-SEC-008
-  test_case_ids: []
+  test_case_ids:
+    - TC-MF-TRAP-001
 - hlr_id: HLR-MF-FUN-005
   llr_ids:
     - LLR-MF-SEC-012
@@ -118,16 +131,19 @@
     - LLR-MF-SEC-042
     - LLR-MF-SEC-043
     - LLR-MF-SEC-044
-  test_case_ids: []
+  test_case_ids:
+    - TC-MF-TRAP-001
 - hlr_id: HLR-MF-OUT-001
   llr_ids:
     - LLR-MF-SEC-046
     - LLR-MF-SEC-047
-  test_case_ids: []
+  test_case_ids:
+    - TC-MF-TRAP-001
 - hlr_id: HLR-MF-OUT-002
   llr_ids:
     - LLR-MF-SEC-045
-  test_case_ids: []
+  test_case_ids:
+    - TC-MF-TRAP-001
 - hlr_id: HLR-MF-RES-001
   llr_ids:
     - LLR-MF-SEC-009
@@ -136,4 +152,5 @@
     - LLR-MF-SEC-013
     - LLR-MF-SEC-016
     - LLR-MF-SEC-048
-  test_case_ids: []
+  test_case_ids:
+    - TC-MF-TRAP-001
