@@ -173,3 +173,15 @@
   web_section: 42
   description: "Metafont shall implement the semantic routines for nullary, unary, and binary operations, mapping tokens and modifiers to their respective action procedures."
   parent_hlr: []
+- id: LLR-MF-SEC-043
+  web_section: 43
+  description: "Metafont shall implement the 'do_statement' routine as the central state machine to process tokens and execute associated commands."
+  parent_hlr: []
+- id: LLR-MF-SEC-044
+  web_section: 44
+  description: "Metafont shall implement action procedures for imperative commands such as 'randomseed' and other non-expression statements."
+  parent_hlr: []
+- id: LLR-MF-SEC-045
+  web_section: 45
+  description: "Metafont shall implement procedures for generating and writing Font Metric (TFM) files."
+  parent_hlr: []
