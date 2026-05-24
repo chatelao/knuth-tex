@@ -125,15 +125,15 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Develop AST visitor to identify boolean expressions in control flow statements.
       - [x] Implement logic to decompose complex boolean expressions into atomic conditions.
       - [x] Implement mapping of atomic conditions to unique IDs within a decision.
-  - [ ] Implement the `record_mcdc` runtime library:
-    - [ ] Develop the runtime library for bit-mask recording:
-      - [ ] Define data structures for efficient bit-mask storage (mapped by decision ID).
-      - [ ] Implement `record_mcdc` procedure in Pascal for runtime recording.
-      - [ ] Implement thread-safe (if necessary) recording functions.
-    - [ ] Implement coverage data persistence and export:
-      - [ ] Develop routines to write coverage data to disk upon program termination.
-      - [ ] Implement a post-processor to convert raw masks to a human-readable format.
-      - [ ] Develop a utility to merge coverage data from multiple execution runs.
+  - [ ] Implement the MC/DC runtime library:
+    - [x] Develop the runtime library for evaluation recording:
+      - [x] Define event-based logging format for decision and condition evaluations.
+      - [x] Implement `mcdc_begin` and `mcdc_cond` routines in Pascal for runtime recording.
+      - [x] Implement thread-safe (if necessary) recording functions.
+    - [x] Implement coverage data persistence and export:
+      - [x] Develop routines to write coverage data to disk upon program termination (`mcdc_dump`).
+      - [x] Implement a post-processor to convert raw logs to structured test vectors.
+      - [x] Develop a utility to merge coverage data from multiple execution runs.
 - [ ] **Execution & Analysis**:
   - [x] Implement MC/DC Analysis Logic:
     - [x] Develop `MCDCAnalyzer` for evaluating condition independence.
