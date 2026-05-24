@@ -91,8 +91,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Develop BVA tests for TeX/Metafont internal constants (e.g., `buf_size`, `error_line`).
   - [ ] Implement Error Handling and Resource Exhaustion tests:
     - [ ] TeX Resource Exhaustion:
-      - [ ] Develop tests for TeX stack overflow (macro recursion).
-      - [ ] Develop tests for TeX string pool exhaustion.
+      - [x] Develop tests for TeX stack overflow (macro recursion).
+      - [x] Develop tests for TeX string pool exhaustion.
       - [ ] Develop tests for TeX memory overflow (`mem_max`).
     - [ ] Metafont Resource Exhaustion:
       - [ ] Develop tests for Metafont memory exhaustion (complex paths).

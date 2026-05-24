@@ -1,0 +1,12 @@
+# TeX String Pool Exhaustion Robustness Test Configuration
+test_id: "TC-TEX-ROB-006"
+description: "Robustness test for TeX string pool exhaustion"
+source_web: "dist/tex/tex.web"
+setup_files:
+  - "dist/lib/plain.tex"
+  - "verification/tests/robustness/pool_exhaustion/pool_exhaustion.tex"
+test_input_data: "\n\\input pool_exhaustion\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/pool_exhaustion/expected_terminal.out"

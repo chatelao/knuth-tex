@@ -1,0 +1,13 @@
+% TeX String Pool Exhaustion Test
+\catcode`@=11
+\newcount\stringcount
+\stringcount=0
+\loop
+  \advance\stringcount by 1
+  % Create a long string to hit pool_size (32000) before max_strings (3000)
+  % Each \csname call will create a new string in the pool.
+  % 1500 * 25 characters = 37500 characters, which should exceed pool_size.
+  \expandafter\def\csname a-very-long-string-identifier-number-\the\stringcount\endcsname{content}
+\ifnum\stringcount<1500
+\repeat
+\bye
