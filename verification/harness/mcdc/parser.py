@@ -125,6 +125,13 @@ class EmptyStatement(Node):
     def __repr__(self):
         return "EmptyStmt"
 
+class Probe(Node):
+    """Represents a coverage probe call."""
+    def __init__(self, probe_id):
+        self.probe_id = probe_id
+    def __repr__(self):
+        return f"Probe({self.probe_id})"
+
 class ParserError(Exception):
     def __init__(self, message, token):
         if token:
