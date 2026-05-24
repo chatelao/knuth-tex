@@ -69,42 +69,72 @@ class Instrumenter:
     """Instruments a Pascal AST by inserting Probe nodes."""
     def __init__(self):
         self.next_decision_id = 1
+        self.next_condition_id = 1
 
     def instrument(self, node):
         if isinstance(node, Block):
             new_statements = []
             for stmt in node.statements:
-                if isinstance(stmt, (IfStatement, WhileStatement, RepeatStatement, ForStatement)):
-                    new_statements.append(Probe(self.next_decision_id))
-                    self.next_decision_id += 1
-                new_statements.append(self.instrument(stmt))
+                instrumented = self.instrument(stmt)
+                if isinstance(instrumented, Block) and not isinstance(stmt, Block):
+                     # Flatten if it was wrapped in a block by our instrumentation
+                     new_statements.extend(instrumented.statements)
+                else:
+                     new_statements.append(instrumented)
             return Block(new_statements)
-        elif isinstance(node, IfStatement):
-            return IfStatement(
-                self.instrument_expression(node.condition),
-                self.instrument(node.then_branch),
-                self.instrument(node.else_branch) if node.else_branch else None
-            )
-        elif isinstance(node, WhileStatement):
-            return WhileStatement(
-                self.instrument_expression(node.condition),
-                self.instrument(node.body)
-            )
-        elif isinstance(node, RepeatStatement):
-            return RepeatStatement(
-                [self.instrument(s) for s in node.statements],
-                self.instrument_expression(node.condition)
-            )
-        elif isinstance(node, ForStatement):
-            return ForStatement(
-                node.variable,
-                node.start_expr,
-                node.direction,
-                node.end_expr,
-                self.instrument(node.body)
-            )
+
+        if isinstance(node, (IfStatement, WhileStatement, RepeatStatement, ForStatement)):
+            decision_id = self.next_decision_id
+            self.next_decision_id += 1
+            self.next_condition_id = 1
+
+            if isinstance(node, IfStatement):
+                new_node = IfStatement(
+                    self.instrument_expression(node.condition, decision_id),
+                    self.instrument(node.then_branch),
+                    self.instrument(node.else_branch) if node.else_branch else None
+                )
+            elif isinstance(node, WhileStatement):
+                new_node = WhileStatement(
+                    self.instrument_expression(node.condition, decision_id),
+                    self.instrument(node.body)
+                )
+            elif isinstance(node, RepeatStatement):
+                new_node = RepeatStatement(
+                    [self.instrument(s) for s in node.statements],
+                    self.instrument_expression(node.condition, decision_id)
+                )
+            else: # ForStatement
+                new_node = ForStatement(
+                    node.variable,
+                    node.start_expr,
+                    node.direction,
+                    node.end_expr,
+                    self.instrument(node.body)
+                )
+
+            return Block([Probe(decision_id), new_node])
+
         return node
 
-    def instrument_expression(self, expr):
-        # Placeholder for condition-level instrumentation
-        return expr
+    def instrument_expression(self, expr, decision_id):
+        if isinstance(expr, Expression):
+            return Expression(self.instrument_expression(expr.root, decision_id))
+
+        if isinstance(expr, BinaryOp) and expr.op.upper() in ('AND', 'OR'):
+            return BinaryOp(
+                self.instrument_expression(expr.left, decision_id),
+                expr.op,
+                self.instrument_expression(expr.right, decision_id)
+            )
+
+        if isinstance(expr, UnaryOp) and expr.op.upper() == 'NOT':
+            return UnaryOp(
+                expr.op,
+                self.instrument_expression(expr.operand, decision_id)
+            )
+
+        # Atomic condition
+        cond_id = self.next_condition_id
+        self.next_condition_id += 1
+        return Probe(decision_id, cond_id, expr)
