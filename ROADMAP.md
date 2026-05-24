@@ -98,7 +98,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] Develop tests for Metafont memory exhaustion (complex paths).
       - [ ] Develop tests for Metafont bisection stack overflow (`bistack_size`).
     - [ ] Input/File Error Handling:
-      - [ ] Develop tests for file-not-found and invalid input syntax.
+      - [x] Develop tests for file-not-found and invalid input syntax.
       - [ ] Develop tests for invalid format/base file loading.
 - [x] **Traceability**:
   - [x] Map all test cases to HLRs and LLRs in the traceability matrix.
