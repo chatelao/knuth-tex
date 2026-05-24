@@ -1,0 +1,9 @@
+# BVA Constants Metafont Test Configuration
+test_id: "TC-MF-ROB-002"
+description: "Boundary Value Analysis for Metafont internal constants (buf_size)"
+source_web: "dist/mf/mf.web"
+setup_files:
+  - "verification/tests/robustness/bva_constants/mf_buf_size_overflow.mf"
+test_input_data: "\ninput mf_buf_size_overflow\n"
+settings:
+  tolerance: 0.1

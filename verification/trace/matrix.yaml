@@ -37,6 +37,7 @@
   test_case_ids:
     - TC-TEX-TRIP-001
     - TC-TEX-ROB-003
+    - TC-TEX-ROB-004
 - hlr_id: HLR-TEX-FUN-002
   llr_ids:
     - LLR-TEX-SEC-007
@@ -161,3 +162,4 @@
     - LLR-MF-SEC-048
   test_case_ids:
     - TC-MF-TRAP-001
+    - TC-MF-ROB-002
