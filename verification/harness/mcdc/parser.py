@@ -7,21 +7,48 @@ class Node:
 
 class Expression(Node):
     """Represents a Pascal expression."""
-    def __init__(self, tokens):
-        self.tokens = tokens
+    def __init__(self, root):
+        self.root = root
     def __repr__(self):
-        return f"Expr('{' '.join(t.value for t in self.tokens)}')"
+        return f"Expr({self.root})"
+
+class Literal(Node):
+    """Represents a literal value (number, string)."""
+    def __init__(self, value, token_type):
+        self.value = value
+        self.token_type = token_type
+    def __repr__(self):
+        if self.token_type == 'STRING':
+            return f"'{self.value}'"
+        return str(self.value)
+
+class BinaryOp(Node):
+    """Represents a binary operation."""
+    def __init__(self, left, op, right):
+        self.left = left
+        self.op = op
+        self.right = right
+    def __repr__(self):
+        return f"({self.left} {self.op} {self.right})"
+
+class UnaryOp(Node):
+    """Represents a unary operation."""
+    def __init__(self, op, operand):
+        self.op = op
+        self.operand = operand
+    def __repr__(self):
+        return f"{self.op}({self.operand})"
 
 class Identifier(Node):
     """Represents a Pascal identifier, potentially with subscripts or dots."""
     def __init__(self, name, modifiers=None):
         self.name = name
-        self.modifiers = modifiers or [] # List of ('subscript', [tokens]) or ('dot', name)
+        self.modifiers = modifiers or [] # List of ('subscript', indices) or ('dot', name)
     def __repr__(self):
         res = self.name
         for mod_type, val in self.modifiers:
             if mod_type == 'subscript':
-                res += f"[{' '.join(t.value for t in val)}]"
+                res += f"[{', '.join(repr(idx) for idx in val)}]"
             elif mod_type == 'dot':
                 res += f".{val}"
             elif mod_type == 'pointer':
@@ -142,15 +169,19 @@ class Parser:
 
             if nxt.value == '[':
                 self.consume() # [
-                sub_tokens = []
-                bracket_level = 1
-                while bracket_level > 0:
-                    t = self.consume()
-                    if t.value == '[': bracket_level += 1
-                    elif t.value == ']': bracket_level -= 1
-                    if bracket_level > 0:
-                        sub_tokens.append(t)
-                modifiers.append(('subscript', sub_tokens))
+                indices = []
+                while True:
+                    idx = self.parse_expression_internal()
+                    indices.append(Expression(idx))
+                    if self.peek() and self.peek().value == ',':
+                        self.consume()
+                    else:
+                        break
+                if self.peek() and self.peek().value == ']':
+                    self.consume()
+                else:
+                    raise ParserError("Expected ']'", self.peek())
+                modifiers.append(('subscript', indices))
             elif nxt.value == '.':
                 self.consume() # .
                 dot_id = self.consume('ID')
@@ -162,51 +193,91 @@ class Parser:
                 break
         return Identifier(name, modifiers)
 
-    def parse_expression(self, delimiters):
-        """Parses an expression until one of the delimiters is reached (balancing parens)."""
-        expr_tokens = []
-        paren_level = 0
-        bracket_level = 0
+    def parse_expression(self):
+        """Parses an expression."""
+        return Expression(self.parse_expression_internal())
 
-        while True:
-            nxt = self.peek()
-            if nxt is None: break
+    def parse_expression_internal(self):
+        """Pascal expression: simple_expression {relop simple_expression}"""
+        left = self.parse_simple_expression()
+        while self.peek() and (self.peek().value in ('=', '<>', '<', '<=', '>', '>=') or self.peek().type == 'IN'):
+            op = self.consume().value
+            right = self.parse_simple_expression()
+            left = BinaryOp(left, op, right)
+        return left
 
-            if paren_level == 0 and bracket_level == 0:
-                if nxt.type in delimiters or nxt.value in delimiters:
-                    break
+    def parse_simple_expression(self):
+        """Pascal simple_expression: [sign] term {addop term}"""
+        nxt = self.peek()
+        if nxt and nxt.value in ('+', '-'):
+            op = self.consume().value
+            left = UnaryOp(op, self.parse_term())
+        else:
+            left = self.parse_term()
 
+        while self.peek() and (self.peek().value in ('+', '-') or self.peek().type == 'OR'):
+            op = self.consume().value
+            right = self.parse_term()
+            left = BinaryOp(left, op, right)
+        return left
+
+    def parse_term(self):
+        """Pascal term: factor {mulop factor}"""
+        left = self.parse_factor()
+        while self.peek() and (self.peek().value in ('*', '/') or self.peek().type in ('DIV', 'MOD', 'AND')):
+            op = self.consume().value
+            right = self.parse_factor()
+            left = BinaryOp(left, op, right)
+        return left
+
+    def parse_factor(self):
+        """Pascal factor: identifier | identifier '(' args ')' | literal | '(' expression ')' | NOT factor"""
+        token = self.peek()
+        if token is None:
+            raise ParserError("Unexpected end of expression", None)
+
+        if token.value == '(':
+            self.consume()
+            expr = self.parse_expression_internal()
+            if self.peek() and self.peek().value == ')':
+                self.consume()
+            else:
+                raise ParserError("Expected ')'", self.peek())
+            return expr
+        elif token.type == 'NOT':
+            self.consume()
+            return UnaryOp('NOT', self.parse_factor())
+        elif token.type in ('NUMBER', 'STRING'):
             t = self.consume()
-            expr_tokens.append(t)
-
-            if t.value == '(': paren_level += 1
-            elif t.value == ')': paren_level -= 1
-            elif t.value == '[': bracket_level += 1
-            elif t.value == ']': bracket_level -= 1
-
-            if paren_level < 0 or bracket_level < 0:
-                raise ParserError("Unbalanced parentheses or brackets", t)
-
-        if not expr_tokens:
-             raise ParserError("Empty expression", self.peek())
-
-        return Expression(expr_tokens)
+            return Literal(t.value, t.type)
+        elif token.type == 'ID':
+            id_node = self.parse_identifier()
+            if self.peek() and self.peek().value == '(':
+                args = self.parse_args()
+                return ProcedureCall(id_node, args)
+            return id_node
+        else:
+            raise ParserError(f"Unexpected token {token.value} in expression", token)
 
     def parse_args(self):
         """Parses procedure call arguments."""
         self.consume() # (
         args = []
-        if self.peek().value == ')':
+        if self.peek() and self.peek().value == ')':
             self.consume() # )
             return args
 
         while True:
-            arg_expr = self.parse_expression([',', ')'])
+            arg_expr = self.parse_expression()
             args.append(arg_expr)
-            nxt = self.consume()
-            if nxt.value == ')':
+            nxt = self.peek()
+            if nxt and nxt.value == ')':
+                self.consume()
                 break
-            # nxt must be ','
+            elif nxt and nxt.value == ',':
+                self.consume()
+            else:
+                raise ParserError(f"Expected ',' or ')', got {nxt.value if nxt else 'EOF'}", nxt)
         return args
 
     def parse_block(self):
@@ -229,7 +300,7 @@ class Parser:
     def parse_if_statement(self):
         """Parses an IF...THEN...ELSE statement."""
         self.consume('IF')
-        condition = self.parse_expression(['THEN'])
+        condition = self.parse_expression()
         self.consume('THEN')
         then_branch = self.parse_statement()
         else_branch = None
@@ -241,7 +312,7 @@ class Parser:
     def parse_while_statement(self):
         """Parses a WHILE...DO statement."""
         self.consume('WHILE')
-        condition = self.parse_expression(['DO'])
+        condition = self.parse_expression()
         self.consume('DO')
         body = self.parse_statement()
         return WhileStatement(condition, body)
@@ -260,7 +331,7 @@ class Parser:
             if self.pos == last_pos:
                  raise ParserError("Parser failed to progress in REPEAT...UNTIL block", self.peek())
         self.consume('UNTIL')
-        condition = self.parse_expression([';', 'END', 'ELSE', 'UNTIL'])
+        condition = self.parse_expression()
         return RepeatStatement(statements, condition)
 
     def parse_for_statement(self):
@@ -268,9 +339,9 @@ class Parser:
         self.consume('FOR')
         variable = self.parse_identifier()
         self.consume('ASSIGN')
-        start_expr = self.parse_expression(['TO', 'DOWNTO'])
+        start_expr = self.parse_expression()
         direction = self.consume(['TO', 'DOWNTO']).type
-        end_expr = self.parse_expression(['DO'])
+        end_expr = self.parse_expression()
         self.consume('DO')
         body = self.parse_statement()
         return ForStatement(variable, start_expr, direction, end_expr, body)
@@ -309,7 +380,7 @@ class Parser:
                 nxt = self.peek()
                 if nxt and nxt.type == 'ASSIGN':
                     self.consume('ASSIGN')
-                    expr = self.parse_expression([';', 'END', 'ELSE', 'UNTIL'])
+                    expr = self.parse_expression()
                     return Assignment(target, expr)
                 else:
                     # Procedure call

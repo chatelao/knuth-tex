@@ -27,7 +27,8 @@ def test_parse_complex_assignment():
     assert stmt.target.name == "bytemem"
     assert len(stmt.target.modifiers) == 1
     assert stmt.target.modifiers[0][0] == 'subscript'
-    assert "buffer [ i ]" in repr(stmt.expr)
+    # New repr format: Expr(buffer[Expr(i)])
+    assert "buffer[Expr(i)]" in repr(stmt.expr)
 
 def test_parse_procedure_call_no_args():
     code = "initialize;"
@@ -51,7 +52,8 @@ def test_parse_procedure_call_with_args():
     assert stmt.name.name == "write"
     assert len(stmt.args) == 2
     assert "output" in repr(stmt.args[0])
-    assert "xchr [ buffer [ k - 1 ] ]" in repr(stmt.args[1])
+    # New repr format: Expr(xchr[Expr(buffer[Expr((k - 1))])])
+    assert "xchr[Expr(buffer[Expr((k - 1))])]" in repr(stmt.args[1])
 
 def test_parse_dotted_identifier():
     code = "curstate.namefield := p;"
@@ -83,7 +85,8 @@ def test_parse_nested_expressions():
 
     assert isinstance(stmt, Assignment)
     assert stmt.target.name == "h"
-    assert "mod hashsize" in repr(stmt.expr)
+    # New tree structure: (((h + h) + buffer[Expr(i)]) mod hashsize)
+    assert "MOD HASHSIZE" in repr(stmt.expr).upper()
 
 def test_parse_pointer_deref():
     code = "p^.link := 0;"
@@ -241,3 +244,44 @@ def test_nested_loops():
     assert isinstance(stmt, ForStatement)
     assert isinstance(stmt.body, WhileStatement)
     assert isinstance(stmt.body.body, RepeatStatement)
+
+def test_complex_boolean_expression():
+    code = "IF (a > 0) AND (b < 10) OR NOT c THEN x := 1;"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, IfStatement)
+    # Check tree structure roughly via repr
+    # OR has lower precedence than AND
+    # ((a > 0) AND (b < 10)) OR (NOT c)
+    repr_str = repr(stmt.condition)
+    assert "OR" in repr_str
+    assert "AND" in repr_str
+    assert "NOT" in repr_str
+    assert "((a > 0) AND (b < 10))" in repr_str or "Expr(((a > 0) AND (b < 10)))" in repr_str
+
+def test_operator_precedence():
+    code = "x := a + b * c = d OR e AND f;"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    # Precedence in Pascal:
+    # 1. NOT (Highest)
+    # 2. *, /, DIV, MOD, AND (Multiplying operators)
+    # 3. +, -, OR (Adding operators)
+    # 4. =, <>, <, <=, >, >=, IN (Relational operators) (Lowest)
+
+    # x := ( (a + (b * c)) = (d OR (e AND f)) )
+    # Wait, d OR (e AND f) is parsed because OR and AND have higher precedence than =.
+    # In Pascal, 1 + 2 = 3 is (1+2)=3.
+    # a + b * c = d OR e AND f
+    # term1: a + (b * c)
+    # term2: d OR (e AND f)
+    # result: (term1 = term2)
+
+    repr_str = repr(stmt.expr)
+    assert "((a + (b * c)) = (d OR (e AND f)))" in repr_str
