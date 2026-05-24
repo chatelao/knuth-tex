@@ -110,15 +110,15 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Define Pascal tokens and regular expressions for TANGLE subset.
       - [x] Implement token scanning and error handling.
       - [x] Develop unit tests for the Lexer with sample TANGLE output.
-    - [ ] Implement basic Pascal statement parsing and probe insertion:
+    - [x] Implement basic Pascal statement parsing and probe insertion:
       - [x] Implement parser for Pascal assignment and procedure call statements.
       - [x] Implement parser for compound statements (BEGIN...END).
       - [x] Implement parser for conditional statements (IF...THEN...ELSE).
       - [x] Implement parser for iterative statements (WHILE, REPEAT, FOR).
-      - [ ] Implement probe insertion logic:
-        - [ ] Develop logic for inserting unique probe calls before/within each decision point.
-        - [ ] Implement Pascal-to-Pascal transformation to inject `record_mcdc` calls.
-        - [ ] Verify probe insertion on simple Pascal programs.
+      - [x] Implement probe insertion logic:
+        - [x] Develop logic for inserting unique probe calls before/within each decision point.
+        - [x] Implement Pascal-to-Pascal transformation to inject `record_mcdc` calls.
+        - [x] Verify probe insertion on simple Pascal programs.
     - [x] Implement robust boolean expression parsing.
     - [ ] Implement decision and condition identification logic:
       - [ ] Develop AST visitor to identify boolean expressions in control flow statements.
