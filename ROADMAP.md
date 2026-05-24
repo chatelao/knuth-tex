@@ -134,8 +134,12 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] Implement a post-processor to convert raw masks to a human-readable format.
       - [ ] Develop a utility to merge coverage data from multiple execution runs.
 - [ ] **Execution & Analysis**:
+  - [x] Implement MC/DC Analysis Logic:
+    - [x] Develop `MCDCAnalyzer` for evaluating condition independence.
+    - [x] Implement boolean expression evaluator for instrumented ASTs.
+    - [x] Implement logic to identify independence pairs from test vectors.
   - [ ] Run RBT suite with instrumentation enabled.
-  - [ ] Perform MC/DC analysis on collected data.
+  - [ ] Perform MC/DC analysis on collected data and generate reports.
 - [ ] **Gap Analysis & Augmentation**:
   - [ ] Identify uncovered code.
   - [ ] Create augmented test cases to achieve 100% MC/DC.
