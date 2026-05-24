@@ -88,10 +88,18 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [ ] Implement Boundary Value Analysis (BVA) tests:
     - [ ] Develop BVA tests for TeX integer registers (max/min values).
     - [ ] Develop BVA tests for Metafont coordinate ranges.
+    - [ ] Develop BVA tests for TeX/Metafont internal constants (e.g., `buf_size`, `error_line`).
   - [ ] Implement Error Handling and Resource Exhaustion tests:
-    - [ ] Develop tests for TeX stack overflow (macro recursion).
-    - [ ] Develop tests for Metafont memory exhaustion (complex paths).
-    - [ ] Develop tests for file-not-found and invalid input syntax.
+    - [ ] TeX Resource Exhaustion:
+      - [ ] Develop tests for TeX stack overflow (macro recursion).
+      - [ ] Develop tests for TeX string pool exhaustion.
+      - [ ] Develop tests for TeX memory overflow (`mem_max`).
+    - [ ] Metafont Resource Exhaustion:
+      - [ ] Develop tests for Metafont memory exhaustion (complex paths).
+      - [ ] Develop tests for Metafont bisection stack overflow (`bistack_size`).
+    - [ ] Input/File Error Handling:
+      - [ ] Develop tests for file-not-found and invalid input syntax.
+      - [ ] Develop tests for invalid format/base file loading.
 - [x] **Traceability**:
   - [x] Map all test cases to HLRs and LLRs in the traceability matrix.
 
@@ -107,17 +115,24 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Implement parser for compound statements (BEGIN...END).
       - [x] Implement parser for conditional statements (IF...THEN...ELSE).
       - [x] Implement parser for iterative statements (WHILE, REPEAT, FOR).
-      - [ ] Develop logic for inserting unique probe IDs before each decision point.
-      - [ ] Verify probe insertion on simple Pascal programs.
+      - [ ] Implement probe insertion logic:
+        - [ ] Develop logic for inserting unique probe calls before/within each decision point.
+        - [ ] Implement Pascal-to-Pascal transformation to inject `record_mcdc` calls.
+        - [ ] Verify probe insertion on simple Pascal programs.
     - [x] Implement robust boolean expression parsing.
-    - [ ] Implement decision and condition identification logic.
+    - [ ] Implement decision and condition identification logic:
+      - [ ] Develop AST visitor to identify boolean expressions in control flow statements.
+      - [ ] Implement logic to decompose complex boolean expressions into atomic conditions.
+      - [ ] Implement mapping of atomic conditions to unique IDs within a decision.
   - [ ] Implement the `record_mcdc` runtime library:
     - [ ] Develop the runtime library for bit-mask recording:
-      - [ ] Define data structures for efficient bit-mask storage.
+      - [ ] Define data structures for efficient bit-mask storage (mapped by decision ID).
+      - [ ] Implement `record_mcdc` procedure in Pascal for runtime recording.
       - [ ] Implement thread-safe (if necessary) recording functions.
     - [ ] Implement coverage data persistence and export:
       - [ ] Develop routines to write coverage data to disk upon program termination.
       - [ ] Implement a post-processor to convert raw masks to a human-readable format.
+      - [ ] Develop a utility to merge coverage data from multiple execution runs.
 - [ ] **Execution & Analysis**:
   - [ ] Run RBT suite with instrumentation enabled.
   - [ ] Perform MC/DC analysis on collected data.
@@ -129,13 +144,13 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 ## Phase 6: Tool Qualification & Final Certification
 - [ ] **Tool Qualification**:
   - [ ] Perform qualification for the Test Harness and Comparators:
-    - [ ] Define Tool Operational Requirements (TOR).
-    - [ ] Develop Qualification Test Suite (QTS) for Harness.
+    - [ ] Define Tool Operational Requirements (TOR) for Harness/Comparators.
+    - [ ] Develop Qualification Test Suite (QTS) for Harness (Tangle/Compile/Execute/Compare).
     - [ ] Execute QTS and generate Tool Qualification Report (TQR).
   - [ ] Perform qualification for the MC/DC Instrumenter:
-    - [ ] Define TOR for Instrumenter.
-    - [ ] Develop QTS for Instrumenter (MC/DC validation).
-    - [ ] Execute QTS and generate TQR for Instrumenter.
+    - [ ] Define TOR for MC/DC Instrumenter.
+    - [ ] Develop Qualification Test Suite (QTS) for Instrumenter (verification of correct probe placement and expression decomposition).
+    - [ ] Execute QTS and generate Tool Qualification Report (TQR) for Instrumenter.
   - [ ] Verify `TANGLE` and the Pascal compiler or their outputs.
 - [ ] **Final Documentation**:
   - [ ] Generate the final Traceability Report.
