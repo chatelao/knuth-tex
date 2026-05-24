@@ -1,0 +1,10 @@
+# File Not Found TeX Test Configuration
+test_id: "TC-TEX-ROB-001"
+description: "Test TeX error handling for file not found"
+source_web: "dist/tex/tex.web"
+setup_files:
+  - "dist/lib/plain.tex"
+  - "verification/tests/robustness/file_not_found/file_not_found.tex"
+test_input_data: "\n\\input file_not_found\n"
+settings:
+  tolerance: 0.1

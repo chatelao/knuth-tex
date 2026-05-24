@@ -1,0 +1,10 @@
+# Syntax Error TeX Test Configuration
+test_id: "TC-TEX-ROB-002"
+description: "Test TeX error handling for undefined control sequence"
+source_web: "dist/tex/tex.web"
+setup_files:
+  - "dist/lib/plain.tex"
+  - "verification/tests/robustness/syntax_error/syntax_error.tex"
+test_input_data: "\n\\input syntax_error\n"
+settings:
+  tolerance: 0.1
