@@ -1,0 +1,10 @@
+# BVA Integers TeX Test Configuration
+test_id: "TC-TEX-ROB-003"
+description: "Boundary Value Analysis for TeX integer registers"
+source_web: "dist/tex/tex.web"
+setup_files:
+  - "dist/lib/plain.tex"
+  - "verification/tests/robustness/bva_integers/bva_integers.tex"
+test_input_data: "\n\\input bva_integers\n"
+settings:
+  tolerance: 0.1
