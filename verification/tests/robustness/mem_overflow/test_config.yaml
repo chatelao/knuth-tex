@@ -1,0 +1,12 @@
+# TeX Main Memory Overflow Robustness Test Configuration
+test_id: "TC-TEX-ROB-007"
+description: "Robustness test for TeX main memory overflow (mem_max)"
+source_web: "dist/tex/tex.web"
+setup_files:
+  - "dist/lib/plain.tex"
+  - "verification/tests/robustness/mem_overflow/mem_overflow.tex"
+test_input_data: "\n\\input mem_overflow\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/mem_overflow/expected_terminal.out"

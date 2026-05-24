@@ -1,0 +1,12 @@
+% TeX Main Memory Overflow Test
+\catcode`@=11
+\newcount\nodecount
+\nodecount=0
+\setbox0=\hbox{%
+\loop
+  \advance\nodecount by 1
+  \hskip 0pt % This creates a glue node (2 words)
+\ifnum\nodecount<35000
+\repeat
+}
+\bye
