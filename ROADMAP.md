@@ -83,7 +83,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [ ] Develop test cases for standard compilation and font generation:
     - [x] Implement `STORY` test case (Basic TeX paragraph breaking).
     - [x] Implement `HELLO` test case (Basic TeX macro expansion).
-    - [ ] Implement `LOGO` test case (Metafont character generation).
+    - [x] Implement `LOGO` test case (Metafont character generation).
 - [ ] **Robustness Testing**:
   - [ ] Implement Boundary Value Analysis (BVA) tests:
     - [ ] Develop BVA tests for TeX integer registers (max/min values).

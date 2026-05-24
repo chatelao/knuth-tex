@@ -1,0 +1,14 @@
+# LOGO Metafont Test Configuration
+test_id: "TC-MF-LOGO-001"
+description: "Metafont logo character generation test"
+source_web: "dist/mf/mf.web"
+setup_files:
+  - "dist/lib/logo.mf"
+  - "dist/lib/logo10.mf"
+test_input_data: "\ninput logo10\n"
+expected_outputs:
+  log: "logo10.log"
+  tfm: "logo10.tfm"
+  gf: "logo10.600gf"
+settings:
+  tolerance: 0.1
