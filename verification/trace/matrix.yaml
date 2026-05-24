@@ -135,17 +135,20 @@
     - LLR-MF-SEC-044
   test_case_ids:
     - TC-MF-TRAP-001
+    - TC-MF-LOGO-001
 - hlr_id: HLR-MF-OUT-001
   llr_ids:
     - LLR-MF-SEC-046
     - LLR-MF-SEC-047
   test_case_ids:
     - TC-MF-TRAP-001
+    - TC-MF-LOGO-001
 - hlr_id: HLR-MF-OUT-002
   llr_ids:
     - LLR-MF-SEC-045
   test_case_ids:
     - TC-MF-TRAP-001
+    - TC-MF-LOGO-001
 - hlr_id: HLR-MF-RES-001
   llr_ids:
     - LLR-MF-SEC-009
