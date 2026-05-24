@@ -120,6 +120,29 @@ class ForStatement(Node):
     def __repr__(self):
         return f"For({self.variable} := {self.start_expr} {self.direction} {self.end_expr}) DO {self.body}"
 
+class CaseItem(Node):
+    """Represents a single item in a CASE statement."""
+    def __init__(self, labels, statement):
+        self.labels = labels # List of Expression (usually literals or constants)
+        self.statement = statement
+    def __repr__(self):
+        labels_str = ", ".join(repr(label) for label in self.labels)
+        return f"{labels_str}: {self.statement}"
+
+class CaseStatement(Node):
+    """Represents a CASE statement."""
+    def __init__(self, expression, items, otherwise=None):
+        self.expression = expression
+        self.items = items
+        self.otherwise = otherwise
+    def __repr__(self):
+        items_str = "; ".join(repr(item) for item in self.items)
+        res = f"Case({self.expression}) OF {items_str}"
+        if self.otherwise:
+            res += f" OTHERWISE {self.otherwise}"
+        res += " END"
+        return res
+
 class EmptyStatement(Node):
     """Represents an empty statement (e.g., between two semicolons)."""
     def __repr__(self):
@@ -358,6 +381,37 @@ class Parser:
         body = self.parse_statement()
         return ForStatement(variable, start_expr, direction, end_expr, body)
 
+    def parse_case_statement(self):
+        """Parses a CASE statement."""
+        self.consume('CASE')
+        expression = self.parse_expression()
+        self.consume('OF')
+        items = []
+        otherwise = None
+
+        while self.peek() and self.peek().type not in ('END', 'OTHERWISE'):
+            labels = []
+            while True:
+                labels.append(self.parse_expression())
+                if self.peek() and self.peek().value == ',':
+                    self.consume()
+                else:
+                    break
+            self.consume('OP') # :
+            stmt = self.parse_statement()
+            items.append(CaseItem(labels, stmt))
+            if self.peek() and self.peek().value == ';':
+                self.consume()
+
+        if self.peek() and self.peek().type == 'OTHERWISE':
+            self.consume()
+            otherwise = self.parse_statement()
+            if self.peek() and self.peek().value == ';':
+                self.consume()
+
+        self.consume('END')
+        return CaseStatement(expression, items, otherwise)
+
     def parse_statement(self):
         """Parses a single statement."""
         # Skip labels
@@ -378,6 +432,8 @@ class Parser:
             return self.parse_repeat_statement()
         elif token.type == 'FOR':
             return self.parse_for_statement()
+        elif token.type == 'CASE':
+            return self.parse_case_statement()
         elif token.value == ';':
             return EmptyStatement()
         elif token.type == 'END' or token.type == 'ELSE' or token.type == 'UNTIL':

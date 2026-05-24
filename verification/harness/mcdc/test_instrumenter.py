@@ -117,6 +117,20 @@ def test_instrumenter_complex_condition():
     assert "NOT record_mcdc(1, 2, b)" in output
     assert "record_mcdc(1, 3, c)" in output
 
+def test_instrumenter_case():
+    code = "CASE x OF 1: y := 1; 2: y := 2 OTHERWISE y := 0 END"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    ast = parser.parse_statement()
+
+    instrumenter = Instrumenter()
+    instrumented_ast = instrumenter.instrument(ast)
+    emitter = PascalEmitter()
+    output = emitter.emit(instrumented_ast)
+
+    assert "record_mcdc(1); CASE record_mcdc(1, 1, x) OF 1: y := 1; 2: y := 2; OTHERWISE y := 0 END" in output
+
 def test_instrumenter_nested_control_logic():
     code = """
     BEGIN

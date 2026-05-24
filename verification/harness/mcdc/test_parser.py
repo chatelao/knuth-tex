@@ -2,7 +2,7 @@ import pytest
 from verification.harness.mcdc.lexer import Lexer
 from verification.harness.mcdc.parser import (
     Parser, Assignment, ProcedureCall, Block, IfStatement, EmptyStatement, ParserError,
-    WhileStatement, RepeatStatement, ForStatement
+    WhileStatement, RepeatStatement, ForStatement, CaseStatement, CaseItem
 )
 
 def test_parse_simple_assignment():
@@ -261,6 +261,29 @@ def test_complex_boolean_expression():
     assert "AND" in repr_str
     assert "NOT" in repr_str
     assert "((a > 0) AND (b < 10))" in repr_str or "Expr(((a > 0) AND (b < 10)))" in repr_str
+
+def test_parse_case_statement():
+    code = """
+    CASE x OF
+        1: y := 1;
+        2, 3: BEGIN y := 2; z := 3 END;
+        OTHERWISE y := 0
+    END
+    """
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, CaseStatement)
+    assert "x" in repr(stmt.expression)
+    assert len(stmt.items) == 2
+    assert "1" in repr(stmt.items[0].labels[0])
+    assert "2" in repr(stmt.items[1].labels[0])
+    assert "3" in repr(stmt.items[1].labels[1])
+    assert isinstance(stmt.items[1].statement, Block)
+    assert stmt.otherwise is not None
+    assert stmt.otherwise.target.name == "y"
 
 def test_operator_precedence():
     code = "x := a + b * c = d OR e AND f;"

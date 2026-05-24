@@ -1,7 +1,7 @@
 from verification.harness.mcdc.parser import (
     Node, Expression, Literal, BinaryOp, UnaryOp, Identifier, Assignment,
     ProcedureCall, Block, IfStatement, WhileStatement, RepeatStatement,
-    ForStatement, EmptyStatement, Probe
+    ForStatement, EmptyStatement, Probe, CaseItem, CaseStatement
 )
 
 class PascalEmitter:
@@ -56,6 +56,16 @@ class PascalEmitter:
             return f"REPEAT {'; '.join(stmts)} UNTIL {self.emit(node.condition)}"
         elif isinstance(node, ForStatement):
             return f"FOR {self.emit(node.variable)} := {self.emit(node.start_expr)} {node.direction} {self.emit(node.end_expr)} DO {self.emit(node.body)}"
+        elif isinstance(node, CaseItem):
+            labels_str = ", ".join(self.emit(label) for label in node.labels)
+            return f"{labels_str}: {self.emit(node.statement)}"
+        elif isinstance(node, CaseStatement):
+            items_str = "; ".join(self.emit(item) for item in node.items)
+            res = f"CASE {self.emit(node.expression)} OF {items_str}"
+            if node.otherwise:
+                res += f"; OTHERWISE {self.emit(node.otherwise)}"
+            res += " END"
+            return res
         elif isinstance(node, EmptyStatement):
             return ""
         elif isinstance(node, Probe):
@@ -83,7 +93,7 @@ class Instrumenter:
                      new_statements.append(instrumented)
             return Block(new_statements)
 
-        if isinstance(node, (IfStatement, WhileStatement, RepeatStatement, ForStatement)):
+        if isinstance(node, (IfStatement, WhileStatement, RepeatStatement, ForStatement, CaseStatement)):
             decision_id = self.next_decision_id
             self.next_decision_id += 1
             self.next_condition_id = 1
@@ -103,6 +113,13 @@ class Instrumenter:
                 new_node = RepeatStatement(
                     [self.instrument(s) for s in node.statements],
                     self.instrument_expression(node.condition, decision_id)
+                )
+            elif isinstance(node, CaseStatement):
+                # We instrument the expression of the case statement
+                new_node = CaseStatement(
+                    self.instrument_expression(node.expression, decision_id),
+                    [CaseItem(item.labels, self.instrument(item.statement)) for item in node.items],
+                    self.instrument(node.otherwise) if node.otherwise else None
                 )
             else: # ForStatement
                 new_node = ForStatement(
