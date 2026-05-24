@@ -81,7 +81,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Automate `TRAP` execution and comparison of `.log`, `.typ`, and `.tfm` files.
 - [ ] **Normal Range Testing**:
   - [ ] Develop test cases for standard compilation and font generation:
-    - [ ] Implement `STORY` test case (Basic TeX paragraph breaking).
+    - [x] Implement `STORY` test case (Basic TeX paragraph breaking).
     - [x] Implement `HELLO` test case (Basic TeX macro expansion).
     - [ ] Implement `LOGO` test case (Metafont character generation).
 - [ ] **Robustness Testing**:

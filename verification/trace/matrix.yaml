@@ -11,6 +11,7 @@
     - LLR-TEX-SEC-039
   test_case_ids:
     - TC-TEX-TRIP-001
+    - TC-TEX-STORY-001
 - hlr_id: HLR-TEX-OUT-001
   llr_ids:
     - LLR-TEX-SEC-031
