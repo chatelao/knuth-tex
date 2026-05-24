@@ -114,6 +114,7 @@
     - LLR-MF-SEC-008
   test_case_ids:
     - TC-MF-TRAP-001
+    - TC-MF-ROB-001
 - hlr_id: HLR-MF-FUN-005
   llr_ids:
     - LLR-MF-SEC-012

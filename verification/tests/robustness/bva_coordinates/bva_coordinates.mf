@@ -1,0 +1,28 @@
+% BVA Test for Metafont Coordinates
+warningcheck := 1;
+
+% Test 1: Just below threshold (4095.999)
+x1 := 4095.999;
+show x1;
+
+% Test 2: At threshold (4096) - should trigger warning
+x2 := 4096;
+show x2;
+
+% Test 3: Large value near el_gordo (32767)
+x3 := 32767;
+show x3;
+
+% Test 4: Negative values
+x4 := -4095.999;
+show x4;
+
+% Test 5: Negative value at threshold
+x5 := -4096;
+show x5;
+
+% Test 6: Very large value (el_gordo)
+x6 := 32767.999;
+show x6;
+
+end

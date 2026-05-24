@@ -87,7 +87,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 - [ ] **Robustness Testing**:
   - [ ] Implement Boundary Value Analysis (BVA) tests:
     - [x] Develop BVA tests for TeX integer registers (max/min values).
-    - [ ] Develop BVA tests for Metafont coordinate ranges.
+    - [x] Develop BVA tests for Metafont coordinate ranges.
     - [ ] Develop BVA tests for TeX/Metafont internal constants (e.g., `buf_size`, `error_line`).
   - [ ] Implement Error Handling and Resource Exhaustion tests:
     - [ ] TeX Resource Exhaustion:

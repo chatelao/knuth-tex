@@ -1,0 +1,10 @@
+# BVA Coordinates Metafont Test Configuration
+test_id: "TC-MF-ROB-001"
+description: "Boundary Value Analysis for Metafont coordinate ranges"
+source_web: "dist/mf/mf.web"
+setup_files:
+  - "dist/lib/plain.mf"
+  - "verification/tests/robustness/bva_coordinates/bva_coordinates.mf"
+test_input_data: "\ninput bva_coordinates\n"
+settings:
+  tolerance: 0.1
