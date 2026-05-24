@@ -120,10 +120,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - [x] Implement Pascal-to-Pascal transformation to inject `record_mcdc` calls.
         - [x] Verify probe insertion on simple Pascal programs.
     - [x] Implement robust boolean expression parsing.
-    - [ ] Implement decision and condition identification logic:
-      - [ ] Develop AST visitor to identify boolean expressions in control flow statements.
-      - [ ] Implement logic to decompose complex boolean expressions into atomic conditions.
-      - [ ] Implement mapping of atomic conditions to unique IDs within a decision.
+    - [x] Implement decision and condition identification logic:
+      - [x] Develop AST visitor to identify boolean expressions in control flow statements.
+      - [x] Implement logic to decompose complex boolean expressions into atomic conditions.
+      - [x] Implement mapping of atomic conditions to unique IDs within a decision.
   - [ ] Implement the `record_mcdc` runtime library:
     - [ ] Develop the runtime library for bit-mask recording:
       - [ ] Define data structures for efficient bit-mask storage (mapped by decision ID).
