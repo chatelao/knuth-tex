@@ -115,6 +115,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Implement parser for compound statements (BEGIN...END).
       - [x] Implement parser for conditional statements (IF...THEN...ELSE).
       - [x] Implement parser for iterative statements (WHILE, REPEAT, FOR).
+      - [x] Implement parser for `CASE` statements.
       - [x] Implement probe insertion logic:
         - [x] Develop logic for inserting unique probe calls before/within each decision point.
         - [x] Implement Pascal-to-Pascal transformation to inject `record_mcdc` calls.
@@ -148,15 +149,29 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 ## Phase 6: Tool Qualification & Final Certification
 - [ ] **Tool Qualification**:
   - [ ] Perform qualification for the Test Harness and Comparators:
-    - [ ] Define Tool Operational Requirements (TOR) for Harness/Comparators.
-    - [ ] Develop Qualification Test Suite (QTS) for Harness (Tangle/Compile/Execute/Compare).
-    - [ ] Execute QTS and generate Tool Qualification Report (TQR).
+    - [ ] **TOR-HARNESS**: Define Tool Operational Requirements for Harness/Comparators.
+      - [ ] Specify requirements for WEB handling (Tangle/Weave).
+      - [ ] Specify requirements for Pascal compilation and execution.
+      - [ ] Specify requirements for DVI/GF/PK/TFM comparison logic.
+    - [ ] **QTS-HARNESS**: Develop Qualification Test Suite for Harness.
+      - [ ] Create positive and negative test cases for Tangle/Compile/Execute steps.
+      - [ ] Create gold standards for comparison results (Normal/Float/Symbolic).
+    - [ ] **TQR-HARNESS**: Execute QTS and generate Tool Qualification Report.
   - [ ] Perform qualification for the MC/DC Instrumenter:
-    - [ ] Define TOR for MC/DC Instrumenter.
-    - [ ] Develop Qualification Test Suite (QTS) for Instrumenter (verification of correct probe placement and expression decomposition).
-    - [ ] Execute QTS and generate Tool Qualification Report (TQR) for Instrumenter.
-  - [ ] Verify `TANGLE` and the Pascal compiler or their outputs.
+    - [ ] **TOR-INSTR**: Define Tool Operational Requirements for MC/DC Instrumenter.
+      - [ ] Specify Pascal grammar coverage for TANGLE subset.
+      - [ ] Specify expected probe placement for each decision type.
+      - [ ] Specify expression decomposition requirements for MC/DC.
+    - [ ] **QTS-INSTR**: Develop Qualification Test Suite for Instrumenter.
+      - [ ] Verify correct probe placement in nested control structures.
+      - [ ] Verify correct expression tree generation for complex boolean logic.
+      - [ ] Verify equivalence of original and instrumented Pascal code behavior.
+    - [ ] **TQR-INSTR**: Execute QTS and generate Tool Qualification Report.
+  - [ ] **Compiler/Tangle Verification**: Verify `TANGLE` and the Pascal compiler or their outputs.
+    - [ ] Perform cross-comparison of `TANGLE` output with documented Pascal listings.
+    - [ ] Validate Pascal compiler against a known-good standard suite.
 - [ ] **Final Documentation**:
-  - [ ] Generate the final Traceability Report.
-  - [ ] Generate the Verification Results Report.
-  - [ ] Finalize the Verification Analysis Report (VAR).
+  - [ ] **SAS**: Software Accomplishment Summary.
+  - [ ] **Traceability**: Generate the final Traceability Report (HLR/LLR/TC).
+  - [ ] **Results**: Generate the Verification Results Report (Pass/Fail stats).
+  - [ ] **VAR**: Finalize the Verification Analysis Report (Coverage & Gap analysis).
