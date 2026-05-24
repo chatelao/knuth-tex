@@ -88,7 +88,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [ ] Implement Boundary Value Analysis (BVA) tests:
     - [x] Develop BVA tests for TeX integer registers (max/min values).
     - [x] Develop BVA tests for Metafont coordinate ranges.
-    - [ ] Develop BVA tests for TeX/Metafont internal constants (e.g., `buf_size`, `error_line`).
+    - [x] Develop BVA tests for TeX/Metafont internal constants (e.g., `buf_size`, `error_line`).
   - [ ] Implement Error Handling and Resource Exhaustion tests:
     - [ ] TeX Resource Exhaustion:
       - [ ] Develop tests for TeX stack overflow (macro recursion).
