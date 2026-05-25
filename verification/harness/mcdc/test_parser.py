@@ -2,7 +2,9 @@ import pytest
 from verification.harness.mcdc.lexer import Lexer
 from verification.harness.mcdc.parser import (
     Parser, Assignment, ProcedureCall, Block, IfStatement, EmptyStatement, ParserError,
-    WhileStatement, RepeatStatement, ForStatement, CaseStatement, CaseItem
+    WhileStatement, RepeatStatement, ForStatement, CaseStatement, CaseItem,
+    Program, LabelDeclaration, ConstDeclaration, TypeDeclaration, VarDeclaration,
+    ProcedureDeclaration, FunctionDeclaration, GotoStatement, LabeledStatement
 )
 
 def test_parse_simple_assignment():
@@ -73,8 +75,10 @@ def test_parse_with_label():
     parser = Parser(tokens)
     stmt = parser.parse_statement()
 
-    assert isinstance(stmt, Assignment)
-    assert stmt.target.name == "p"
+    assert isinstance(stmt, LabeledStatement)
+    assert stmt.label == "31"
+    assert isinstance(stmt.statement, Assignment)
+    assert stmt.statement.target.name == "p"
 
 def test_parse_nested_expressions():
     code = "h := (h + h + buffer[i]) mod hashsize;"
@@ -308,3 +312,34 @@ def test_operator_precedence():
 
     repr_str = repr(stmt.expr)
     assert "((a + (b * c)) = (d OR (e AND f)))" in repr_str
+
+def test_parse_full_program():
+    code = """
+    PROGRAM test(input, output);
+    LABEL 1, 2;
+    CONST c = 10;
+    VAR x, y: integer;
+    PROCEDURE p(a: integer);
+    BEGIN
+        x := a
+    END;
+    BEGIN
+        p(c);
+        GOTO 1;
+        1: x := 0
+    END.
+    """
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    prog = parser.parse_program()
+
+    assert isinstance(prog, Program)
+    assert prog.name == "test"
+    assert prog.args == ["input", "output"]
+    assert len(prog.declarations) == 4
+    assert isinstance(prog.declarations[0], LabelDeclaration)
+    assert isinstance(prog.declarations[1], ConstDeclaration)
+    assert isinstance(prog.declarations[2], VarDeclaration)
+    assert isinstance(prog.declarations[3], ProcedureDeclaration)
+    assert isinstance(prog.block, Block)

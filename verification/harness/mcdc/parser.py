@@ -78,7 +78,100 @@ class Block(Node):
         self.statements = statements
     def __repr__(self):
         stmts_str = "; ".join(repr(s) for s in self.statements)
-        return f"Block(BEGIN {stmts_str} END)"
+        return f"BEGIN {stmts_str} END"
+
+class Program(Node):
+    """Represents a full Pascal program."""
+    def __init__(self, name, args, declarations, block):
+        self.name = name
+        self.args = args
+        self.declarations = declarations
+        self.block = block
+    def __repr__(self):
+        args_str = f"({', '.join(self.args)})" if self.args else ""
+        decls_str = "\n".join(repr(d) for d in self.declarations)
+        return f"PROGRAM {self.name}{args_str};\n{decls_str}\n{self.block}."
+
+class LabelDeclaration(Node):
+    def __init__(self, labels):
+        self.labels = labels
+    def __repr__(self):
+        return f"LABEL {', '.join(self.labels)};"
+
+class ConstDeclaration(Node):
+    def __init__(self, constants):
+        self.constants = constants # List of (name, value)
+    def __repr__(self):
+        consts_str = "; ".join(f"{n} = {repr(v)}" for n, v in self.constants)
+        return f"CONST {consts_str};"
+
+class TypeDeclaration(Node):
+    def __init__(self, types):
+        self.types = types # List of (name, definition)
+    def __repr__(self):
+        types_str = "; ".join(f"{n} = {v}" for n, v in self.types)
+        return f"TYPE {types_str};"
+
+class VarDeclaration(Node):
+    def __init__(self, vars):
+        self.vars = vars # List of (names_list, type)
+    def __repr__(self):
+        vars_str = "; ".join(f"{', '.join(names)}: {type_name}" for names, type_name in self.vars)
+        return f"VAR {vars_str};"
+
+class ProcedureDeclaration(Node):
+    def __init__(self, name, params, declarations, block, is_forward=False):
+        self.name = name
+        self.params = params
+        self.declarations = declarations
+        self.block = block
+        self.is_forward = is_forward
+    def __repr__(self):
+        res = f"PROCEDURE {self.name}"
+        if self.params:
+             res += f"({self.params})"
+        res += ";"
+        if self.is_forward:
+            res += " FORWARD;"
+        else:
+            if self.declarations:
+                res += "\n" + "\n".join(repr(d) for d in self.declarations)
+            res += f"\n{self.block};"
+        return res
+
+class FunctionDeclaration(Node):
+    def __init__(self, name, params, return_type, declarations, block, is_forward=False):
+        self.name = name
+        self.params = params
+        self.return_type = return_type
+        self.declarations = declarations
+        self.block = block
+        self.is_forward = is_forward
+    def __repr__(self):
+        res = f"FUNCTION {self.name}"
+        if self.params:
+             res += f"({self.params})"
+        res += f": {self.return_type};"
+        if self.is_forward:
+            res += " FORWARD;"
+        else:
+            if self.declarations:
+                res += "\n" + "\n".join(repr(d) for d in self.declarations)
+            res += f"\n{self.block};"
+        return res
+
+class GotoStatement(Node):
+    def __init__(self, label):
+        self.label = label
+    def __repr__(self):
+        return f"GOTO {self.label}"
+
+class LabeledStatement(Node):
+    def __init__(self, label, statement):
+        self.label = label
+        self.statement = statement
+    def __repr__(self):
+        return f"{self.label}: {self.statement}"
 
 class IfStatement(Node):
     """Represents an IF...THEN...ELSE statement."""
@@ -315,6 +408,133 @@ class Parser:
                 raise ParserError(f"Expected ',' or ')', got {nxt.value if nxt else 'EOF'}", nxt)
         return args
 
+    def parse_program(self):
+        """Parses a full Pascal program."""
+        self.consume('PROGRAM')
+        name = self.consume('ID').value
+        args = []
+        if self.peek() and self.peek().value == '(':
+            self.consume() # (
+            while True:
+                args.append(self.consume('ID').value)
+                if self.peek() and self.peek().value == ',':
+                    self.consume()
+                else:
+                    break
+            self.consume('OP') # )
+        self.consume('OP') # ;
+
+        declarations = self.parse_declarations()
+        block = self.parse_block()
+        self.consume('OP') # .
+        return Program(name, args, declarations, block)
+
+    def parse_declarations(self):
+        """Parses Pascal declarations (LABEL, CONST, TYPE, VAR, PROCEDURE, FUNCTION)."""
+        declarations = []
+        while self.peek() and self.peek().type in ('LABEL', 'CONST', 'TYPE', 'VAR', 'PROCEDURE', 'FUNCTION'):
+            token = self.peek()
+            if token.type == 'LABEL':
+                self.consume()
+                labels = []
+                while True:
+                    labels.append(self.consume('NUMBER').value)
+                    if self.peek() and self.peek().value == ',':
+                        self.consume()
+                    else:
+                        break
+                self.consume('OP') # ;
+                declarations.append(LabelDeclaration(labels))
+            elif token.type == 'CONST':
+                self.consume()
+                constants = []
+                while self.peek() and self.peek().type == 'ID':
+                    name = self.consume().value
+                    self.consume('OP') # =
+                    val = self.parse_expression_internal()
+                    constants.append((name, val))
+                    self.consume('OP') # ;
+                declarations.append(ConstDeclaration(constants))
+            elif token.type == 'TYPE':
+                self.consume()
+                types = []
+                while self.peek() and self.peek().type == 'ID':
+                    name = self.consume().value
+                    self.consume('OP') # =
+                    # Type definitions can be complex, for now we just capture until ';'
+                    # This is a simplification.
+                    parts = []
+                    while self.peek() and self.peek().value != ';':
+                        parts.append(self.consume().value)
+                    type_def = " ".join(parts)
+                    types.append((name, type_def))
+                    self.consume('OP') # ;
+                declarations.append(TypeDeclaration(types))
+            elif token.type == 'VAR':
+                self.consume()
+                vars_list = []
+                while self.peek() and self.peek().type == 'ID':
+                    names = []
+                    while True:
+                        names.append(self.consume('ID').value)
+                        if self.peek() and self.peek().value == ',':
+                            self.consume()
+                        else:
+                            break
+                    self.consume('OP') # :
+                    # Again, simplifying type capture
+                    parts = []
+                    while self.peek() and self.peek().value != ';':
+                        parts.append(self.consume().value)
+                    type_name = " ".join(parts)
+                    vars_list.append((names, type_name))
+                    self.consume('OP') # ;
+                declarations.append(VarDeclaration(vars_list))
+            elif token.type in ('PROCEDURE', 'FUNCTION'):
+                declarations.append(self.parse_routine_declaration())
+        return declarations
+
+    def parse_routine_declaration(self):
+        """Parses a procedure or function declaration."""
+        is_func = self.peek().type == 'FUNCTION'
+        self.consume() # PROCEDURE or FUNCTION
+        name = self.consume('ID').value
+        params = None
+        if self.peek() and self.peek().value == '(':
+            self.consume() # (
+            # Simplify param capture
+            parts = []
+            depth = 1
+            while depth > 0:
+                t = self.consume()
+                if t.value == '(': depth += 1
+                elif t.value == ')': depth -= 1
+                if depth > 0:
+                    parts.append(t.value)
+            params = " ".join(parts)
+
+        return_type = None
+        if is_func:
+            self.consume('OP') # :
+            return_type = self.consume('ID').value
+
+        self.consume('OP') # ;
+
+        if self.peek() and self.peek().type == 'FORWARD':
+            self.consume()
+            self.consume('OP') # ;
+            if is_func:
+                return FunctionDeclaration(name, params, return_type, [], None, is_forward=True)
+            return ProcedureDeclaration(name, params, [], None, is_forward=True)
+
+        local_decls = self.parse_declarations()
+        body = self.parse_block()
+        self.consume('OP') # ;
+
+        if is_func:
+            return FunctionDeclaration(name, params, return_type, local_decls, body)
+        return ProcedureDeclaration(name, params, local_decls, body)
+
     def parse_block(self):
         """Parses a BEGIN...END block."""
         self.consume('BEGIN')
@@ -414,13 +634,15 @@ class Parser:
 
     def parse_statement(self):
         """Parses a single statement."""
-        # Skip labels
-        while self.peek() and self.peek().type == 'NUMBER' and self.peek(1) and self.peek(1).value == ':':
-            self.consume() # number
-            self.consume() # :
-
         token = self.peek()
         if token is None: return None
+
+        # Handle labeled statement
+        if token.type == 'NUMBER' and self.peek(1) and self.peek(1).value == ':':
+            label = self.consume().value
+            self.consume() # :
+            stmt = self.parse_statement()
+            return LabeledStatement(label, stmt)
 
         if token.type == 'BEGIN':
             return self.parse_block()
@@ -434,6 +656,10 @@ class Parser:
             return self.parse_for_statement()
         elif token.type == 'CASE':
             return self.parse_case_statement()
+        elif token.type == 'GOTO':
+            self.consume()
+            label = self.consume().value # Number or ID
+            return GotoStatement(label)
         elif token.value == ';':
             return EmptyStatement()
         elif token.type == 'END' or token.type == 'ELSE' or token.type == 'UNTIL':

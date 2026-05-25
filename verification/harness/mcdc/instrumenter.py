@@ -1,7 +1,9 @@
 from verification.harness.mcdc.parser import (
     Node, Expression, Literal, BinaryOp, UnaryOp, Identifier, Assignment,
     ProcedureCall, Block, IfStatement, WhileStatement, RepeatStatement,
-    ForStatement, EmptyStatement, Probe, CaseItem, CaseStatement
+    ForStatement, EmptyStatement, Probe, CaseItem, CaseStatement,
+    Program, LabelDeclaration, ConstDeclaration, TypeDeclaration, VarDeclaration,
+    ProcedureDeclaration, FunctionDeclaration, GotoStatement, LabeledStatement
 )
 
 class PascalEmitter:
@@ -43,6 +45,47 @@ class PascalEmitter:
             stmts = [self.emit(s) for s in node.statements]
             stmts = [s for s in stmts if s]
             return f"BEGIN {'; '.join(stmts)} END"
+        elif isinstance(node, Program):
+            args_str = f"({', '.join(node.args)})" if node.args else ""
+            decls_str = "\n".join(self.emit(d) for d in node.declarations)
+            return f"PROGRAM {node.name}{args_str};\n{decls_str}\n{self.emit(node.block)}."
+        elif isinstance(node, LabelDeclaration):
+            return f"LABEL {', '.join(node.labels)};"
+        elif isinstance(node, ConstDeclaration):
+            consts_str = "; ".join(f"{n} = {self.emit(v)}" for n, v in node.constants)
+            return f"CONST {consts_str};"
+        elif isinstance(node, TypeDeclaration):
+            types_str = "; ".join(f"{n} = {v}" for n, v in node.types)
+            return f"TYPE {types_str};"
+        elif isinstance(node, VarDeclaration):
+            vars_str = "; ".join(f"{', '.join(names)}: {type_name}" for names, type_name in node.vars)
+            return f"VAR {vars_str};"
+        elif isinstance(node, ProcedureDeclaration):
+            res = f"PROCEDURE {node.name}"
+            if node.params: res += f"({node.params})"
+            res += ";"
+            if node.is_forward:
+                res += " FORWARD;"
+            else:
+                if node.declarations:
+                    res += "\n" + "\n".join(self.emit(d) for d in node.declarations)
+                res += f"\n{self.emit(node.block)};"
+            return res
+        elif isinstance(node, FunctionDeclaration):
+            res = f"FUNCTION {node.name}"
+            if node.params: res += f"({node.params})"
+            res += f": {node.return_type};"
+            if node.is_forward:
+                res += " FORWARD;"
+            else:
+                if node.declarations:
+                    res += "\n" + "\n".join(self.emit(d) for d in node.declarations)
+                res += f"\n{self.emit(node.block)};"
+            return res
+        elif isinstance(node, GotoStatement):
+            return f"GOTO {node.label}"
+        elif isinstance(node, LabeledStatement):
+            return f"{node.label}: {self.emit(node.statement)}"
         elif isinstance(node, IfStatement):
             res = f"IF {self.emit(node.condition)} THEN {self.emit(node.then_branch)}"
             if node.else_branch:
@@ -92,6 +135,36 @@ class Instrumenter:
                 else:
                      new_statements.append(instrumented)
             return Block(new_statements)
+
+        if isinstance(node, Program):
+            return Program(
+                node.name,
+                node.args,
+                [self.instrument(d) for d in node.declarations],
+                self.instrument(node.block)
+            )
+
+        if isinstance(node, ProcedureDeclaration):
+            if node.is_forward: return node
+            return ProcedureDeclaration(
+                node.name,
+                node.params,
+                [self.instrument(d) for d in node.declarations],
+                self.instrument(node.block)
+            )
+
+        if isinstance(node, FunctionDeclaration):
+            if node.is_forward: return node
+            return FunctionDeclaration(
+                node.name,
+                node.params,
+                node.return_type,
+                [self.instrument(d) for d in node.declarations],
+                self.instrument(node.block)
+            )
+
+        if isinstance(node, LabeledStatement):
+            return LabeledStatement(node.label, self.instrument(node.statement))
 
         if isinstance(node, (IfStatement, WhileStatement, RepeatStatement, ForStatement, CaseStatement)):
             decision_id = self.next_decision_id
