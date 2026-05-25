@@ -105,21 +105,20 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 
 ## Phase 5: Structural Coverage & MC/DC Analysis
 - [ ] **Instrumentation**:
-  - [ ] Develop the Pascal parser/instrumenter for `TANGLE` output:
+  - [x] Develop the Pascal parser/instrumenter for `TANGLE` output:
     - [x] Implement Lexer for Pascal subset:
       - [x] Define Pascal tokens and regular expressions for TANGLE subset.
       - [x] Implement token scanning and error handling.
       - [x] Develop unit tests for the Lexer with sample TANGLE output.
-    - [x] Implement basic Pascal statement parsing and probe insertion:
-      - [x] Implement parser for Pascal assignment and procedure call statements.
-      - [x] Implement parser for compound statements (BEGIN...END).
-      - [x] Implement parser for conditional statements (IF...THEN...ELSE).
-      - [x] Implement parser for iterative statements (WHILE, REPEAT, FOR).
-      - [x] Implement parser for `CASE` statements.
+    - [x] Implement full Pascal program parsing and recursive probe insertion:
+      - [x] Implement parser for full program structure and declarations (PROGRAM, LABEL, CONST, TYPE, VAR).
+      - [x] Implement parser for routine declarations (PROCEDURE, FUNCTION).
+      - [x] Implement parser for all statement types including GOTO and labels.
       - [x] Implement probe insertion logic:
         - [x] Develop logic for inserting unique probe calls before/within each decision point.
-        - [x] Implement Pascal-to-Pascal transformation to inject `record_mcdc` calls.
-        - [x] Verify probe insertion on simple Pascal programs.
+        - [x] Implement Pascal-to-Pascal transformation to inject `mcdc_begin` and `mcdc_cond` calls.
+        - [x] Implement recursive instrumentation of nested routine bodies.
+        - [x] Verify probe insertion on complex Pascal programs and nested routines.
     - [x] Implement robust boolean expression parsing.
     - [x] Implement decision and condition identification logic:
       - [x] Develop AST visitor to identify boolean expressions in control flow statements.

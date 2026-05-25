@@ -131,6 +131,34 @@ def test_instrumenter_case():
 
     assert "mcdc_begin(1); CASE mcdc_cond(1, 1, x) OF 1: y := 1; 2: y := 2; OTHERWISE y := 0 END" in output
 
+def test_instrument_program_with_procedures():
+    code = """
+    PROGRAM test;
+    VAR x: boolean;
+    PROCEDURE p;
+    BEGIN
+        IF x THEN x := false
+    END;
+    BEGIN
+        p
+    END.
+    """
+    lexer = Lexer(code)
+    parser = Parser(lexer.tokenize())
+    ast = parser.parse_program()
+
+    instrumenter = Instrumenter()
+    instrumented = instrumenter.instrument(ast)
+
+    emitter = PascalEmitter()
+    output = emitter.emit(instrumented)
+
+    # Check for two decisions (IF in p, but wait, PROCEDURE itself is not a decision, only IF inside it)
+    # Decision IDs are global.
+    # p's IF should have a decision ID.
+    assert "mcdc_begin(1); IF mcdc_cond(1, 1, x) THEN x := false" in output
+    assert "PROGRAM test;" in output
+
 def test_instrumenter_nested_control_logic():
     code = """
     BEGIN
