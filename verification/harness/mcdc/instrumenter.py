@@ -70,8 +70,8 @@ class PascalEmitter:
             return ""
         elif isinstance(node, Probe):
             if node.condition_id is not None:
-                return f"record_mcdc({node.decision_id}, {node.condition_id}, {self.emit(node.value)})"
-            return f"record_mcdc({node.decision_id})"
+                return f"mcdc_cond({node.decision_id}, {node.condition_id}, {self.emit(node.value)})"
+            return f"mcdc_begin({node.decision_id})"
         else:
             raise ValueError(f"Unknown node type: {type(node)}")
 

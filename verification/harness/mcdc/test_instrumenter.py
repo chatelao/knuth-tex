@@ -39,9 +39,9 @@ def test_instrumenter_basic():
     emitter = PascalEmitter()
     output = emitter.emit(instrumented_ast)
 
-    assert "record_mcdc(1)" in output
+    assert "mcdc_begin(1)" in output
     # x > 0 should be instrumented as well
-    assert "record_mcdc(1, 1, (x > 0))" in output
+    assert "mcdc_cond(1, 1, (x > 0))" in output
 
 def test_instrumenter_multiple_decisions():
     code = """
@@ -62,12 +62,12 @@ def test_instrumenter_multiple_decisions():
     emitter = PascalEmitter()
     output = emitter.emit(instrumented_ast)
 
-    assert "record_mcdc(1)" in output
-    assert "IF record_mcdc(1, 1, (x > 0))" in output
-    assert "record_mcdc(2)" in output
-    assert "WHILE record_mcdc(2, 1, (y < 10))" in output
-    assert "record_mcdc(3)" in output
-    assert "REPEAT z := (z - 1) UNTIL record_mcdc(3, 1, (z = 0))" in output
+    assert "mcdc_begin(1)" in output
+    assert "IF mcdc_cond(1, 1, (x > 0))" in output
+    assert "mcdc_begin(2)" in output
+    assert "WHILE mcdc_cond(2, 1, (y < 10))" in output
+    assert "mcdc_begin(3)" in output
+    assert "REPEAT z := (z - 1) UNTIL mcdc_cond(3, 1, (z = 0))" in output
 
 def test_instrumenter_nested():
     # Let's wrap it in a BEGIN...END to be sure
@@ -83,7 +83,7 @@ def test_instrumenter_nested():
     emitter = PascalEmitter()
     output = emitter.emit(instrumented_ast)
 
-    assert "record_mcdc(1); IF record_mcdc(1, 1, (x > 0)) THEN BEGIN record_mcdc(2); IF record_mcdc(2, 1, (y > 0)) THEN z := 1 END" in output
+    assert "mcdc_begin(1); IF mcdc_cond(1, 1, (x > 0)) THEN BEGIN mcdc_begin(2); IF mcdc_cond(2, 1, (y > 0)) THEN z := 1 END" in output
 
 def test_instrumenter_simple_condition():
     code = "IF a > 0 THEN x := 1"
@@ -98,7 +98,7 @@ def test_instrumenter_simple_condition():
     output = emitter.emit(instrumented_ast)
 
     # Should be wrapped in BEGIN ... END because instrument returns a Block for IF
-    assert "BEGIN record_mcdc(1); IF record_mcdc(1, 1, (a > 0)) THEN x := 1 END" == output
+    assert "BEGIN mcdc_begin(1); IF mcdc_cond(1, 1, (a > 0)) THEN x := 1 END" == output
 
 def test_instrumenter_complex_condition():
     code = "IF (a > 0) AND (NOT b OR c) THEN x := 1"
@@ -113,9 +113,9 @@ def test_instrumenter_complex_condition():
     output = emitter.emit(instrumented_ast)
 
     # Decomposed: (a > 0) is 1, b is 2, c is 3
-    assert "record_mcdc(1, 1, (a > 0))" in output
-    assert "NOT record_mcdc(1, 2, b)" in output
-    assert "record_mcdc(1, 3, c)" in output
+    assert "mcdc_cond(1, 1, (a > 0))" in output
+    assert "NOT mcdc_cond(1, 2, b)" in output
+    assert "mcdc_cond(1, 3, c)" in output
 
 def test_instrumenter_case():
     code = "CASE x OF 1: y := 1; 2: y := 2 OTHERWISE y := 0 END"
@@ -129,7 +129,7 @@ def test_instrumenter_case():
     emitter = PascalEmitter()
     output = emitter.emit(instrumented_ast)
 
-    assert "record_mcdc(1); CASE record_mcdc(1, 1, x) OF 1: y := 1; 2: y := 2; OTHERWISE y := 0 END" in output
+    assert "mcdc_begin(1); CASE mcdc_cond(1, 1, x) OF 1: y := 1; 2: y := 2; OTHERWISE y := 0 END" in output
 
 def test_instrumenter_nested_control_logic():
     code = """
@@ -152,6 +152,6 @@ def test_instrumenter_nested_control_logic():
     # IF A -> decision 1
     # WHILE B -> decision 2
     # IF C OR D -> decision 3
-    assert "record_mcdc(1); IF record_mcdc(1, 1, A)" in output
-    assert "record_mcdc(2); WHILE record_mcdc(2, 1, B)" in output
-    assert "record_mcdc(3); IF (record_mcdc(3, 1, C) OR record_mcdc(3, 2, D))" in output
+    assert "mcdc_begin(1); IF mcdc_cond(1, 1, A)" in output
+    assert "mcdc_begin(2); WHILE mcdc_cond(2, 1, B)" in output
+    assert "mcdc_begin(3); IF (mcdc_cond(3, 1, C) OR mcdc_cond(3, 2, D))" in output
