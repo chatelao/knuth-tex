@@ -1,0 +1,11 @@
+% Metafont Main Memory Overflow Test
+% mem_max = 30,000 words. knot_node_size = 7 words.
+% ~4300 knots should exceed 30,000 words.
+
+path p;
+p := (0,0)
+for i=1 upto 5000:
+  .. (i,i)
+endfor
+;
+end

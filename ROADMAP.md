@@ -95,7 +95,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Develop tests for TeX string pool exhaustion.
       - [x] Develop tests for TeX memory overflow (`mem_max`).
     - [ ] Metafont Resource Exhaustion:
-      - [ ] Develop tests for Metafont memory exhaustion (complex paths).
+      - [x] Develop tests for Metafont memory exhaustion (complex paths).
       - [ ] Develop tests for Metafont bisection stack overflow (`bistack_size`).
     - [ ] Input/File Error Handling:
       - [x] Develop tests for file-not-found and invalid input syntax.
