@@ -1,0 +1,12 @@
+# Metafont Main Memory Overflow Robustness Test Configuration
+test_id: "TC-MF-ROB-003"
+description: "Robustness test for Metafont main memory overflow (mem_max)"
+source_web: "dist/mf/mf.web"
+setup_files:
+  - "dist/lib/plain.mf"
+  - "verification/tests/robustness/mf_mem_overflow/mf_mem_overflow.mf"
+test_input_data: "\ninput mf_mem_overflow\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/mf_mem_overflow/expected_terminal.out"

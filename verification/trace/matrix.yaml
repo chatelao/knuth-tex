@@ -165,3 +165,4 @@
   test_case_ids:
     - TC-MF-TRAP-001
     - TC-MF-ROB-002
+    - TC-MF-ROB-003
