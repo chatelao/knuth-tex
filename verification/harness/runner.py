@@ -15,6 +15,10 @@ from verification.harness.dvitype import DVItypeWrapper
 from verification.harness.gftype import GFtypeWrapper
 from verification.harness.pktype import PKtypeWrapper
 from verification.harness.tftopl import TFtoPLWrapper
+from verification.harness.mcdc.lexer import Lexer
+from verification.harness.mcdc.parser import Parser
+from verification.harness.mcdc.instrumenter import Instrumenter, PascalEmitter
+from verification.harness.mcdc.report_generator import MCDCReportGenerator
 
 class VerificationTestRunner:
     """Orchestrates the execution of a single verification test."""
@@ -31,6 +35,8 @@ class VerificationTestRunner:
         self.test_dir = self.test_config_path.parent
         self.test_config = self.load_test_config()
         self.test_id = self.test_config.get('test_id', self.test_dir.name)
+        self.mcdc_enabled = harness_config.get('mcdc', False)
+        self.mcdc_decisions = {}
 
         # Setup output directory for this specific test
         base_output_dir = Path(harness_config.get('output_dir', 'verification/results'))
@@ -83,6 +89,56 @@ class VerificationTestRunner:
             pool_file=str(pool_file)
         )
 
+    def run_instrumentation(self, pascal_file):
+        """Instruments the Pascal file for MC/DC coverage."""
+        logging.info(f"[{self.test_id}] Starting MC/DC instrumentation...")
+
+        with open(pascal_file, 'r') as f:
+            code = f.read()
+
+        lexer = Lexer(code)
+        tokens = lexer.tokenize()
+        parser = Parser(tokens)
+        ast = parser.parse_program()
+
+        instrumenter = Instrumenter()
+        instrumented_ast = instrumenter.instrument(ast)
+        self.mcdc_decisions = instrumenter.decisions
+
+        emitter = PascalEmitter()
+        instrumented_code = emitter.emit(instrumented_ast)
+
+        # Prepend include for runtime
+        instrumented_code = '#include "runtime.p"\n' + instrumented_code
+
+        instrumented_pascal = Path(pascal_file).with_suffix('.mcdc.p')
+        with open(instrumented_pascal, 'w') as f:
+            f.write(instrumented_code)
+
+        return str(instrumented_pascal)
+
+    def generate_mcdc_report(self):
+        """Generates the MC/DC coverage report."""
+        logging.info(f"[{self.test_id}] Generating MC/DC coverage report...")
+        log_file = self.output_dir / "mcdc_coverage.out"
+        if not log_file.exists():
+            logging.warning(f"[{self.test_id}] MC/DC log file not found: {log_file}")
+            return
+
+        generator = MCDCReportGenerator(self.mcdc_decisions)
+        report = generator.generate_report(str(log_file))
+
+        # Save YAML report
+        report_yaml = self.output_dir / "mcdc_report.yaml"
+        generator.save_report_yaml(report, str(report_yaml))
+
+        # Save text summary
+        report_txt = self.output_dir / "mcdc_report.txt"
+        with open(report_txt, 'w') as f:
+            f.write(generator.format_summary(report))
+
+        logging.info(f"[{self.test_id}] MC/DC report generated: {report_txt}")
+
     def run_compile(self, pascal_file):
         """Executes the Compile step for the test."""
         logging.info(f"[{self.test_id}] Starting Compile step...")
@@ -102,6 +158,9 @@ class VerificationTestRunner:
     def run_setup(self):
         """Copies required files to the test execution directory."""
         setup_files = self.test_config.get('setup_files', [])
+        if self.mcdc_enabled:
+            setup_files.append('verification/harness/mcdc/runtime.p')
+
         if not setup_files:
             return
 
@@ -209,9 +268,14 @@ class VerificationTestRunner:
             pascal_file, pool_file = self.run_tangle()
             logging.info(f"[{self.test_id}] Tangle step completed: {pascal_file}, {pool_file}")
 
+            if self.mcdc_enabled:
+                pascal_file = self.run_instrumentation(pascal_file)
+                logging.info(f"[{self.test_id}] Instrumentation step completed: {pascal_file}")
+
             exe_file = self.run_compile(pascal_file)
             logging.info(f"[{self.test_id}] Compile step completed: {exe_file}")
 
+            success = True
             stages = self.test_config.get('stages')
             if stages:
                 for stage in stages:
@@ -219,17 +283,22 @@ class VerificationTestRunner:
                     logging.info(f"[{self.test_id}] Executing stage: {stage_id}")
                     result = self.run_execute(exe_file, stage_config=stage)
                     if not self.run_compare(result, stage_config=stage):
-                        return False
+                        success = False
+                        break
             else:
                 result = self.run_execute(exe_file)
                 logging.info(f"[{self.test_id}] Execute step completed with exit code {result.returncode}")
 
                 if not self.run_compare(result):
                     logging.error(f"[{self.test_id}] Compare step failed.")
-                    return False
+                    success = False
 
-            logging.info(f"[{self.test_id}] Test completed successfully.")
-            return True
+            if success and self.mcdc_enabled:
+                self.generate_mcdc_report()
+
+            if success:
+                logging.info(f"[{self.test_id}] Test completed successfully.")
+            return success
         except Exception as e:
             logging.error(f"[{self.test_id}] Test failed: {e}")
             import traceback
@@ -304,6 +373,12 @@ def main():
         help="Specific test ID(s) to run. Can be specified multiple times."
     )
 
+    parser.add_argument(
+        "--mcdc",
+        action="store_true",
+        help="Enable MC/DC instrumentation and coverage analysis."
+    )
+
     args = parser.parse_args()
 
     if not args.config:
@@ -313,6 +388,9 @@ def main():
         sys.exit(1)
 
     config = load_config(args.config)
+
+    if args.mcdc:
+        config['mcdc'] = True
 
     # Initialize logging using output_dir from config
     output_dir = config.get('output_dir', 'verification/results')

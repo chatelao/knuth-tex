@@ -139,7 +139,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Implement boolean expression evaluator for instrumented ASTs.
     - [x] Implement logic to identify independence pairs from test vectors.
     - [x] Develop MC/DC Report Generator utility.
-    - [ ] Integrate the MC/DC instrumenter and runtime into the harness runner.
+    - [x] Integrate the MC/DC instrumenter and runtime into the harness runner.
     - [ ] Run RBT suite with instrumentation enabled on a pilot module (e.g., Strings).
     - [ ] Perform MC/DC analysis on collected data and generate reports for the pilot module.
 - [ ] **Gap Analysis & Augmentation**:
