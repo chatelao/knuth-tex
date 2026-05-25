@@ -1,0 +1,11 @@
+# Invalid Format TeX Test Configuration
+test_id: "TC-TEX-ROB-008"
+description: "Robustness test for loading an invalid TeX format file"
+source_web: "dist/tex/tex.web"
+setup_files:
+  - "verification/tests/robustness/invalid_format/invalid.fmt"
+test_input_data: "&invalid\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/invalid_format/expected_terminal.out"

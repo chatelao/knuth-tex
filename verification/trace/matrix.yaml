@@ -40,6 +40,7 @@
     - TC-TEX-ROB-004
     - TC-TEX-ROB-005
     - TC-TEX-ROB-006
+    - TC-TEX-ROB-008
 - hlr_id: HLR-TEX-FUN-002
   llr_ids:
     - LLR-TEX-SEC-007
@@ -166,3 +167,4 @@
     - TC-MF-TRAP-001
     - TC-MF-ROB-002
     - TC-MF-ROB-003
+    - TC-MF-ROB-004

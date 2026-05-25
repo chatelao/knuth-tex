@@ -1,0 +1,11 @@
+# Invalid Base Metafont Test Configuration
+test_id: "TC-MF-ROB-004"
+description: "Robustness test for loading an invalid Metafont base file"
+source_web: "dist/mf/mf.web"
+setup_files:
+  - "verification/tests/robustness/invalid_base/invalid.base"
+test_input_data: "&invalid\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/invalid_base/expected_terminal.out"
