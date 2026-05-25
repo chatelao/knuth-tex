@@ -138,8 +138,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Develop `MCDCAnalyzer` for evaluating condition independence.
     - [x] Implement boolean expression evaluator for instrumented ASTs.
     - [x] Implement logic to identify independence pairs from test vectors.
-  - [ ] Run RBT suite with instrumentation enabled.
-  - [ ] Perform MC/DC analysis on collected data and generate reports.
+    - [x] Develop MC/DC Report Generator utility.
+    - [ ] Integrate the MC/DC instrumenter and runtime into the harness runner.
+    - [ ] Run RBT suite with instrumentation enabled on a pilot module (e.g., Strings).
+    - [ ] Perform MC/DC analysis on collected data and generate reports for the pilot module.
 - [ ] **Gap Analysis & Augmentation**:
   - [ ] Identify uncovered code.
   - [ ] Create augmented test cases to achieve 100% MC/DC.
@@ -149,22 +151,22 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 - [ ] **Tool Qualification**:
   - [ ] Perform qualification for the Test Harness and Comparators:
     - [ ] **TOR-HARNESS**: Define Tool Operational Requirements for Harness/Comparators.
-      - [ ] Specify requirements for WEB handling (Tangle/Weave).
-      - [ ] Specify requirements for Pascal compilation and execution.
-      - [ ] Specify requirements for DVI/GF/PK/TFM comparison logic.
+      - [ ] Formalize requirements for WEB-to-Pascal conversion via TANGLE.
+      - [ ] Formalize requirements for Pascal compilation and environment-isolated execution.
+      - [ ] Formalize requirements for automated output comparison (Log, DVI, GF, TFM).
     - [ ] **QTS-HARNESS**: Develop Qualification Test Suite for Harness.
-      - [ ] Create positive and negative test cases for Tangle/Compile/Execute steps.
-      - [ ] Create gold standards for comparison results (Normal/Float/Symbolic).
+      - [ ] Implement automated tests to verify Tangle/Compile/Execute wrappers.
+      - [ ] Implement automated tests to verify each comparison engine against known differences.
     - [ ] **TQR-HARNESS**: Execute QTS and generate Tool Qualification Report.
   - [ ] Perform qualification for the MC/DC Instrumenter:
     - [ ] **TOR-INSTR**: Define Tool Operational Requirements for MC/DC Instrumenter.
-      - [ ] Specify Pascal grammar coverage for TANGLE subset.
-      - [ ] Specify expected probe placement for each decision type.
-      - [ ] Specify expression decomposition requirements for MC/DC.
+      - [ ] Formalize requirements for Pascal subset grammar coverage.
+      - [ ] Formalize requirements for unique probe placement and ID assignment.
+      - [ ] Formalize requirements for boolean expression decomposition into atomic conditions.
     - [ ] **QTS-INSTR**: Develop Qualification Test Suite for Instrumenter.
-      - [ ] Verify correct probe placement in nested control structures.
-      - [ ] Verify correct expression tree generation for complex boolean logic.
-      - [ ] Verify equivalence of original and instrumented Pascal code behavior.
+      - [ ] Implement automated tests to verify probe placement in all control structures.
+      - [ ] Implement automated tests to verify independence pair identification for all logic patterns.
+      - [ ] Implement automated tests to verify functional equivalence of instrumented code.
     - [ ] **TQR-INSTR**: Execute QTS and generate Tool Qualification Report.
   - [ ] **Compiler/Tangle Verification**: Verify `TANGLE` and the Pascal compiler or their outputs.
     - [ ] Perform cross-comparison of `TANGLE` output with documented Pascal listings.

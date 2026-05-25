@@ -123,6 +123,7 @@ class Instrumenter:
     def __init__(self):
         self.next_decision_id = 1
         self.next_condition_id = 1
+        self.decisions = {} # decision_id -> instrumented AST node
 
     def instrument(self, node):
         if isinstance(node, Block):
@@ -172,29 +173,39 @@ class Instrumenter:
             self.next_condition_id = 1
 
             if isinstance(node, IfStatement):
+                inst_cond = self.instrument_expression(node.condition, decision_id)
+                self.decisions[decision_id] = inst_cond
                 new_node = IfStatement(
-                    self.instrument_expression(node.condition, decision_id),
+                    inst_cond,
                     self.instrument(node.then_branch),
                     self.instrument(node.else_branch) if node.else_branch else None
                 )
             elif isinstance(node, WhileStatement):
+                inst_cond = self.instrument_expression(node.condition, decision_id)
+                self.decisions[decision_id] = inst_cond
                 new_node = WhileStatement(
-                    self.instrument_expression(node.condition, decision_id),
+                    inst_cond,
                     self.instrument(node.body)
                 )
             elif isinstance(node, RepeatStatement):
+                inst_cond = self.instrument_expression(node.condition, decision_id)
+                self.decisions[decision_id] = inst_cond
                 new_node = RepeatStatement(
                     [self.instrument(s) for s in node.statements],
-                    self.instrument_expression(node.condition, decision_id)
+                    inst_cond
                 )
             elif isinstance(node, CaseStatement):
                 # We instrument the expression of the case statement
+                inst_expr = self.instrument_expression(node.expression, decision_id)
+                self.decisions[decision_id] = inst_expr
                 new_node = CaseStatement(
-                    self.instrument_expression(node.expression, decision_id),
+                    inst_expr,
                     [CaseItem(item.labels, self.instrument(item.statement)) for item in node.items],
                     self.instrument(node.otherwise) if node.otherwise else None
                 )
             else: # ForStatement
+                # ForStatement doesn't have a boolean condition, but we track its execution
+                self.decisions[decision_id] = node.variable
                 new_node = ForStatement(
                     node.variable,
                     node.start_expr,
