@@ -106,11 +106,13 @@ class MCDCAnalyzer:
         # Unique vectors
         unique_vectors = []
         seen = set()
+        # Filter vectors to only include keys present in condition_ids
         for v in test_vectors:
-            tuple_v = tuple(sorted(v.items()))
+            filtered_v = {k: v[k] for k in self.condition_ids if k in v}
+            tuple_v = tuple(sorted(filtered_v.items()))
             if tuple_v not in seen:
                 seen.add(tuple_v)
-                unique_vectors.append(v)
+                unique_vectors.append(filtered_v)
 
         for cond_id in sorted(self.condition_ids):
             independence_pair = self._find_independence_pair(cond_id, unique_vectors)

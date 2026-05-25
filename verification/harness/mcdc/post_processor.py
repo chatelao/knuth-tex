@@ -25,8 +25,7 @@ def parse_mcdc_log(filepath):
                     d_id = int(parts[1])
                     if d_id in pending_vectors:
                         # Flush previous evaluation of this decision
-                        if pending_vectors[d_id]:
-                            decisions[d_id].append(pending_vectors[d_id])
+                        decisions[d_id].append(pending_vectors[d_id])
                     pending_vectors[d_id] = {}
                 elif type == 'C':
                     d_id = int(parts[1])
@@ -44,8 +43,7 @@ def parse_mcdc_log(filepath):
 
     # Flush all remaining pending vectors
     for d_id, vector in pending_vectors.items():
-        if vector:
-            decisions[d_id].append(vector)
+        decisions[d_id].append(vector)
 
     return dict(decisions)
 
