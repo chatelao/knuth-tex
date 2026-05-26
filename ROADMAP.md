@@ -163,20 +163,20 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Formalize requirements for Pascal compilation and environment-isolated execution.
       - [x] Formalize requirements for automated output comparison (Log, DVI, GF, TFM).
     - [ ] **QTS-HARNESS**: Develop Qualification Test Suite for Harness.
-      - [ ] Create `verification/harness/test_tangle.py` for TANGLE wrapper verification.
-      - [ ] Create `verification/harness/test_compiler.py` for Compiler wrapper verification.
-      - [ ] Create `verification/harness/test_executor.py` for Executor/Isolation verification.
+      - [x] Create `verification/harness/test_tangle.py` for TANGLE wrapper verification.
+      - [x] Create `verification/harness/test_compiler.py` for Compiler wrapper verification.
+      - [x] Create `verification/harness/test_executor.py` for Executor/Isolation verification.
       - [ ] Create `verification/harness/test_comparer.py` and symbolic comparator tests (DVI, GF, PK, TFM).
     - [ ] **TQR-HARNESS**: Execute QTS and generate Tool Qualification Report.
       - [ ] Execute `pytest verification/harness/` and capture results.
       - [ ] Document test execution results for all TOR-HARNESS requirements in `verification/results/tqr_harness.md`.
       - [ ] Analyze any failures and provide mitigation or corrective actions.
   - [ ] Perform qualification for the MC/DC Instrumenter:
-    - [ ] **TOR-INSTR**: Define Tool Operational Requirements for MC/DC Instrumenter.
-      - [ ] Create `verification/reqs/tor_instr.yaml`.
-      - [ ] Formalize requirements for Pascal subset grammar coverage.
-      - [ ] Formalize requirements for unique probe placement and ID assignment.
-      - [ ] Formalize requirements for boolean expression decomposition into atomic conditions.
+    - [x] **TOR-INSTR**: Define Tool Operational Requirements for MC/DC Instrumenter.
+      - [x] Create `verification/reqs/tor_instr.yaml`.
+      - [x] Formalize requirements for Pascal subset grammar coverage.
+      - [x] Formalize requirements for unique probe placement and ID assignment.
+      - [x] Formalize requirements for boolean expression decomposition into atomic conditions.
     - [ ] **QTS-INSTR**: Develop Qualification Test Suite for Instrumenter.
       - [ ] Enhance `verification/harness/mcdc/test_parser.py` for full grammar coverage.
       - [ ] Enhance `verification/harness/mcdc/test_instrumenter.py` for probe placement verification.

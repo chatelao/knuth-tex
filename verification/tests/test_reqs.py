@@ -53,3 +53,13 @@ def test_validate_tor_harness_yaml():
         assert 'id' in item
         assert 'description' in item
         assert 'category' in item
+
+def test_validate_tor_instr_yaml():
+    tor_path = Path("verification/reqs/tor_instr.yaml")
+    with open(tor_path, 'r') as f:
+        data = yaml.safe_load(f)
+    assert isinstance(data, list)
+    for item in data:
+        assert 'id' in item
+        assert 'description' in item
+        assert 'category' in item
