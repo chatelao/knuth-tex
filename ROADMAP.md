@@ -96,6 +96,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Develop tests for TeX memory overflow (`mem_max`).
     - [ ] Metafont Resource Exhaustion:
       - [x] Develop tests for Metafont memory exhaustion (complex paths).
+      - [x] Develop tests for Metafont path size overflow (`path_size`).
       - [ ] Develop tests for Metafont bisection stack overflow (`bistack_size`).
     - [x] Input/File Error Handling:
       - [x] Develop tests for file-not-found and invalid input syntax.
@@ -151,9 +152,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] Execute the full RBT suite with pilot instrumentation and collect `mcdc_coverage.out`.
       - [ ] Aggregate coverage data and generate the MC/DC analysis report for the Strings module.
 - [ ] **Gap Analysis & Augmentation**:
-  - [ ] Identify uncovered code.
-  - [ ] Create augmented test cases to achieve 100% MC/DC.
-  - [ ] Document justifications for any unavoidable gaps (VAR).
+  - [ ] Run coverage analysis for the Strings module.
+  - [ ] Identify uncovered decisions and conditions in Strings module.
+  - [ ] Design and implement augmented test cases to achieve 100% MC/DC for Strings.
+  - [ ] Document final results and provide justifications for any unavoidable gaps in the VAR.
 
 ## Phase 6: Tool Qualification & Final Certification
 - [ ] **Tool Qualification**:
@@ -187,8 +189,9 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Document test execution results for all TOR-INSTR requirements in `verification/results/tqr_instr.md`.
       - [x] Analyze any failures and provide mitigation or corrective actions.
   - [ ] **Compiler/Tangle Verification**: Verify `TANGLE` and the Pascal compiler or their outputs.
-    - [ ] Perform cross-comparison of `TANGLE` output with documented Pascal listings.
-    - [ ] Validate Pascal compiler against a known-good standard suite.
+    - [ ] Perform automated cross-comparison of `TANGLE` output with published Pascal listings in *TeX: The Program* and *Metafont: The Program*.
+    - [ ] Validate the Pascal compiler (e.g., `fpc`) against the ISO 7185 Pascal Level 0 Test Suite.
+    - [ ] Verify that `TANGLE` correctly handles all WEB numeric and string macros.
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
     - [ ] Create `verification/results/sas.md`.
@@ -199,8 +202,9 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Create a script to export `matrix.yaml` into human-readable traceability tables in `verification/results/traceability_report.md`.
     - [x] Generate the final report in `verification/results/traceability_report.md`.
   - [ ] **Results**: Generate the Verification Results Report (Pass/Fail stats).
-    - [ ] Aggregate all test results into `verification/results/test_results_summary.md`.
-    - [ ] Provide pass/fail statistics and evidence for all RBT and robustness tests.
+    - [ ] Aggregate all RBT, robustness, and qualification test results into `verification/results/test_results_summary.md`.
+    - [ ] Provide detailed pass/fail statistics and evidence for all tested requirements.
+    - [ ] Generate a consolidated report including execution logs for each failed test case.
   - [ ] **VAR**: Finalize the Verification Analysis Report (Coverage & Gap analysis).
     - [ ] Create `verification/results/var.md`.
     - [ ] Include the final MC/DC coverage metrics for all modules.

@@ -1,0 +1,11 @@
+# Metafont Path Size Overflow Robustness Test Configuration
+test_id: "TC-MF-ROB-005"
+description: "Robustness test for Metafont path size overflow (path_size)"
+source_web: "dist/mf/mf.web"
+setup_files:
+  - "verification/tests/robustness/path_overflow/path_overflow.mf"
+test_input_data: "\ninput path_overflow\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/path_overflow/expected_terminal.out"
