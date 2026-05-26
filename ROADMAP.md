@@ -182,10 +182,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Enhance `verification/harness/mcdc/test_instrumenter.py` for probe placement verification.
       - [x] Enhance `verification/harness/mcdc/test_analyzer.py` for independence pair verification.
       - [x] Implement end-to-end functional equivalence tests in `test_integration.py`.
-    - [ ] **TQR-INSTR**: Execute QTS and generate Tool Qualification Report.
-      - [ ] Execute `pytest verification/harness/mcdc/` and capture results.
-      - [ ] Document test execution results for all TOR-INSTR requirements in `verification/results/tqr_instr.md`.
-      - [ ] Analyze any failures and provide mitigation or corrective actions.
+    - [x] **TQR-INSTR**: Execute QTS and generate Tool Qualification Report.
+      - [x] Execute `pytest verification/harness/mcdc/` and capture results.
+      - [x] Document test execution results for all TOR-INSTR requirements in `verification/results/tqr_instr.md`.
+      - [x] Analyze any failures and provide mitigation or corrective actions.
   - [ ] **Compiler/Tangle Verification**: Verify `TANGLE` and the Pascal compiler or their outputs.
     - [ ] Perform cross-comparison of `TANGLE` output with documented Pascal listings.
     - [ ] Validate Pascal compiler against a known-good standard suite.
