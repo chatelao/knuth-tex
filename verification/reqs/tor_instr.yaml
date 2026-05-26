@@ -1,0 +1,42 @@
+# Tool Operational Requirements for the MC/DC Instrumenter (TOR-INSTR)
+# Schema:
+# - id: TOR-INSTR-XXX
+#   description: "Requirement description"
+#   category: [Functional|Interface|Security]
+
+- id: TOR-INSTR-001
+  description: "The instrumenter shall support a subset of the Pascal grammar sufficient for parsing TANGLE output, including PROGRAM, LABEL, CONST, TYPE, VAR, PROCEDURE, and FUNCTION declarations."
+  category: Functional
+- id: TOR-INSTR-002
+  description: "The instrumenter shall identify all decision points in the code, including IF, WHILE, REPEAT-UNTIL, FOR, and CASE statements."
+  category: Functional
+- id: TOR-INSTR-003
+  description: "The instrumenter shall decompose complex boolean expressions within decision points into atomic conditions."
+  category: Functional
+- id: TOR-INSTR-004
+  description: "The instrumenter shall assign a unique ID to each identified decision point within a program."
+  category: Functional
+- id: TOR-INSTR-005
+  description: "The instrumenter shall assign a unique ID to each atomic condition within a decision point."
+  category: Functional
+- id: TOR-INSTR-006
+  description: "The instrumenter shall inject 'mcdc_begin' probe calls at the start of each decision point."
+  category: Functional
+- id: TOR-INSTR-007
+  description: "The instrumenter shall wrap atomic conditions with 'mcdc_cond' probe calls to record their evaluation during runtime."
+  category: Functional
+- id: TOR-INSTR-008
+  description: "The instrumenter shall provide a mechanism to selectively instrument only specified routines (procedures or functions)."
+  category: Functional
+- id: TOR-INSTR-009
+  description: "The instrumenter shall perform a Pascal-to-Pascal transformation, emitting valid Pascal source code from the instrumented Abstract Syntax Tree (AST)."
+  category: Functional
+- id: TOR-INSTR-010
+  description: "The instrumenter shall support the 'otherwise' clause in CASE statements."
+  category: Functional
+- id: TOR-INSTR-011
+  description: "The instrumenter shall correctly handle labels and GOTO statements in the Pascal source."
+  category: Functional
+- id: TOR-INSTR-012
+  description: "The instrumenter shall prepend a runtime inclusion directive (e.g., #include 'runtime.p') to the generated instrumented source file."
+  category: Functional
