@@ -133,8 +133,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Develop routines to write coverage data to disk upon program termination (`mcdc_dump`).
       - [x] Implement a post-processor to convert raw logs to structured test vectors.
       - [x] Develop a utility to merge coverage data from multiple execution runs.
-- [ ] **Execution & Analysis**:
-  - [ ] Implement MC/DC Analysis Logic:
+- [x] **Execution & Analysis**:
+  - [x] Implement MC/DC Analysis Logic:
     - [x] Develop `MCDCAnalyzer` for evaluating condition independence.
     - [x] Implement boolean expression evaluator for instrumented ASTs.
     - [x] Implement logic to identify independence pairs from test vectors.
@@ -157,7 +157,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 
 ## Phase 6: Tool Qualification & Final Certification
 - [ ] **Tool Qualification**:
-  - [ ] Perform qualification for the Test Harness and Comparators:
+  - [x] Perform qualification for the Test Harness and Comparators:
     - [x] **TOR-HARNESS**: Define Tool Operational Requirements for Harness/Comparators.
       - [x] Formalize requirements for WEB-to-Pascal conversion via TANGLE.
       - [x] Formalize requirements for Pascal compilation and environment-isolated execution.
@@ -171,13 +171,13 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Execute `pytest verification/harness/` and capture results.
       - [x] Document test execution results for all TOR-HARNESS requirements in `verification/results/tqr_harness.md`.
       - [x] Analyze any failures and provide mitigation or corrective actions.
-  - [ ] Perform qualification for the MC/DC Instrumenter:
+  - [x] Perform qualification for the MC/DC Instrumenter:
     - [x] **TOR-INSTR**: Define Tool Operational Requirements for MC/DC Instrumenter.
       - [x] Create `verification/reqs/tor_instr.yaml`.
       - [x] Formalize requirements for Pascal subset grammar coverage.
       - [x] Formalize requirements for unique probe placement and ID assignment.
       - [x] Formalize requirements for boolean expression decomposition into atomic conditions.
-    - [ ] **QTS-INSTR**: Develop Qualification Test Suite for Instrumenter.
+    - [x] **QTS-INSTR**: Develop Qualification Test Suite for Instrumenter.
       - [x] Enhance `verification/harness/mcdc/test_parser.py` for full grammar coverage.
       - [x] Enhance `verification/harness/mcdc/test_instrumenter.py` for probe placement verification.
       - [x] Enhance `verification/harness/mcdc/test_analyzer.py` for independence pair verification.
@@ -197,6 +197,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [x] **Traceability**: Generate the final Traceability Report (HLR/LLR/TC).
     - [x] Verify 100% bi-directional mapping between requirements and tests.
     - [x] Create a script to export `matrix.yaml` into human-readable traceability tables in `verification/results/traceability_report.md`.
+    - [x] Generate the final report in `verification/results/traceability_report.md`.
   - [ ] **Results**: Generate the Verification Results Report (Pass/Fail stats).
     - [ ] Aggregate all test results into `verification/results/test_results_summary.md`.
     - [ ] Provide pass/fail statistics and evidence for all RBT and robustness tests.
