@@ -214,3 +214,49 @@ def test_selective_instrumentation():
     assert "PROCEDURE p1;\nBEGIN mcdc_begin(1); IF mcdc_cond(1, 1, x) THEN x := false END;" in output
     # p2 should NOT be instrumented
     assert "PROCEDURE p2;\nBEGIN IF y THEN y := false END;" in output
+
+def test_instrumenter_repeat():
+    code = "REPEAT x := x + 1 UNTIL x > 10"
+    lexer = Lexer(code)
+    parser = Parser(lexer.tokenize())
+    ast = parser.parse_statement()
+
+    instrumenter = Instrumenter()
+    instrumented = instrumenter.instrument(ast)
+    output = PascalEmitter().emit(instrumented)
+
+    # REPEAT should have a begin probe and a condition probe
+    assert "BEGIN mcdc_begin(1); REPEAT x := (x + 1) UNTIL mcdc_cond(1, 1, (x > 10)) END" == output
+
+def test_instrumenter_for():
+    code = "FOR i := 1 TO 10 DO x := x + i"
+    lexer = Lexer(code)
+    parser = Parser(lexer.tokenize())
+    ast = parser.parse_statement()
+
+    instrumenter = Instrumenter()
+    instrumented = instrumenter.instrument(ast)
+    output = PascalEmitter().emit(instrumented)
+
+    # FOR should have a begin probe but no mcdc_cond since it's not a boolean decision point for MC/DC
+    # but we still track it as a decision point for execution.
+    assert "BEGIN mcdc_begin(1); FOR i := 1 TO 10 DO x := (x + i) END" == output
+
+def test_instrumenter_nested_case():
+    code = """
+    CASE x OF
+        1: CASE y OF
+            1: z := 1
+           END
+    END
+    """
+    lexer = Lexer(code)
+    parser = Parser(lexer.tokenize())
+    ast = parser.parse_statement()
+
+    instrumenter = Instrumenter()
+    instrumented = instrumenter.instrument(ast)
+    output = PascalEmitter().emit(instrumented)
+
+    # Two decisions: decision 1 for outer case, decision 2 for inner case
+    assert "mcdc_begin(1); CASE mcdc_cond(1, 1, x) OF 1: BEGIN mcdc_begin(2); CASE mcdc_cond(2, 1, y) OF 1: z := 1 END END END" in output
