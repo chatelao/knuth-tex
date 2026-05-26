@@ -72,3 +72,31 @@
   description: "The Metafont system shall manage memory dynamically using the WEB memory-word structure to store data and instructions."
   category: Resource
   source: "The Metafontbook, Appendix B"
+- id: HLR-TEX-FUN-007
+  description: "The TeX system shall provide basic infrastructure services including initialization, character set conversion, file I/O, and string management."
+  category: Functional
+  source: "The TeXbook, Appendix B"
+- id: HLR-TEX-FUN-008
+  description: "The TeX system shall implement comprehensive error reporting, diagnostic displays, and debugging aids."
+  category: Functional
+  source: "The TeXbook, Chapter 27"
+- id: HLR-TEX-FUN-009
+  description: "The TeX system shall maintain global state through the semantic nest and the table of equivalents to manage nested modes and scoping."
+  category: Functional
+  source: "The TeXbook, Chapters 13, 24"
+- id: HLR-TEX-FUN-010
+  description: "The TeX system shall provide procedures for packaging material into horizontal and vertical boxes, including dimension and glue calculations."
+  category: Functional
+  source: "The TeXbook, Chapters 12, 21"
+- id: HLR-MF-FUN-006
+  description: "The Metafont system shall provide basic infrastructure services including initialization, character set conversion, file I/O, and string management."
+  category: Functional
+  source: "The Metafontbook, Appendix B"
+- id: HLR-MF-FUN-007
+  description: "The Metafont system shall implement comprehensive error reporting and diagnostic debugging aids."
+  category: Functional
+  source: "The Metafontbook, Chapter 27"
+- id: HLR-MF-FUN-008
+  description: "The Metafont system shall provide support for online graphic output to display character shapes during development."
+  category: Functional
+  source: "The Metafontbook, Appendix B"

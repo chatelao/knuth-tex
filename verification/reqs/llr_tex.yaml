@@ -8,27 +8,33 @@
 - id: LLR-TEX-SEC-001
   web_section: 1
   description: "TeX shall be initialized and identify itself as TeX82."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-007
 - id: LLR-TEX-SEC-002
   web_section: 2
   description: "TeX shall convert all input text into an internal eight-bit code (standard ASCII)."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-007
 - id: LLR-TEX-SEC-003
   web_section: 3
   description: "TeX shall implement basic I/O operations for text (alpha_file) and bytes (byte_file), including opening, closing, and testing for end-of-file."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-007
 - id: LLR-TEX-SEC-004
   web_section: 4
   description: "TeX shall implement string handling using a string pool (str_pool) and a starting index array (str_start)."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-007
 - id: LLR-TEX-SEC-005
   web_section: 5
   description: "TeX shall implement output redirection to the terminal, log file, or other destinations based on the 'selector' variable."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-007
 - id: LLR-TEX-SEC-006
   web_section: 6
   description: "TeX shall implement error reporting and four interaction modes: batch, nonstop, scroll, and error_stop."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-008
 - id: LLR-TEX-SEC-007
   web_section: 7
   description: "TeX shall implement fixed-point arithmetic using scaled integers to represent dimensions."
@@ -57,7 +63,8 @@
 - id: LLR-TEX-SEC-012
   web_section: 12
   description: "TeX shall implement procedures to display the contents of boxes and nodes for diagnostic and debugging purposes."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-008
 - id: LLR-TEX-SEC-013
   web_section: 13
   description: "TeX shall implement procedures to reclaim memory by destroying boxes and their associated data structures."
@@ -76,11 +83,13 @@
 - id: LLR-TEX-SEC-016
   web_section: 16
   description: "TeX shall maintain a semantic nest to track the state of nested horizontal, vertical, and math modes."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-009
 - id: LLR-TEX-SEC-017
   web_section: 17
   description: "TeX shall maintain a table of equivalents (eqtb) to store current values of control sequences, registers, and other parameters."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-009
 - id: LLR-TEX-SEC-018
   web_section: 18
   description: "TeX shall implement a hash table to efficiently look up and manage control sequences."
@@ -159,7 +168,8 @@
 - id: LLR-TEX-SEC-033
   web_section: 33
   description: "TeX shall implement packaging procedures to create horizontal and vertical boxes, including calculations for glue setting and dimensions."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-010
 - id: LLR-TEX-SEC-034
   web_section: 34
   description: "TeX shall define data structures for math mode, including nodes for fractions, radicals, and various math symbols."
@@ -248,16 +258,20 @@
 - id: LLR-TEX-SEC-051
   web_section: 51
   description: "TeX shall implement the main program that initializes the system and enters the main control loop."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-007
 - id: LLR-TEX-SEC-052
   web_section: 52
   description: "TeX shall provide debugging aids, including the 'debug_help' routine, to diagnose errors and inspect internal states."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-008
 - id: LLR-TEX-SEC-053
   web_section: 53
   description: "TeX shall provide 'hooks' for extensions, including support for 'whatsit' nodes and associated procedures for special purposes like file output."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-007
 - id: LLR-TEX-SEC-054
   web_section: 54
   description: "TeX shall allow for system-dependent changes to be integrated via change files to adapt to different host environments."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-TEX-FUN-007
