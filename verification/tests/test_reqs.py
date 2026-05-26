@@ -43,3 +43,13 @@ def test_validate_matrix_yaml():
         assert 'hlr_id' in item
         assert 'llr_ids' in item
         assert 'test_case_ids' in item
+
+def test_validate_tor_harness_yaml():
+    tor_path = Path("verification/reqs/tor_harness.yaml")
+    with open(tor_path, 'r') as f:
+        data = yaml.safe_load(f)
+    assert isinstance(data, list)
+    for item in data:
+        assert 'id' in item
+        assert 'description' in item
+        assert 'category' in item
