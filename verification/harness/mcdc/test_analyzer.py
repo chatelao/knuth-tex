@@ -1,6 +1,6 @@
 import pytest
 from verification.harness.mcdc.lexer import Lexer
-from verification.harness.mcdc.parser import Parser
+from verification.harness.mcdc.parser import Parser, BinaryOp, UnaryOp, Literal
 from verification.harness.mcdc.instrumenter import Instrumenter
 from verification.harness.mcdc.analyzer import MCDCAnalyzer
 
@@ -131,3 +131,56 @@ def test_analyzer_redundant_vectors():
 
     results = analyzer.analyze(vectors)
     assert results['covered_conditions'] == 1
+
+def test_analyzer_evaluate_operators():
+    # Test arithmetic and relational operators in MCDCAnalyzer.evaluate
+    # We can pass any AST node to evaluate.
+    analyzer = MCDCAnalyzer(Literal(True, 'BOOLEAN'))
+
+    # Relational
+    assert analyzer.evaluate(BinaryOp(Literal(1, 'NUMBER'), '=', Literal(1, 'NUMBER')), {}) is True
+    assert analyzer.evaluate(BinaryOp(Literal(1, 'NUMBER'), '<>', Literal(2, 'NUMBER')), {}) is True
+    assert analyzer.evaluate(BinaryOp(Literal(1, 'NUMBER'), '<', Literal(2, 'NUMBER')), {}) is True
+    assert analyzer.evaluate(BinaryOp(Literal(2, 'NUMBER'), '<=', Literal(2, 'NUMBER')), {}) is True
+    assert analyzer.evaluate(BinaryOp(Literal(2, 'NUMBER'), '>', Literal(1, 'NUMBER')), {}) is True
+    assert analyzer.evaluate(BinaryOp(Literal(2, 'NUMBER'), '>=', Literal(2, 'NUMBER')), {}) is True
+
+    # Arithmetic
+    assert analyzer.evaluate(BinaryOp(Literal(5, 'NUMBER'), '+', Literal(3, 'NUMBER')), {}) == 8
+    assert analyzer.evaluate(BinaryOp(Literal(5, 'NUMBER'), '-', Literal(3, 'NUMBER')), {}) == 2
+    assert analyzer.evaluate(BinaryOp(Literal(5, 'NUMBER'), '*', Literal(3, 'NUMBER')), {}) == 15
+    assert analyzer.evaluate(BinaryOp(Literal(6, 'NUMBER'), '/', Literal(2, 'NUMBER')), {}) == 3.0
+    assert analyzer.evaluate(BinaryOp(Literal(7, 'NUMBER'), 'DIV', Literal(2, 'NUMBER')), {}) == 3
+    assert analyzer.evaluate(BinaryOp(Literal(7, 'NUMBER'), 'MOD', Literal(2, 'NUMBER')), {}) == 1
+
+    # Unary
+    assert analyzer.evaluate(UnaryOp('+', Literal(5, 'NUMBER')), {}) == 5
+    assert analyzer.evaluate(UnaryOp('-', Literal(5, 'NUMBER')), {}) == -5
+    assert analyzer.evaluate(UnaryOp('NOT', Literal(True, 'BOOLEAN')), {}) is False
+
+def test_analyzer_independence_pair_verification():
+    # Test that MCDCAnalyzer correctly identifies independence pairs
+    # IF A AND B THEN ...
+    code = "IF A AND B THEN x := 1"
+    ast = get_instrumented_ast(code)
+    analyzer = MCDCAnalyzer(ast)
+
+    # (T, T) -> T
+    # (F, T) -> F
+    # (T, F) -> F
+    v1 = {1: True, 2: True}
+    v2 = {1: False, 2: True}
+    v3 = {1: True, 2: False}
+    vectors = [v1, v2, v3]
+
+    results = analyzer.analyze(vectors)
+
+    # Condition 1 (A) independence pair should be (v1, v2)
+    pair1 = results['conditions'][1]['independence_pair']
+    assert pair1 is not None
+    assert (pair1[0] == v1 and pair1[1] == v2) or (pair1[0] == v2 and pair1[1] == v1)
+
+    # Condition 2 (B) independence pair should be (v1, v3)
+    pair2 = results['conditions'][2]['independence_pair']
+    assert pair2 is not None
+    assert (pair2[0] == v1 and pair2[1] == v3) or (pair2[0] == v3 and pair2[1] == v1)

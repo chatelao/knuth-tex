@@ -162,15 +162,15 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Formalize requirements for WEB-to-Pascal conversion via TANGLE.
       - [x] Formalize requirements for Pascal compilation and environment-isolated execution.
       - [x] Formalize requirements for automated output comparison (Log, DVI, GF, TFM).
-    - [ ] **QTS-HARNESS**: Develop Qualification Test Suite for Harness.
+    - [x] **QTS-HARNESS**: Develop Qualification Test Suite for Harness.
       - [x] Create `verification/harness/test_tangle.py` for TANGLE wrapper verification.
       - [x] Create `verification/harness/test_compiler.py` for Compiler wrapper verification.
       - [x] Create `verification/harness/test_executor.py` for Executor/Isolation verification.
       - [x] Create `verification/harness/test_comparer.py` and symbolic comparator tests (DVI, GF, PK, TFM).
-    - [ ] **TQR-HARNESS**: Execute QTS and generate Tool Qualification Report.
-      - [ ] Execute `pytest verification/harness/` and capture results.
-      - [ ] Document test execution results for all TOR-HARNESS requirements in `verification/results/tqr_harness.md`.
-      - [ ] Analyze any failures and provide mitigation or corrective actions.
+    - [x] **TQR-HARNESS**: Execute QTS and generate Tool Qualification Report.
+      - [x] Execute `pytest verification/harness/` and capture results.
+      - [x] Document test execution results for all TOR-HARNESS requirements in `verification/results/tqr_harness.md`.
+      - [x] Analyze any failures and provide mitigation or corrective actions.
   - [ ] Perform qualification for the MC/DC Instrumenter:
     - [x] **TOR-INSTR**: Define Tool Operational Requirements for MC/DC Instrumenter.
       - [x] Create `verification/reqs/tor_instr.yaml`.
@@ -180,8 +180,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [ ] **QTS-INSTR**: Develop Qualification Test Suite for Instrumenter.
       - [x] Enhance `verification/harness/mcdc/test_parser.py` for full grammar coverage.
       - [x] Enhance `verification/harness/mcdc/test_instrumenter.py` for probe placement verification.
-      - [ ] Enhance `verification/harness/mcdc/test_analyzer.py` for independence pair verification.
-      - [ ] Implement end-to-end functional equivalence tests in `test_integration.py`.
+      - [x] Enhance `verification/harness/mcdc/test_analyzer.py` for independence pair verification.
+      - [x] Implement end-to-end functional equivalence tests in `test_integration.py`.
     - [ ] **TQR-INSTR**: Execute QTS and generate Tool Qualification Report.
       - [ ] Execute `pytest verification/harness/mcdc/` and capture results.
       - [ ] Document test execution results for all TOR-INSTR requirements in `verification/results/tqr_instr.md`.
