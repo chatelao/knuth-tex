@@ -194,9 +194,9 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [ ] Create `verification/results/sas.md`.
     - [ ] Document system overview, verification environment, and compliance status.
     - [ ] Summarize all deviations, problem reports, and their resolutions.
-  - [ ] **Traceability**: Generate the final Traceability Report (HLR/LLR/TC).
-    - [ ] Verify 100% bi-directional mapping between requirements and tests.
-    - [ ] Create a script to export `matrix.yaml` into human-readable traceability tables in `verification/results/traceability_report.md`.
+  - [x] **Traceability**: Generate the final Traceability Report (HLR/LLR/TC).
+    - [x] Verify 100% bi-directional mapping between requirements and tests.
+    - [x] Create a script to export `matrix.yaml` into human-readable traceability tables in `verification/results/traceability_report.md`.
   - [ ] **Results**: Generate the Verification Results Report (Pass/Fail stats).
     - [ ] Aggregate all test results into `verification/results/test_results_summary.md`.
     - [ ] Provide pass/fail statistics and evidence for all RBT and robustness tests.
