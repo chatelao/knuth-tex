@@ -178,8 +178,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Formalize requirements for unique probe placement and ID assignment.
       - [x] Formalize requirements for boolean expression decomposition into atomic conditions.
     - [ ] **QTS-INSTR**: Develop Qualification Test Suite for Instrumenter.
-      - [ ] Enhance `verification/harness/mcdc/test_parser.py` for full grammar coverage.
-      - [ ] Enhance `verification/harness/mcdc/test_instrumenter.py` for probe placement verification.
+      - [x] Enhance `verification/harness/mcdc/test_parser.py` for full grammar coverage.
+      - [x] Enhance `verification/harness/mcdc/test_instrumenter.py` for probe placement verification.
       - [ ] Enhance `verification/harness/mcdc/test_analyzer.py` for independence pair verification.
       - [ ] Implement end-to-end functional equivalence tests in `test_integration.py`.
     - [ ] **TQR-INSTR**: Execute QTS and generate Tool Qualification Report.

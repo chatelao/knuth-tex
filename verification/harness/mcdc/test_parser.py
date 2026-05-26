@@ -343,3 +343,85 @@ def test_parse_full_program():
     assert isinstance(prog.declarations[2], VarDeclaration)
     assert isinstance(prog.declarations[3], ProcedureDeclaration)
     assert isinstance(prog.block, Block)
+
+def test_parse_function_declaration():
+    code = """
+    FUNCTION f(a, b: integer): boolean;
+    VAR x: integer;
+    BEGIN
+        f := a > b
+    END;
+    """
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    func = parser.parse_routine_declaration()
+
+    assert isinstance(func, FunctionDeclaration)
+    assert func.name == "f"
+    # Lexer adds spaces around operators and punctuation
+    assert "a , b : integer" in func.params
+    assert func.return_type == "boolean"
+    assert len(func.declarations) == 1
+    assert isinstance(func.declarations[0], VarDeclaration)
+    assert isinstance(func.block, Block)
+
+def test_parse_nested_case():
+    code = """
+    CASE x OF
+        1: CASE y OF
+            1: z := 1;
+            2: z := 2
+           END;
+        2: z := 3
+    END
+    """
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, CaseStatement)
+    assert len(stmt.items) == 2
+    assert isinstance(stmt.items[0].statement, CaseStatement)
+    assert len(stmt.items[0].statement.items) == 2
+
+def test_parse_complex_record_access():
+    code = "a[i].b^.c[j] := 1;"
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    stmt = parser.parse_statement()
+
+    assert isinstance(stmt, Assignment)
+    target = stmt.target
+    assert target.name == "a"
+    # a[i].b^.c[j] has 5 modifiers: subscript, dot, pointer, dot, subscript
+    assert len(target.modifiers) == 5
+    assert target.modifiers[0][0] == 'subscript'
+    assert target.modifiers[1] == ('dot', 'b')
+    assert target.modifiers[2] == ('pointer', None)
+    assert target.modifiers[3] == ('dot', 'c')
+    assert target.modifiers[4][0] == 'subscript'
+
+def test_parse_type_declaration():
+    code = """
+    TYPE
+        byte = 0..255;
+        word = record l, r: byte end;
+    VAR w: word;
+    """
+    # We can use parse_declarations by providing a mock parser state if we want,
+    # but easier to just wrap in a dummy program or just test the declarations part.
+    # Actually, parse_program is the main entry point for declarations.
+    code = "PROGRAM t; " + code + " BEGIN END."
+    lexer = Lexer(code)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    prog = parser.parse_program()
+
+    type_decl = next(d for d in prog.declarations if isinstance(d, TypeDeclaration))
+    assert len(type_decl.types) == 2
+    assert type_decl.types[0] == ("byte", "0 .. 255")
+    assert type_decl.types[1][0] == "word"
+    assert type_decl.types[1][1].lower() == "record l , r : byte end"
