@@ -141,8 +141,13 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Develop MC/DC Report Generator utility.
     - [x] Integrate the MC/DC instrumenter and runtime into the harness runner.
     - [ ] Pilot Module Coverage (Strings):
-      - [ ] Identify all Pascal routines corresponding to WEB "Strings" sections (e.g., `make_string`, `str_eq_buf`).
-      - [ ] Configure `Instrumenter` to selectively instrument only the identified "Strings" routines.
+      - [x] Identify all Pascal routines corresponding to WEB "Strings" sections:
+        - `make_string`
+        - `str_eq_buf`
+        - `str_eq_str` (TeX)
+        - `str_vs_str` (Metafont)
+        - `get_strings_started`
+      - [x] Configure `Instrumenter` to selectively instrument only the identified "Strings" routines.
       - [ ] Execute the full RBT suite with pilot instrumentation and collect `mcdc_coverage.out`.
       - [ ] Aggregate coverage data and generate the MC/DC analysis report for the Strings module.
 - [ ] **Gap Analysis & Augmentation**:

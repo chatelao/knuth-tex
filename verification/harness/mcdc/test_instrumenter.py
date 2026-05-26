@@ -183,3 +183,34 @@ def test_instrumenter_nested_control_logic():
     assert "mcdc_begin(1); IF mcdc_cond(1, 1, A)" in output
     assert "mcdc_begin(2); WHILE mcdc_cond(2, 1, B)" in output
     assert "mcdc_begin(3); IF (mcdc_cond(3, 1, C) OR mcdc_cond(3, 2, D))" in output
+
+def test_selective_instrumentation():
+    code = """
+    PROGRAM test;
+    PROCEDURE p1;
+    BEGIN
+        IF x THEN x := false
+    END;
+    PROCEDURE p2;
+    BEGIN
+        IF y THEN y := false
+    END;
+    BEGIN
+        p1; p2
+    END.
+    """
+    lexer = Lexer(code)
+    parser = Parser(lexer.tokenize())
+    ast = parser.parse_program()
+
+    # Only instrument p1
+    instrumenter = Instrumenter(include_routines=['p1'])
+    instrumented = instrumenter.instrument(ast)
+
+    emitter = PascalEmitter()
+    output = emitter.emit(instrumented)
+
+    # p1 should be instrumented
+    assert "PROCEDURE p1;\nBEGIN mcdc_begin(1); IF mcdc_cond(1, 1, x) THEN x := false END;" in output
+    # p2 should NOT be instrumented
+    assert "PROCEDURE p2;\nBEGIN IF y THEN y := false END;" in output
