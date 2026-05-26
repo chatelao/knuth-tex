@@ -66,7 +66,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [x] Develop TFM comparator (using `TFtoPL`).
 
 ## Phase 4: Requirements-Based Testing (RBT) Implementation
-- [ ] **Baseline Integration**:
+- [x] **Baseline Integration**:
   - [x] Automate the TRIP (TeX) torture test:
     - [x] Create `TRIP` test configuration and directory.
     - [x] Automate `TANGLE` on `tex.web` with `trip.ch`.
@@ -79,32 +79,32 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Automate compilation of `trap.p`.
     - [x] Automate `INIMF` run to generate `trap.base`.
     - [x] Automate `TRAP` execution and comparison of `.log`, `.typ`, and `.tfm` files.
-- [ ] **Normal Range Testing**:
-  - [ ] Develop test cases for standard compilation and font generation:
+- [x] **Normal Range Testing**:
+  - [x] Develop test cases for standard compilation and font generation:
     - [x] Implement `STORY` test case (Basic TeX paragraph breaking).
     - [x] Implement `HELLO` test case (Basic TeX macro expansion).
     - [x] Implement `LOGO` test case (Metafont character generation).
 - [ ] **Robustness Testing**:
-  - [ ] Implement Boundary Value Analysis (BVA) tests:
+  - [x] Implement Boundary Value Analysis (BVA) tests:
     - [x] Develop BVA tests for TeX integer registers (max/min values).
     - [x] Develop BVA tests for Metafont coordinate ranges.
     - [x] Develop BVA tests for TeX/Metafont internal constants (e.g., `buf_size`, `error_line`).
   - [ ] Implement Error Handling and Resource Exhaustion tests:
-    - [ ] TeX Resource Exhaustion:
+    - [x] TeX Resource Exhaustion:
       - [x] Develop tests for TeX stack overflow (macro recursion).
       - [x] Develop tests for TeX string pool exhaustion.
       - [x] Develop tests for TeX memory overflow (`mem_max`).
     - [ ] Metafont Resource Exhaustion:
       - [x] Develop tests for Metafont memory exhaustion (complex paths).
       - [ ] Develop tests for Metafont bisection stack overflow (`bistack_size`).
-    - [ ] Input/File Error Handling:
+    - [x] Input/File Error Handling:
       - [x] Develop tests for file-not-found and invalid input syntax.
       - [x] Develop tests for invalid format/base file loading.
 - [x] **Traceability**:
   - [x] Map all test cases to HLRs and LLRs in the traceability matrix.
 
 ## Phase 5: Structural Coverage & MC/DC Analysis
-- [ ] **Instrumentation**:
+- [x] **Instrumentation**:
   - [x] Develop the Pascal parser/instrumenter for `TANGLE` output:
     - [x] Implement Lexer for Pascal subset:
       - [x] Define Pascal tokens and regular expressions for TANGLE subset.
@@ -124,7 +124,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Develop AST visitor to identify boolean expressions in control flow statements.
       - [x] Implement logic to decompose complex boolean expressions into atomic conditions.
       - [x] Implement mapping of atomic conditions to unique IDs within a decision.
-  - [ ] Implement the MC/DC runtime library:
+  - [x] Implement the MC/DC runtime library:
     - [x] Develop the runtime library for evaluation recording:
       - [x] Define event-based logging format for decision and condition evaluations.
       - [x] Implement `mcdc_begin` and `mcdc_cond` routines in Pascal for runtime recording.
@@ -134,14 +134,17 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Implement a post-processor to convert raw logs to structured test vectors.
       - [x] Develop a utility to merge coverage data from multiple execution runs.
 - [ ] **Execution & Analysis**:
-  - [x] Implement MC/DC Analysis Logic:
+  - [ ] Implement MC/DC Analysis Logic:
     - [x] Develop `MCDCAnalyzer` for evaluating condition independence.
     - [x] Implement boolean expression evaluator for instrumented ASTs.
     - [x] Implement logic to identify independence pairs from test vectors.
     - [x] Develop MC/DC Report Generator utility.
     - [x] Integrate the MC/DC instrumenter and runtime into the harness runner.
-    - [ ] Run RBT suite with instrumentation enabled on a pilot module (e.g., Strings).
-    - [ ] Perform MC/DC analysis on collected data and generate reports for the pilot module.
+    - [ ] Pilot Module Coverage (Strings):
+      - [ ] Identify all Pascal routines corresponding to WEB "Strings" sections (e.g., `make_string`, `str_eq_buf`).
+      - [ ] Configure `Instrumenter` to selectively instrument only the identified "Strings" routines.
+      - [ ] Execute the full RBT suite with pilot instrumentation and collect `mcdc_coverage.out`.
+      - [ ] Aggregate coverage data and generate the MC/DC analysis report for the Strings module.
 - [ ] **Gap Analysis & Augmentation**:
   - [ ] Identify uncovered code.
   - [ ] Create augmented test cases to achieve 100% MC/DC.
@@ -158,6 +161,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] Implement automated tests to verify Tangle/Compile/Execute wrappers.
       - [ ] Implement automated tests to verify each comparison engine against known differences.
     - [ ] **TQR-HARNESS**: Execute QTS and generate Tool Qualification Report.
+      - [ ] Document test execution results for all TOR-HARNESS requirements.
+      - [ ] Analyze any failures and provide mitigation or corrective actions.
   - [ ] Perform qualification for the MC/DC Instrumenter:
     - [ ] **TOR-INSTR**: Define Tool Operational Requirements for MC/DC Instrumenter.
       - [ ] Formalize requirements for Pascal subset grammar coverage.
@@ -168,11 +173,21 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] Implement automated tests to verify independence pair identification for all logic patterns.
       - [ ] Implement automated tests to verify functional equivalence of instrumented code.
     - [ ] **TQR-INSTR**: Execute QTS and generate Tool Qualification Report.
+      - [ ] Document test execution results for all TOR-INSTR requirements.
+      - [ ] Analyze any failures and provide mitigation or corrective actions.
   - [ ] **Compiler/Tangle Verification**: Verify `TANGLE` and the Pascal compiler or their outputs.
     - [ ] Perform cross-comparison of `TANGLE` output with documented Pascal listings.
     - [ ] Validate Pascal compiler against a known-good standard suite.
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
+    - [ ] Document system overview, verification environment, and compliance status.
+    - [ ] Summarize all deviations, problem reports, and their resolutions.
   - [ ] **Traceability**: Generate the final Traceability Report (HLR/LLR/TC).
+    - [ ] Verify 100% bi-directional mapping between requirements and tests.
+    - [ ] Export final `matrix.yaml` into human-readable traceability tables.
   - [ ] **Results**: Generate the Verification Results Report (Pass/Fail stats).
+    - [ ] Compile all test logs and execution records from `verification/results/`.
+    - [ ] Provide pass/fail statistics and evidence for all RBT and robustness tests.
   - [ ] **VAR**: Finalize the Verification Analysis Report (Coverage & Gap analysis).
+    - [ ] Include the final MC/DC coverage metrics for all modules.
+    - [ ] Provide documented justifications for any remaining structural coverage gaps.
