@@ -1,0 +1,36 @@
+# Tool Operational Requirements for the Test Harness (TOR-HARNESS)
+# Schema:
+# - id: TOR-HARNESS-XXX
+#   description: "Requirement description"
+#   category: [Functional|Interface|Security]
+
+- id: TOR-HARNESS-001
+  description: "The harness shall provide a Tangle wrapper to convert WEB source files and optional change files into Pascal source and string pool files using the TANGLE processor."
+  category: Functional
+- id: TOR-HARNESS-002
+  description: "The harness shall provide a Compile wrapper to invoke a Pascal compiler for generating executable binaries from Pascal source files."
+  category: Functional
+- id: TOR-HARNESS-003
+  description: "The harness shall provide an Execute wrapper to run the generated binaries with specified command-line arguments and standard input."
+  category: Functional
+- id: TOR-HARNESS-004
+  description: "The harness shall implement environment isolation for test execution by running binaries in dedicated subdirectories."
+  category: Functional
+- id: TOR-HARNESS-005
+  description: "The harness shall provide a Comparison module to perform automated pass/fail determination by comparing actual output files with expected baselines."
+  category: Functional
+- id: TOR-HARNESS-006
+  description: "The Comparison module shall support text-based comparison with configurable normalization (e.g., whitespace collapsing)."
+  category: Functional
+- id: TOR-HARNESS-007
+  description: "The Comparison module shall support symbolic comparison for binary formats (DVI, GF, PK, TFM) by delegating to specialized converters (DVItype, GFtype, PKtype, TFtoPL)."
+  category: Functional
+- id: TOR-HARNESS-008
+  description: "The harness shall support multi-stage test execution as defined in test configuration files."
+  category: Functional
+- id: TOR-HARNESS-009
+  description: "The harness shall capture and log terminal output (stdout and stderr) for each test execution."
+  category: Functional
+- id: TOR-HARNESS-010
+  description: "The harness shall provide a mechanism to load global and test-specific configurations from YAML files."
+  category: Functional
