@@ -1,0 +1,9 @@
+% Metafont Path Size Overflow Test
+% path_size = 300 knots.
+path p;
+p := (0,0)
+for i=1 upto 300:
+  .. (i,i)
+endfor
+;
+end
