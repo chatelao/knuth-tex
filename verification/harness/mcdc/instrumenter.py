@@ -120,10 +120,16 @@ class PascalEmitter:
 
 class Instrumenter:
     """Instruments a Pascal AST by inserting Probe nodes."""
-    def __init__(self):
+    def __init__(self, include_routines=None):
         self.next_decision_id = 1
         self.next_condition_id = 1
         self.decisions = {} # decision_id -> instrumented AST node
+        self.include_routines = include_routines
+
+    def _should_instrument(self, routine_name):
+        if self.include_routines is None:
+            return True
+        return routine_name.lower() in [r.lower() for r in self.include_routines]
 
     def instrument(self, node):
         if isinstance(node, Block):
@@ -147,21 +153,23 @@ class Instrumenter:
 
         if isinstance(node, ProcedureDeclaration):
             if node.is_forward: return node
+            should_inst = self._should_instrument(node.name)
             return ProcedureDeclaration(
                 node.name,
                 node.params,
                 [self.instrument(d) for d in node.declarations],
-                self.instrument(node.block)
+                self.instrument(node.block) if should_inst else node.block
             )
 
         if isinstance(node, FunctionDeclaration):
             if node.is_forward: return node
+            should_inst = self._should_instrument(node.name)
             return FunctionDeclaration(
                 node.name,
                 node.params,
                 node.return_type,
                 [self.instrument(d) for d in node.declarations],
-                self.instrument(node.block)
+                self.instrument(node.block) if should_inst else node.block
             )
 
         if isinstance(node, LabeledStatement):
