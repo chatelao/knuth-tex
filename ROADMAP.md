@@ -166,7 +166,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Create `verification/harness/test_tangle.py` for TANGLE wrapper verification.
       - [x] Create `verification/harness/test_compiler.py` for Compiler wrapper verification.
       - [x] Create `verification/harness/test_executor.py` for Executor/Isolation verification.
-      - [ ] Create `verification/harness/test_comparer.py` and symbolic comparator tests (DVI, GF, PK, TFM).
+      - [x] Create `verification/harness/test_comparer.py` and symbolic comparator tests (DVI, GF, PK, TFM).
     - [ ] **TQR-HARNESS**: Execute QTS and generate Tool Qualification Report.
       - [ ] Execute `pytest verification/harness/` and capture results.
       - [ ] Document test execution results for all TOR-HARNESS requirements in `verification/results/tqr_harness.md`.
