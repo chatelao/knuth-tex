@@ -199,6 +199,7 @@
     - TC-MF-ROB-003
     - TC-MF-ROB-004
     - TC-MF-ROB-005
+    - TC-MF-ROB-006
 - hlr_id: HLR-MF-FUN-006
   llr_ids:
     - LLR-MF-SEC-001
