@@ -151,7 +151,9 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Configure `Instrumenter` to selectively instrument only the identified "Strings" routines.
 - [ ] **Gap Analysis & Augmentation (Strings Module)**:
   - [ ] **Baseline Coverage Assessment**:
-    - [ ] Execute the full RBT suite with selective instrumentation of the Strings module.
+    - [ ] Create a dedicated harness configuration for Strings module instrumentation.
+    - [ ] Execute the test runner with the `--mcdc` flag using the Strings-specific configuration for all RBT cases.
+    - [ ] Verify the generation of `mcdc_report.yaml` containing coverage for target routines.
     - [ ] Aggregate coverage data from multiple runs into a consolidated report.
     - [ ] Verify that all identified routines (`make_string`, `str_eq_buf`, etc.) are hit at least once.
   - [ ] **Structural Gap Identification**:
