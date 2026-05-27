@@ -5,3 +5,11 @@ pascal_compiler: "gpc"
 tex_source_dir: "dist/tex"
 mf_source_dir: "dist/mf"
 output_dir: "verification/results"
+
+# Selective MC/DC instrumentation for the Strings module (Phase 5)
+mcdc_include_routines:
+  - "make_string"
+  - "str_eq_buf"
+  - "str_eq_str"
+  - "str_vs_str"
+  - "get_strings_started"

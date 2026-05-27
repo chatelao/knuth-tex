@@ -101,7 +101,8 @@ class VerificationTestRunner:
         parser = Parser(tokens)
         ast = parser.parse_program()
 
-        instrumenter = Instrumenter()
+        include_routines = self.harness_config.get('mcdc_include_routines')
+        instrumenter = Instrumenter(include_routines=include_routines)
         instrumented_ast = instrumenter.instrument(ast)
         self.mcdc_decisions = instrumenter.decisions
 
