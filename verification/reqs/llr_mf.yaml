@@ -8,27 +8,33 @@
 - id: LLR-MF-SEC-001
   web_section: 1
   description: "Metafont shall be initialized and identify itself as MF84."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-006
 - id: LLR-MF-SEC-002
   web_section: 2
   description: "Metafont shall convert all input text into an internal eight-bit code (standard ASCII)."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-006
 - id: LLR-MF-SEC-003
   web_section: 3
   description: "Metafont shall implement basic I/O operations for text (alpha_file) and bytes (byte_file), including opening, closing, and testing for end-of-file."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-006
 - id: LLR-MF-SEC-004
   web_section: 4
   description: "Metafont shall implement string handling using a string pool (str_pool) and a starting index array (str_start)."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-006
 - id: LLR-MF-SEC-005
   web_section: 5
   description: "Metafont shall implement output redirection to the terminal, log file, or other destinations based on the 'selector' variable."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-006
 - id: LLR-MF-SEC-006
   web_section: 6
   description: "Metafont shall implement error reporting and four interaction modes: batch, nonstop, scroll, and error_stop."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-007
 - id: LLR-MF-SEC-007
   web_section: 7
   description: "Metafont shall implement fixed-point arithmetic using scaled integers to ensure identical output across different computers."
@@ -132,7 +138,8 @@
 - id: LLR-MF-SEC-027
   web_section: 27
   description: "Metafont shall provide primitive operations for online graphic output, including screen initialization, pixel plotting, and screen updates."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-008
 - id: LLR-MF-SEC-028
   web_section: 28
   description: "Metafont shall maintain and solve systems of linear equations between numeric variables, distinguishing between independent, dependent, and known values."
@@ -241,12 +248,15 @@
 - id: LLR-MF-SEC-049
   web_section: 49
   description: "Metafont shall implement the main program that initializes the system and enters the main control loop."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-006
 - id: LLR-MF-SEC-050
   web_section: 50
   description: "Metafont shall provide debugging aids, including the 'debug_help' routine, to diagnose errors and inspect internal states."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-007
 - id: LLR-MF-SEC-051
   web_section: 51
   description: "Metafont shall allow for system-dependent changes to be integrated via change files to adapt to different host environments."
-  parent_hlr: []
+  parent_hlr:
+    - HLR-MF-FUN-006
