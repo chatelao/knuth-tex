@@ -97,7 +97,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [ ] Metafont Resource Exhaustion:
       - [x] Develop tests for Metafont memory exhaustion (complex paths).
       - [x] Develop tests for Metafont path size overflow (`path_size`).
-      - [ ] Develop tests for Metafont bisection stack overflow (`bistack_size`).
+      - [ ] Verify Metafont bisection stack safety margins (bad=31, 32 checks).
     - [x] Input/File Error Handling:
       - [x] Develop tests for file-not-found and invalid input syntax.
       - [x] Develop tests for invalid format/base file loading.
@@ -149,13 +149,22 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - `str_vs_str` (Metafont)
         - `get_strings_started`
       - [x] Configure `Instrumenter` to selectively instrument only the identified "Strings" routines.
-      - [ ] Execute the full RBT suite with pilot instrumentation and collect `mcdc_coverage.out`.
-      - [ ] Aggregate coverage data and generate the MC/DC analysis report for the Strings module.
-- [ ] **Gap Analysis & Augmentation**:
-  - [ ] Run coverage analysis for the Strings module.
-  - [ ] Identify uncovered decisions and conditions in Strings module.
-  - [ ] Design and implement augmented test cases to achieve 100% MC/DC for Strings.
-  - [ ] Document final results and provide justifications for any unavoidable gaps in the VAR.
+- [ ] **Gap Analysis & Augmentation (Strings Module)**:
+  - [ ] **Baseline Coverage Assessment**:
+    - [ ] Execute the full RBT suite with selective instrumentation of the Strings module.
+    - [ ] Aggregate coverage data from multiple runs into a consolidated report.
+    - [ ] Verify that all identified routines (`make_string`, `str_eq_buf`, etc.) are hit at least once.
+  - [ ] **Structural Gap Identification**:
+    - [ ] Analyze `make_string` for uncovered decision points (e.g., pool exhaustion checks).
+    - [ ] Analyze `str_eq_buf` and `str_eq_str`/`str_vs_str` for branch coverage gaps.
+    - [ ] Identify conditions in `get_strings_started` that require specific environment states.
+  - [ ] **Test Suite Augmentation**:
+    - [ ] Develop targeted test cases for uncovered boolean condition combinations (MC/DC).
+    - [ ] Implement tests for boundary conditions in string pool management.
+    - [ ] Execute augmented suite and verify improvement in coverage metrics.
+  - [ ] **Final Analysis & Justification**:
+    - [ ] Document final MC/DC percentages for each routine in the Strings module.
+    - [ ] Provide engineering justifications for any unreachable code or uncovered conditions in the VAR.
 
 ## Phase 6: Tool Qualification & Final Certification
 - [ ] **Tool Qualification**:
@@ -188,15 +197,24 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Execute `pytest verification/harness/mcdc/` and capture results.
       - [x] Document test execution results for all TOR-INSTR requirements in `verification/results/tqr_instr.md`.
       - [x] Analyze any failures and provide mitigation or corrective actions.
-  - [ ] **Compiler/Tangle Verification**: Verify `TANGLE` and the Pascal compiler or their outputs.
-    - [ ] Perform automated cross-comparison of `TANGLE` output with published Pascal listings in *TeX: The Program* and *Metafont: The Program*.
-    - [ ] Validate the Pascal compiler (e.g., `fpc`) against the ISO 7185 Pascal Level 0 Test Suite.
-    - [ ] Verify that `TANGLE` correctly handles all WEB numeric and string macros.
+  - [ ] **Compiler/Tangle Verification**:
+    - [ ] **TANGLE Output Validation**:
+      - [ ] Implement automated script to compare `TANGLE` generated Pascal against canonical listings.
+      - [ ] Verify handling of WEB numeric macros (e.g., constant expansion).
+      - [ ] Verify handling of WEB string macros and pool file generation.
+      - [ ] Perform manual spot-checks on complex module transitions in `tex.p` and `mf.p`.
+    - [ ] **Pascal Compiler Validation**:
+      - [ ] Procure or implement the ISO 7185 Pascal Level 0 test suite.
+      - [ ] Execute suite using the target compiler (e.g., `fpc`) and document results.
+      - [ ] Verify compiler-specific extensions used in `tex.ch` and `mf.ch` (e.g., command line access).
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
     - [ ] Create `verification/results/sas.md`.
-    - [ ] Document system overview, verification environment, and compliance status.
-    - [ ] Summarize all deviations, problem reports, and their resolutions.
+    - [ ] Document system overview and verification environment (tools, compilers, OS).
+    - [ ] Provide a summary of compliance with HLRs and LLRs.
+    - [ ] Summarize all TQR (Tool Qualification) results.
+    - [ ] Document all deviations from the original verification plan and their impact.
+    - [ ] Compile a final list of open/closed problem reports.
   - [x] **Traceability**: Generate the final Traceability Report (HLR/LLR/TC).
     - [x] Verify 100% bi-directional mapping between requirements and tests.
     - [x] Create a script to export `matrix.yaml` into human-readable traceability tables in `verification/results/traceability_report.md`.
@@ -207,5 +225,12 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Generate a consolidated report including execution logs for each failed test case.
   - [ ] **VAR**: Finalize the Verification Analysis Report (Coverage & Gap analysis).
     - [ ] Create `verification/results/var.md`.
-    - [ ] Include the final MC/DC coverage metrics for all modules.
-    - [ ] Provide documented justifications for any remaining structural coverage gaps.
+    - [ ] **Structural Coverage Analysis**:
+      - [ ] Aggregate MC/DC metrics for the pilot module (Strings).
+      - [ ] Provide a breakdown of coverage by routine and decision point.
+    - [ ] **Gap & Dead Code Analysis**:
+      - [ ] Document justifications for any uncovered conditions (e.g., defensive code, unreachable states).
+      - [ ] Identify and verify any deactivated or dead code found during analysis.
+    - [ ] **Control & Data Flow Review**:
+      - [ ] Perform a qualitative review of critical data paths (e.g., token expansion).
+      - [ ] Verify that control flow follows the design documented in *TeX/Metafont: The Program*.
