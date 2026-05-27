@@ -201,10 +201,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Verify 100% bi-directional mapping between requirements and tests.
     - [x] Create a script to export `matrix.yaml` into human-readable traceability tables in `verification/results/traceability_report.md`.
     - [x] Generate the final report in `verification/results/traceability_report.md`.
-  - [ ] **Results**: Generate the Verification Results Report (Pass/Fail stats).
-    - [ ] Aggregate all RBT, robustness, and qualification test results into `verification/results/test_results_summary.md`.
-    - [ ] Provide detailed pass/fail statistics and evidence for all tested requirements.
-    - [ ] Generate a consolidated report including execution logs for each failed test case.
+  - [x] **Results**: Generate the Verification Results Report (Pass/Fail stats).
+    - [x] Aggregate all RBT, robustness, and qualification test results into `verification/results/test_results_summary.md`.
+    - [x] Provide detailed pass/fail statistics and evidence for all tested requirements.
+    - [x] Generate a consolidated report including execution logs for each failed test case.
   - [ ] **VAR**: Finalize the Verification Analysis Report (Coverage & Gap analysis).
     - [ ] Create `verification/results/var.md`.
     - [ ] Include the final MC/DC coverage metrics for all modules.
