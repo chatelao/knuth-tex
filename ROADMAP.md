@@ -89,7 +89,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Develop BVA tests for TeX integer registers (max/min values).
     - [x] Develop BVA tests for Metafont coordinate ranges.
     - [x] Develop BVA tests for TeX/Metafont internal constants (e.g., `buf_size`, `error_line`).
-  - [ ] Implement Error Handling and Resource Exhaustion tests:
+  - [x] Implement Error Handling and Resource Exhaustion tests:
     - [x] TeX Resource Exhaustion:
       - [x] Develop tests for TeX stack overflow (macro recursion).
       - [x] Develop tests for TeX string pool exhaustion.
@@ -141,7 +141,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Implement logic to identify independence pairs from test vectors.
     - [x] Develop MC/DC Report Generator utility.
     - [x] Integrate the MC/DC instrumenter and runtime into the harness runner.
-    - [ ] Pilot Module Coverage (Strings):
+    - [x] Pilot Module Coverage (Strings):
       - [x] Identify all Pascal routines corresponding to WEB "Strings" sections:
         - `make_string`
         - `str_eq_buf`
@@ -151,11 +151,11 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Configure `Instrumenter` to selectively instrument only the identified "Strings" routines.
 - [ ] **Gap Analysis & Augmentation (Strings Module)**:
   - [ ] **Baseline Coverage Assessment**:
-    - [ ] Create a dedicated harness configuration for Strings module instrumentation.
+    - [x] Create a dedicated harness configuration for Strings module instrumentation (`mcdc_strings_config.yaml`).
     - [ ] Execute the test runner with the `--mcdc` flag using the Strings-specific configuration for all RBT cases.
     - [ ] Verify the generation of `mcdc_report.yaml` containing coverage for target routines.
-    - [ ] Aggregate coverage data from multiple runs into a consolidated report.
-    - [ ] Verify that all identified routines (`make_string`, `str_eq_buf`, etc.) are hit at least once.
+    - [x] Implement a tool to aggregate coverage data from multiple runs (`aggregate_coverage.py`).
+    - [ ] Execute aggregation and verify that all identified routines are hit at least once.
   - [ ] **Structural Gap Identification**:
     - [ ] Analyze `make_string` for uncovered decision points (e.g., pool exhaustion checks).
     - [ ] Analyze `str_eq_buf` and `str_eq_str`/`str_vs_str` for branch coverage gaps.
@@ -201,9 +201,13 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Analyze any failures and provide mitigation or corrective actions.
   - [ ] **Compiler/Tangle Verification**:
     - [ ] **TANGLE Output Validation**:
-      - [ ] Implement automated script to compare `TANGLE` generated Pascal against canonical listings.
-      - [ ] Verify handling of WEB numeric macros (e.g., constant expansion).
-      - [ ] Verify handling of WEB string macros and pool file generation.
+      - [ ] Develop `verify_tangle_output.py` to compare generated Pascal against `tex.p`/`mf.p` canonical listings.
+      - [ ] **Macro Expansion Verification**:
+        - [ ] Verify numeric macro expansion (e.g., `mem_max`, `buf_size`).
+        - [ ] Verify string macro expansion and pool file (`.pool`) consistency.
+      - [ ] **Structural Consistency**:
+        - [ ] Verify module header/footer comment preservation (if any).
+        - [ ] Verify GOTO label mapping consistency between WEB and Pascal.
       - [ ] Perform manual spot-checks on complex module transitions in `tex.p` and `mf.p`.
     - [ ] **Pascal Compiler Validation**:
       - [ ] Procure or implement the ISO 7185 Pascal Level 0 test suite.
@@ -211,12 +215,12 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] Verify compiler-specific extensions used in `tex.ch` and `mf.ch` (e.g., command line access).
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
-    - [ ] Create `verification/results/sas.md`.
-    - [ ] Document system overview and verification environment (tools, compilers, OS).
-    - [ ] Provide a summary of compliance with HLRs and LLRs.
-    - [ ] Summarize all TQR (Tool Qualification) results.
-    - [ ] Document all deviations from the original verification plan and their impact.
-    - [ ] Compile a final list of open/closed problem reports.
+    - [x] Create `verification/results/sas.md` template.
+    - [ ] Finalize Section 1: System Overview and Verification Environment.
+    - [ ] Finalize Section 3: Summary of Compliance with HLRs and LLRs.
+    - [ ] Finalize Section 4: Summary of all TQR (Tool Qualification) results.
+    - [ ] Finalize Section 5: Document all deviations from the original verification plan.
+    - [ ] Finalize Section 6: Compile a final list of open/closed problem reports.
   - [x] **Traceability**: Generate the final Traceability Report (HLR/LLR/TC).
     - [x] Verify 100% bi-directional mapping between requirements and tests.
     - [x] Create a script to export `matrix.yaml` into human-readable traceability tables in `verification/results/traceability_report.md`.
@@ -226,9 +230,9 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Provide detailed pass/fail statistics and evidence for all tested requirements.
     - [x] Generate a consolidated report including execution logs for each failed test case.
   - [ ] **VAR**: Finalize the Verification Analysis Report (Coverage & Gap analysis).
-    - [ ] Create `verification/results/var.md`.
+    - [x] Create `verification/results/var.md` template.
     - [ ] **Structural Coverage Analysis**:
-      - [ ] Aggregate MC/DC metrics for the pilot module (Strings).
+      - [ ] Aggregate MC/DC metrics for the pilot module (Strings) using `aggregate_coverage.py`.
       - [ ] Provide a breakdown of coverage by routine and decision point.
     - [ ] **Gap & Dead Code Analysis**:
       - [ ] Document justifications for any uncovered conditions (e.g., defensive code, unreachable states).

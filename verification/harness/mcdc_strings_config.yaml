@@ -1,0 +1,21 @@
+# Harness configuration for selective MC/DC instrumentation of the Strings module
+tangle_path: "tangle"
+pascal_compiler: "fpc"
+tex_source_dir: "dist/tex"
+mf_source_dir: "dist/mf"
+output_dir: "verification/results"
+mcdc: true
+
+# Selective MC/DC instrumentation for the Strings module (Phase 5)
+mcdc_include_routines:
+  - "make_string"
+  - "str_eq_buf"
+  - "str_eq_str"
+  - "str_vs_str"
+  - "get_strings_started"
+
+# Paths to symbolic comparison tools (expected to be in PATH or provided via config)
+dvitype_path: "dvitype"
+gftype_path: "gftype"
+pktype_path: "pktype"
+tftopl_path: "tftopl"
