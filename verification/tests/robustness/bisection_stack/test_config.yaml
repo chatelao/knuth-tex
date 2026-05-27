@@ -1,0 +1,10 @@
+# Metafont Bisection Stack Safety Margin Robustness Test Configuration
+test_id: "TC-MF-ROB-006"
+description: "Robustness test for Metafont bisection stack safety margins (bad=31, 32 checks)"
+source_web: "dist/mf/mf.web"
+change_file: "verification/tests/robustness/bisection_stack/bisection_stack.ch"
+test_input_data: "\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/bisection_stack/expected_terminal.out"
