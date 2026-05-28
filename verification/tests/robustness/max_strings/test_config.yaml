@@ -1,0 +1,12 @@
+# TeX String Number Overflow Robustness Test Configuration
+test_id: "TC-STR-001"
+description: "Robustness test for TeX string number overflow (max_strings)"
+source_web: "dist/tex/tex.web"
+setup_files:
+  - "dist/lib/plain.tex"
+  - "verification/tests/robustness/max_strings/max_strings.tex"
+test_input_data: "\n\\input max_strings\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/max_strings/expected_terminal.out"

@@ -168,7 +168,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Analyze `str_eq_buf` and `str_eq_str`/`str_vs_str` for branch coverage gaps.
     - [x] Identify conditions in `get_strings_started` that require specific environment states (e.g., pool file existence).
   - [ ] **Test Suite Augmentation**:
-    - [ ] **TC-STR-001 (Resource Exhaustion)**: Develop test case to trigger `str_ptr = max_strings` in `make_string`.
+    - [x] **TC-STR-001 (Resource Exhaustion)**: Develop test case to trigger `str_ptr = max_strings` in `make_string`.
     - [ ] **TC-STR-002 (Pool Corruption)**: Develop test case to trigger digit validation errors in `get_strings_started`.
     - [ ] **TC-STR-003 (Checksum Mismatch)**: Develop test case with invalid pool checksum.
     - [ ] **TC-STR-004 (File Handling)**: Develop test case for missing or truncated `.pool` file.
