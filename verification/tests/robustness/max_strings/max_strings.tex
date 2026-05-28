@@ -1,0 +1,12 @@
+% TeX Number of Strings Overflow Test
+\catcode`@=11
+\newcount\stringcount
+\stringcount=0
+\loop
+  \advance\stringcount by 1
+  % Create a short unique string to hit max_strings (3000) before pool_size (32000)
+  % Each \csname call with a new name will create a new string in the pool.
+  \expandafter\expandafter\expandafter\let\expandafter\csname\the\stringcount\endcsname\undefined
+\ifnum\stringcount<3100
+\repeat
+\bye
