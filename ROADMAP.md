@@ -84,7 +84,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Implement `STORY` test case (Basic TeX paragraph breaking).
     - [x] Implement `HELLO` test case (Basic TeX macro expansion).
     - [x] Implement `LOGO` test case (Metafont character generation).
-- [ ] **Robustness Testing**:
+- [x] **Robustness Testing**:
   - [x] Implement Boundary Value Analysis (BVA) tests:
     - [x] Develop BVA tests for TeX integer registers (max/min values).
     - [x] Develop BVA tests for Metafont coordinate ranges.
@@ -152,14 +152,21 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 - [ ] **Gap Analysis & Augmentation (Strings Module)**:
   - [ ] **Baseline Coverage Assessment**:
     - [x] Create a dedicated harness configuration for Strings module instrumentation (`mcdc_strings_config.yaml`).
-    - [ ] Execute the test runner with the `--mcdc` flag using the Strings-specific configuration for all RBT cases.
+    - [ ] Execute the test runner with the `--mcdc` flag for all RBT cases:
+      - [ ] Execute RBT: `STORY` with selective instrumentation.
+      - [ ] Execute RBT: `HELLO` with selective instrumentation.
+      - [ ] Execute RBT: `LOGO` with selective instrumentation.
+      - [ ] Execute RBT: `TRIP` with selective instrumentation.
+      - [ ] Execute RBT: `TRAP` with selective instrumentation.
     - [ ] Verify the generation of `mcdc_report.yaml` containing coverage for target routines.
     - [x] Implement a tool to aggregate coverage data from multiple runs (`aggregate_coverage.py`).
-    - [ ] Execute aggregation and verify that all identified routines are hit at least once.
+    - [ ] Execute aggregation of all RBT coverage reports.
+    - [ ] Verify that all identified routines (`make_string`, `str_eq_buf`, etc.) are hit at least once.
   - [ ] **Structural Gap Identification**:
-    - [ ] Analyze `make_string` for uncovered decision points (e.g., pool exhaustion checks).
+    - [ ] Perform static analysis of `make_string` in `tex.web`/`mf.web` to map boolean conditions to MC/DC pairs.
+    - [ ] Identify uncovered decision points in `make_string` (e.g., `str_ptr = max_strings` check).
     - [ ] Analyze `str_eq_buf` and `str_eq_str`/`str_vs_str` for branch coverage gaps.
-    - [ ] Identify conditions in `get_strings_started` that require specific environment states.
+    - [ ] Identify conditions in `get_strings_started` that require specific environment states (e.g., pool file existence).
   - [ ] **Test Suite Augmentation**:
     - [ ] Develop targeted test cases for uncovered boolean condition combinations (MC/DC).
     - [ ] Implement tests for boundary conditions in string pool management.
@@ -216,7 +223,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
     - [x] Create `verification/results/sas.md` template.
-    - [ ] Finalize Section 1: System Overview and Verification Environment.
+    - [x] Finalize Section 1: System Overview and Verification Environment.
     - [ ] Finalize Section 3: Summary of Compliance with HLRs and LLRs.
     - [ ] Finalize Section 4: Summary of all TQR (Tool Qualification) results.
     - [ ] Finalize Section 5: Document all deviations from the original verification plan.
