@@ -163,13 +163,16 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [ ] Execute aggregation of all RBT coverage reports.
     - [ ] Verify that all identified routines (`make_string`, `str_eq_buf`, etc.) are hit at least once.
   - [ ] **Structural Gap Identification**:
-    - [ ] Perform static analysis of `make_string` in `tex.web`/`mf.web` to map boolean conditions to MC/DC pairs.
-    - [ ] Identify uncovered decision points in `make_string` (e.g., `str_ptr = max_strings` check).
-    - [ ] Analyze `str_eq_buf` and `str_eq_str`/`str_vs_str` for branch coverage gaps.
-    - [ ] Identify conditions in `get_strings_started` that require specific environment states (e.g., pool file existence).
+    - [x] Perform static analysis of `make_string` in `tex.web`/`mf.web` to map boolean conditions to MC/DC pairs.
+    - [x] Identify uncovered decision points in `make_string` (e.g., `str_ptr = max_strings` check).
+    - [x] Analyze `str_eq_buf` and `str_eq_str`/`str_vs_str` for branch coverage gaps.
+    - [x] Identify conditions in `get_strings_started` that require specific environment states (e.g., pool file existence).
   - [ ] **Test Suite Augmentation**:
-    - [ ] Develop targeted test cases for uncovered boolean condition combinations (MC/DC).
-    - [ ] Implement tests for boundary conditions in string pool management.
+    - [ ] **TC-STR-001 (Resource Exhaustion)**: Develop test case to trigger `str_ptr = max_strings` in `make_string`.
+    - [ ] **TC-STR-002 (Pool Corruption)**: Develop test case to trigger digit validation errors in `get_strings_started`.
+    - [ ] **TC-STR-003 (Checksum Mismatch)**: Develop test case with invalid pool checksum.
+    - [ ] **TC-STR-004 (File Handling)**: Develop test case for missing or truncated `.pool` file.
+    - [ ] **TC-STR-005 (String Comparison)**: Develop tests for varying length and mismatching character combinations in `str_eq_str` and `str_vs_str`.
     - [ ] Execute augmented suite and verify improvement in coverage metrics.
   - [ ] **Final Analysis & Justification**:
     - [ ] Document final MC/DC percentages for each routine in the Strings module.
