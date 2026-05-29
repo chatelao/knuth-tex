@@ -1,0 +1,13 @@
+# TeX String Comparison (str_eq_str) Robustness Test Configuration
+test_id: "TC-STR-005-A"
+description: "Verify str_eq_str (TeX) with identical and differing string contents"
+source_web: "dist/tex/tex.web"
+setup_files:
+  - "dist/lib/plain.tex"
+  - "dist/tex/trip.tfm"
+  - "verification/tests/robustness/string_comparison/string_comparison.tex"
+test_input_data: "\n\\input string_comparison\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/string_comparison/expected_terminal.out"
