@@ -169,10 +169,16 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Identify conditions in `get_strings_started` that require specific environment states (e.g., pool file existence).
   - [ ] **Test Suite Augmentation**:
     - [x] **TC-STR-001 (Resource Exhaustion)**: Develop test case to trigger `str_ptr = max_strings` in `make_string`.
-    - [ ] **TC-STR-002 (Pool Corruption)**: Develop test case to trigger digit validation errors in `get_strings_started`.
+    - [ ] **TC-STR-002 (Pool Corruption)**: Develop test cases to trigger digit validation errors in `get_strings_started`:
+      - [ ] **TC-STR-002-A**: Test with non-digit character in string length indicator.
+      - [ ] **TC-STR-002-B**: Test with premature end-of-line (EOL) before expected string content.
     - [ ] **TC-STR-003 (Checksum Mismatch)**: Develop test case with invalid pool checksum.
-    - [ ] **TC-STR-004 (File Handling)**: Develop test case for missing or truncated `.pool` file.
-    - [ ] **TC-STR-005 (String Comparison)**: Develop tests for varying length and mismatching character combinations in `str_eq_str` and `str_vs_str`.
+    - [ ] **TC-STR-004 (File Handling)**: Develop test cases for missing or truncated `.pool` file:
+      - [ ] **TC-STR-004-A**: Test with missing `.pool` file (I/O failure).
+      - [ ] **TC-STR-004-B**: Test with premature end-of-file (EOF) before checksum.
+    - [ ] **TC-STR-005 (String Comparison)**: Develop tests for varying length and mismatching character combinations:
+      - [ ] **TC-STR-005-A**: Verify `str_eq_str` (TeX) with identical and differing string contents.
+      - [ ] **TC-STR-005-B**: Verify `str_vs_str` (Metafont) lexicographical ordering.
     - [ ] Execute augmented suite and verify improvement in coverage metrics.
   - [ ] **Final Analysis & Justification**:
     - [ ] Document final MC/DC percentages for each routine in the Strings module.
@@ -222,7 +228,9 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [ ] **Pascal Compiler Validation**:
       - [ ] Procure or implement the ISO 7185 Pascal Level 0 test suite.
       - [ ] Execute suite using the target compiler (e.g., `fpc`) and document results.
-      - [ ] Verify compiler-specific extensions used in `tex.ch` and `mf.ch` (e.g., command line access).
+      - [ ] Verify compiler-specific extensions used in `tex.ch` and `mf.ch`:
+        - [ ] Verify command-line argument access routines (e.g., `argc`, `argv` wrappers).
+        - [ ] Verify non-standard system-dependent I/O procedures (e.g., file existence checks).
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
     - [x] Create `verification/results/sas.md` template.
