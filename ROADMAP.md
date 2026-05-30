@@ -176,9 +176,9 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [ ] **TC-STR-004 (File Handling)**: Develop test cases for missing or truncated `.pool` file:
       - [ ] **TC-STR-004-A**: Test with missing `.pool` file (I/O failure).
       - [ ] **TC-STR-004-B**: Test with premature end-of-file (EOF) before checksum.
-    - [ ] **TC-STR-005 (String Comparison)**: Develop tests for varying length and mismatching character combinations:
+    - [x] **TC-STR-005 (String Comparison)**: Develop tests for varying length and mismatching character combinations:
       - [x] **TC-STR-005-A**: Verify `str_eq_str` (TeX) with identical and differing string contents.
-      - [ ] **TC-STR-005-B**: Verify `str_vs_str` (Metafont) lexicographical ordering.
+      - [x] **TC-STR-005-B**: Verify `str_vs_str` (Metafont) lexicographical ordering.
     - [ ] Execute augmented suite and verify improvement in coverage metrics.
   - [ ] **Final Analysis & Justification**:
     - [ ] **Aggregate Coverage**: Use `aggregate_coverage.py` to merge results from all RBT and augmented Strings tests.
