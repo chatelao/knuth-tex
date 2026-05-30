@@ -1,0 +1,15 @@
+% string_comparison.tex
+% This test exercises str_eq_str by defining several fonts.
+% TeX uses str_eq_str to check if a font has already been loaded.
+
+\font\a=trip
+\font\b=trip  % Identical strings: trip vs trip (matches length, then content)
+\font\c=tripp % Different length: tripp vs trip (detected by length comparison)
+\font\d=trap  % Same length, different content: trap vs trip (detected by content loop)
+
+\a Hello
+\b Hello
+\c Hello
+\d Hello
+
+\bye

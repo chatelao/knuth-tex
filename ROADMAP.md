@@ -177,12 +177,14 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] **TC-STR-004-A**: Test with missing `.pool` file (I/O failure).
       - [ ] **TC-STR-004-B**: Test with premature end-of-file (EOF) before checksum.
     - [ ] **TC-STR-005 (String Comparison)**: Develop tests for varying length and mismatching character combinations:
-      - [ ] **TC-STR-005-A**: Verify `str_eq_str` (TeX) with identical and differing string contents.
+      - [x] **TC-STR-005-A**: Verify `str_eq_str` (TeX) with identical and differing string contents.
       - [ ] **TC-STR-005-B**: Verify `str_vs_str` (Metafont) lexicographical ordering.
     - [ ] Execute augmented suite and verify improvement in coverage metrics.
   - [ ] **Final Analysis & Justification**:
-    - [ ] Document final MC/DC percentages for each routine in the Strings module.
-    - [ ] Provide engineering justifications for any unreachable code or uncovered conditions in the VAR.
+    - [ ] **Aggregate Coverage**: Use `aggregate_coverage.py` to merge results from all RBT and augmented Strings tests.
+    - [ ] **Routine Analysis**: Document final MC/DC percentages for `make_string`, `str_eq_buf`, `str_eq_str`, `str_vs_str`, and `get_strings_started`.
+    - [ ] **Gap Analysis**: Review uncovered branches (e.g., specific error conditions in `get_strings_started`).
+    - [ ] **VAR Documentation**: Provide engineering justifications for any unreachable code or uncovered conditions in the Verification Analysis Report.
 
 ## Phase 6: Tool Qualification & Final Certification
 - [ ] **Tool Qualification**:
