@@ -1,0 +1,12 @@
+# Metafont Premature EOF in Pool File Robustness Test Configuration
+test_id: "TC-STR-004-B"
+description: "Robustness test for Metafont string pool (premature EOF / missing checksum)"
+source_web: "dist/mf/mf.web"
+change_file: "verification/tests/robustness/pool_eof_mf/pool_eof_mf.ch"
+setup_files:
+  - "verification/tests/robustness/pool_eof_mf/eof.pool"
+test_input_data: "\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/pool_eof_mf/expected_terminal.out"
