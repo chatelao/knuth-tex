@@ -216,12 +216,14 @@
   test_case_ids:
     - TC-MF-TRAP-001
     - TC-STR-005-B
+    - TC-STR-004-A
 - hlr_id: HLR-MF-FUN-007
   llr_ids:
     - LLR-MF-SEC-006
     - LLR-MF-SEC-050
   test_case_ids:
     - TC-MF-TRAP-001
+    - TC-STR-004-A
 - hlr_id: HLR-MF-FUN-008
   llr_ids:
     - LLR-MF-SEC-027
