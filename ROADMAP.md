@@ -181,10 +181,18 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] **TC-STR-005-B**: Verify `str_vs_str` (Metafont) lexicographical ordering.
     - [ ] Execute augmented suite and verify improvement in coverage metrics.
   - [ ] **Final Analysis & Justification**:
-    - [ ] **Aggregate Coverage**: Use `aggregate_coverage.py` to merge results from all RBT and augmented Strings tests.
-    - [ ] **Routine Analysis**: Document final MC/DC percentages for `make_string`, `str_eq_buf`, `str_eq_str`, `str_vs_str`, and `get_strings_started`.
-    - [ ] **Gap Analysis**: Review uncovered branches (e.g., specific error conditions in `get_strings_started`).
-    - [ ] **VAR Documentation**: Provide engineering justifications for any unreachable code or uncovered conditions in the Verification Analysis Report.
+    - [ ] **Aggregate Coverage**:
+      - [ ] Aggregate MC/DC reports from all RBT and augmented Strings tests using `aggregate_coverage.py`.
+      - [ ] Verify that the aggregated report includes all target routines for the Strings module.
+    - [ ] **Routine Analysis**:
+      - [ ] Generate detailed coverage reports for each routine (`make_string`, `str_eq_buf`, etc.).
+      - [ ] Review branch-level and condition-level coverage for each routine.
+    - [ ] **Gap & Dead Code Analysis**:
+      - [ ] Review uncovered decision points in `get_strings_started` (e.g., file existence checks).
+      - [ ] Identify any "dead code" or unreachable branches in the Strings routines.
+    - [ ] **VAR Documentation**:
+      - [ ] Document final MC/DC percentages in the Verification Analysis Report (VAR).
+      - [ ] Provide formal engineering justifications for all uncovered conditions.
 
 ## Phase 6: Tool Qualification & Final Certification
 - [ ] **Tool Qualification**:
@@ -219,20 +227,23 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Analyze any failures and provide mitigation or corrective actions.
   - [ ] **Compiler/Tangle Verification**:
     - [ ] **TANGLE Output Validation**:
-      - [ ] Develop `verify_tangle_output.py` to compare generated Pascal against `tex.p`/`mf.p` canonical listings.
+      - [ ] Develop `verify_tangle_output.py` utility for automated comparison.
       - [ ] **Macro Expansion Verification**:
-        - [ ] Verify numeric macro expansion (e.g., `mem_max`, `buf_size`).
-        - [ ] Verify string macro expansion and pool file (`.pool`) consistency.
+        - [ ] Verify numeric macro expansion for memory constants (`mem_max`, `mem_min`).
+        - [ ] Verify buffer size macro expansion (`buf_size`).
+        - [ ] Verify string pool (`.pool`) consistency with the generated Pascal source.
       - [ ] **Structural Consistency**:
-        - [ ] Verify module header/footer comment preservation (if any).
-        - [ ] Verify GOTO label mapping consistency between WEB and Pascal.
+        - [ ] Map WEB modules to corresponding Pascal procedure/function definitions.
+        - [ ] Verify GOTO label mapping and block structure integrity.
       - [ ] Perform manual spot-checks on complex module transitions in `tex.p` and `mf.p`.
     - [ ] **Pascal Compiler Validation**:
-      - [ ] Procure or implement the ISO 7185 Pascal Level 0 test suite.
-      - [ ] Execute suite using the target compiler (e.g., `fpc`) and document results.
-      - [ ] Verify compiler-specific extensions used in `tex.ch` and `mf.ch`:
+      - [ ] **ISO 7185 Compliance**:
+        - [ ] Procure or implement the ISO 7185 Pascal Level 0 test suite.
+        - [ ] Execute the suite using the target compiler (e.g., `fpc`) and document results.
+      - [ ] **Extension Verification**:
         - [ ] Verify command-line argument access routines (e.g., `argc`, `argv` wrappers).
-        - [ ] Verify non-standard system-dependent I/O procedures (e.g., file existence checks).
+        - [ ] Validate system-dependent I/O procedures used in the change files.
+        - [ ] Verify support for non-standard `GOTO` labels if used.
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
     - [x] Create `verification/results/sas.md` template.
