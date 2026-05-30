@@ -220,6 +220,7 @@
     - TC-STR-005-B
     - TC-STR-004-A
     - TC-STR-004-B
+    - TC-STR-002-B
 - hlr_id: HLR-MF-FUN-007
   llr_ids:
     - LLR-MF-SEC-006
@@ -228,6 +229,7 @@
     - TC-MF-TRAP-001
     - TC-STR-004-A
     - TC-STR-004-B
+    - TC-STR-002-B
 - hlr_id: HLR-MF-FUN-008
   llr_ids:
     - LLR-MF-SEC-027
