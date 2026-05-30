@@ -1,0 +1,13 @@
+% string_vs_str.mf
+% This test exercises str_vs_str (Metafont) with various string comparisons.
+
+if "abc" = "abc": message "OK: abc = abc"; else: errmessage "FAIL: abc = abc"; fi
+if "abc" <> "abd": message "OK: abc <> abd"; else: errmessage "FAIL: abc <> abd"; fi
+if "abc" < "abd": message "OK: abc < abd"; else: errmessage "FAIL: abc < abd"; fi
+if "abd" > "abc": message "OK: abd > abc"; else: errmessage "FAIL: abd > abc"; fi
+if "abc" < "abcd": message "OK: abc < abcd"; else: errmessage "FAIL: abc < abcd"; fi
+if "abd" > "abcde": message "OK: abd > abcde"; else: errmessage "FAIL: abd > abcde"; fi
+if "" < "a": message "OK: empty < a"; else: errmessage "FAIL: empty < a"; fi
+if "apple" < "apply": message "OK: apple < apply"; else: errmessage "FAIL: apple < apply"; fi
+
+end.

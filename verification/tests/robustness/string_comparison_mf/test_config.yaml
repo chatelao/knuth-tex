@@ -1,0 +1,12 @@
+# Metafont String Comparison (str_vs_str) Robustness Test Configuration
+test_id: "TC-STR-005-B"
+description: "Verify str_vs_str (Metafont) lexicographical ordering"
+source_web: "dist/mf/mf.web"
+setup_files:
+  - "dist/lib/plain.mf"
+  - "verification/tests/robustness/string_comparison_mf/string_vs_str.mf"
+test_input_data: "\ninput string_vs_str\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/string_comparison_mf/expected_terminal.out"
