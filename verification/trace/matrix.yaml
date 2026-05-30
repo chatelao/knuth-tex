@@ -41,6 +41,7 @@
     - TC-TEX-ROB-006
     - TC-TEX-ROB-008
     - TC-STR-001
+    - TC-STR-002-A
     - TC-STR-005-A
 - hlr_id: HLR-TEX-FUN-007
   llr_ids:
@@ -55,6 +56,7 @@
   test_case_ids:
     - TC-TEX-TRIP-001
     - TC-STR-001
+    - TC-STR-002-A
     - TC-STR-005-A
 - hlr_id: HLR-TEX-FUN-008
   llr_ids:

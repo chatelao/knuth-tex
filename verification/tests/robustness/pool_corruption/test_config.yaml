@@ -1,0 +1,12 @@
+# TeX String Pool Corruption Robustness Test Configuration
+test_id: "TC-STR-002-A"
+description: "Robustness test for TeX string pool corruption (non-digit length)"
+source_web: "dist/tex/tex.web"
+change_file: "verification/tests/robustness/pool_corruption/pool_corruption.ch"
+setup_files:
+  - "verification/tests/robustness/pool_corruption/corrupt.pool"
+test_input_data: "\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/pool_corruption/expected_terminal.out"
