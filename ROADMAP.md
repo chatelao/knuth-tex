@@ -169,11 +169,11 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Identify conditions in `get_strings_started` that require specific environment states (e.g., pool file existence).
   - [ ] **Test Suite Augmentation**:
     - [x] **TC-STR-001 (Resource Exhaustion)**: Develop test case to trigger `str_ptr = max_strings` in `make_string`.
-    - [ ] **TC-STR-002 (Pool Corruption)**: Develop test cases to trigger digit validation errors in `get_strings_started`:
+    - [x] **TC-STR-002 (Pool Corruption)**: Develop test cases to trigger digit validation errors in `get_strings_started`:
       - [x] **TC-STR-002-A**: Test with non-digit character in string length indicator.
       - [x] **TC-STR-002-B**: Test with premature end-of-line (EOL) before expected string content.
     - [x] **TC-STR-003 (Checksum Mismatch)**: Develop test case with invalid pool checksum.
-    - [ ] **TC-STR-004 (File Handling)**: Develop test cases for missing or truncated `.pool` file:
+    - [x] **TC-STR-004 (File Handling)**: Develop test cases for missing or truncated `.pool` file:
       - [x] **TC-STR-004-A**: Test with missing `.pool` file (I/O failure).
       - [x] **TC-STR-004-B**: Test with premature end-of-file (EOF) before checksum.
     - [x] **TC-STR-005 (String Comparison)**: Develop tests for varying length and mismatching character combinations:
@@ -185,7 +185,12 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] Aggregate MC/DC reports from all RBT and augmented Strings tests using `aggregate_coverage.py`.
       - [ ] Verify that the aggregated report includes all target routines for the Strings module.
     - [ ] **Routine Analysis**:
-      - [ ] Generate detailed coverage reports for each routine (`make_string`, `str_eq_buf`, etc.).
+      - [ ] Generate detailed coverage reports for each routine:
+        - [ ] `make_string`
+        - [ ] `str_eq_buf`
+        - [ ] `str_eq_str`
+        - [ ] `str_vs_str`
+        - [ ] `get_strings_started`
       - [ ] Review branch-level and condition-level coverage for each routine.
     - [ ] **Gap & Dead Code Analysis**:
       - [ ] Review uncovered decision points in `get_strings_started` (e.g., file existence checks).
@@ -248,9 +253,9 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [ ] **SAS**: Software Accomplishment Summary.
     - [x] Create `verification/results/sas.md` template.
     - [x] Finalize Section 1: System Overview and Verification Environment.
+    - [x] Finalize Section 5: Document all deviations from the original verification plan.
     - [ ] Finalize Section 3: Summary of Compliance with HLRs and LLRs.
     - [ ] Finalize Section 4: Summary of all TQR (Tool Qualification) results.
-    - [ ] Finalize Section 5: Document all deviations from the original verification plan.
     - [ ] Finalize Section 6: Compile a final list of open/closed problem reports.
   - [x] **Traceability**: Generate the final Traceability Report (HLR/LLR/TC).
     - [x] Verify 100% bi-directional mapping between requirements and tests.
