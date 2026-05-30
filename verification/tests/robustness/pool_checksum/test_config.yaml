@@ -1,0 +1,12 @@
+# TeX String Pool Checksum Mismatch Robustness Test Configuration
+test_id: "TC-STR-003"
+description: "Robustness test for TeX string pool checksum mismatch"
+source_web: "dist/tex/tex.web"
+change_file: "verification/tests/robustness/pool_checksum/pool_checksum.ch"
+setup_files:
+  - "verification/tests/robustness/pool_checksum/bad_checksum.pool"
+test_input_data: "\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/pool_checksum/expected_terminal.out"
