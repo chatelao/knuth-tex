@@ -1,0 +1,10 @@
+# Metafont Missing String Pool Robustness Test Configuration
+test_id: "TC-STR-004-A"
+description: "Robustness test for Metafont missing string pool file"
+source_web: "dist/mf/mf.web"
+change_file: "verification/tests/robustness/pool_missing_mf/pool_missing_mf.ch"
+test_input_data: "\n"
+settings:
+  tolerance: 0.1
+expected_outputs:
+  terminal: "verification/tests/robustness/pool_missing_mf/expected_terminal.out"

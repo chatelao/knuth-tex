@@ -174,7 +174,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] **TC-STR-002-B**: Test with premature end-of-line (EOL) before expected string content.
     - [ ] **TC-STR-003 (Checksum Mismatch)**: Develop test case with invalid pool checksum.
     - [ ] **TC-STR-004 (File Handling)**: Develop test cases for missing or truncated `.pool` file:
-      - [ ] **TC-STR-004-A**: Test with missing `.pool` file (I/O failure).
+      - [x] **TC-STR-004-A**: Test with missing `.pool` file (I/O failure).
       - [ ] **TC-STR-004-B**: Test with premature end-of-file (EOF) before checksum.
     - [x] **TC-STR-005 (String Comparison)**: Develop tests for varying length and mismatching character combinations:
       - [x] **TC-STR-005-A**: Verify `str_eq_str` (TeX) with identical and differing string contents.
