@@ -170,7 +170,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [ ] **Test Suite Augmentation**:
     - [x] **TC-STR-001 (Resource Exhaustion)**: Develop test case to trigger `str_ptr = max_strings` in `make_string`.
     - [ ] **TC-STR-002 (Pool Corruption)**: Develop test cases to trigger digit validation errors in `get_strings_started`:
-      - [ ] **TC-STR-002-A**: Test with non-digit character in string length indicator.
+      - [x] **TC-STR-002-A**: Test with non-digit character in string length indicator.
       - [ ] **TC-STR-002-B**: Test with premature end-of-line (EOL) before expected string content.
     - [ ] **TC-STR-003 (Checksum Mismatch)**: Develop test case with invalid pool checksum.
     - [ ] **TC-STR-004 (File Handling)**: Develop test cases for missing or truncated `.pool` file:
