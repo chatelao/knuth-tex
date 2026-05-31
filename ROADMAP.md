@@ -249,7 +249,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - [ ] Execute the suite using the target compiler (e.g., `fpc`) and document results.
       - [ ] **Extension Verification**:
           - [x] Verify command-line argument access routines (e.g., `argc`, `argv` wrappers).
-        - [ ] Validate system-dependent I/O procedures used in the change files.
+        - [x] Validate system-dependent I/O procedures for utilities (TANGLE, WEAVE, etc.).
+        - [ ] Validate system-dependent I/O procedures for TeX/Metafont engines.
         - [ ] Verify support for non-standard `GOTO` labels if used.
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
