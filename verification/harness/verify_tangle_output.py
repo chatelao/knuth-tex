@@ -11,7 +11,7 @@ class PascalNormalizer:
         Handles nested { ... } comments.
         """
         # Remove (* ... *) comments first (they don't typically nest)
-        code = re.sub(r'\(\*.*?\*\)', '', code, flags=re.DOTALL)
+        code = re.sub(r'\(\*.*?\*\)', ' ', code, flags=re.DOTALL)
 
         # Handle { } comments with a stack to support nesting
         result = []
@@ -19,6 +19,8 @@ class PascalNormalizer:
         i = 0
         while i < len(code):
             if code[i] == '{':
+                if stack == 0:
+                    result.append(' ')
                 stack += 1
             elif code[i] == '}':
                 if stack > 0:
