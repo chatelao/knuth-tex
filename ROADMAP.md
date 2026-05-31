@@ -256,9 +256,9 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
     - [x] Create `verification/results/sas.md` template.
     - [x] Finalize Section 1: System Overview and Verification Environment.
     - [x] Finalize Section 5: Document all deviations from the original verification plan.
-    - [ ] Finalize Section 3: Summary of Compliance with HLRs and LLRs.
-    - [ ] Finalize Section 4: Summary of all TQR (Tool Qualification) results.
-    - [ ] Finalize Section 6: Compile a final list of open/closed problem reports.
+    - [x] Finalize Section 3: Summary of Compliance with HLRs and LLRs.
+    - [x] Finalize Section 4: Summary of all TQR (Tool Qualification) results.
+    - [x] Finalize Section 6: Compile a final list of open/closed problem reports.
   - [x] **Traceability**: Generate the final Traceability Report (HLR/LLR/TC).
     - [x] Verify 100% bi-directional mapping between requirements and tests.
     - [x] Create a script to export `matrix.yaml` into human-readable traceability tables in `verification/results/traceability_report.md`.

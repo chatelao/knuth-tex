@@ -33,3 +33,4 @@ requirements.txt.log
 # Verification results
 verification/results/*
 !verification/results/.gitkeep
+!verification/results/*.md
