@@ -4,13 +4,14 @@ from verification.harness.verify_tangle_output import PascalNormalizer, TangleVa
 def test_strip_comments():
     normalizer = PascalNormalizer()
     code = "program test; { comment } begin (* another *) end."
-    assert normalizer.strip_comments(code) == "program test;  begin  end."
+    # Strip comments now replaces comments with a space to ensure token separation
+    assert normalizer.strip_comments(code).split() == ["program", "test;", "begin", "end."]
 
     code_nested = "code { { nested } } more code"
     # Note: Our simple regex might not handle nested comments perfectly if they are of the same type,
     # but standard Pascal doesn't really have nested comments of the same type.
     # {} and (* *) are different types and often used to 'nest' by compilers, but WEB/TANGLE output is usually simple.
-    assert normalizer.strip_comments(code_nested) == "code  more code"
+    assert normalizer.strip_comments(code_nested).split() == ["code", "more", "code"]
 
 def test_normalize_whitespace():
     normalizer = PascalNormalizer()
