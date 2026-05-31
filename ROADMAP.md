@@ -235,7 +235,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [x] Develop `verify_tangle_output.py` utility:
         - [x] Implement Pascal comment filtering and whitespace normalization.
         - [x] Implement constant extraction and macro verification logic.
-      - [ ] **Macro Expansion Verification**:
+      - [x] **Macro Expansion Verification**:
         - [x] Verify numeric macro expansion for memory constants (e.g., `mem_max`, `mem_min`).
         - [x] Verify buffer size macro expansion (e.g., `buf_size`).
         - [x] Verify string pool (`.pool`) consistency with the generated Pascal source.
