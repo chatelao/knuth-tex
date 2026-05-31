@@ -84,29 +84,88 @@ class TangleValidator:
 
         return results
 
+    def extract_pool_checksum(self, pool_content):
+        """
+        Extracts the 9-digit checksum from the pool file content.
+        The checksum line starts with '*' followed by 9 digits.
+        """
+        match = re.search(r'^\*(\d{9})', pool_content, re.MULTILINE)
+        if match:
+            return match.group(1)
+        return None
+
+    def extract_pascal_checksum(self):
+        """
+        Attempts to extract the checksum literal from the Pascal source.
+        It looks for the pattern 'if a <> <checksum> then ... doesn't match ...'
+        """
+        # Search for the string "doesn't match; TANGLE me again" and find the number before it.
+        # We use a broad pattern to account for potential macro expansions of bad_pool.
+        pattern = r'(\d+)\s+then\s+.*?doesn\'\'t match; (?:TANGLE|tangle) me again'
+        match = re.search(pattern, self.clean_code, re.IGNORECASE)
+        if match:
+            return match.group(1)
+
+        # Fallback: look for common @$ expansion pattern 'a <> <number>'
+        match = re.search(r'a\s*<>\s*(\d+)', self.clean_code)
+        if match:
+            return match.group(1)
+
+        return None
+
 def main():
-    if len(sys.argv) < 3:
-        print("Usage: python3 verify_tangle_output.py <pascal_file> <macro_name=value> [<macro_name=value> ...]")
-        sys.exit(1)
+    import argparse
+    parser = argparse.ArgumentParser(description="TANGLE output validator")
+    parser.add_argument("pascal_file", help="Path to the generated Pascal file")
+    parser.add_argument("--pool", help="Path to the generated pool file for checksum verification")
+    parser.add_argument("macros", nargs="*", help="Macro assignments in the form macro=value")
 
-    pascal_file = sys.argv[1]
-    expected_macros = {}
-    for arg in sys.argv[2:]:
-        if '=' in arg:
-            name, value = arg.split('=', 1)
-            expected_macros[name] = value
+    args = parser.parse_args()
 
-    with open(pascal_file, 'r') as f:
+    with open(args.pascal_file, 'r') as f:
         code = f.read()
 
     validator = TangleValidator(code)
-    results = validator.verify_macro_expansion(expected_macros)
-
     all_ok = True
-    for name, actual, expected, success in results:
-        status = "OK" if success else "FAILED"
-        print(f"Macro {name}: expected {expected}, got {actual} -> {status}")
-        if not success:
+
+    # 1. Verify macro expansions if provided
+    if args.macros:
+        expected_macros = {}
+        for arg in args.macros:
+            if '=' in arg:
+                name, value = arg.split('=', 1)
+                expected_macros[name] = value
+
+        results = validator.verify_macro_expansion(expected_macros)
+        for name, actual, expected, success in results:
+            status = "OK" if success else "FAILED"
+            print(f"Macro {name}: expected {expected}, got {actual} -> {status}")
+            if not success:
+                all_ok = False
+
+    # 2. Verify pool checksum if provided
+    if args.pool:
+        try:
+            with open(args.pool, 'r') as f:
+                pool_content = f.read()
+
+            pool_checksum = validator.extract_pool_checksum(pool_content)
+            pascal_checksum = validator.extract_pascal_checksum()
+
+            if pool_checksum and pascal_checksum:
+                success = (pool_checksum == pascal_checksum)
+                status = "OK" if success else "FAILED"
+                print(f"Pool Checksum: pool={pool_checksum}, pascal={pascal_checksum} -> {status}")
+                if not success:
+                    all_ok = False
+            else:
+                if not pool_checksum:
+                    print("Error: Could not extract checksum from pool file.")
+                if not pascal_checksum:
+                    print("Error: Could not extract checksum from Pascal file.")
+                all_ok = False
+        except Exception as e:
+            print(f"Error reading pool file: {e}")
             all_ok = False
 
     if not all_ok:
