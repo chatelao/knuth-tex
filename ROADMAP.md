@@ -248,7 +248,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - [ ] Procure or implement the ISO 7185 Pascal Level 0 test suite.
         - [ ] Execute the suite using the target compiler (e.g., `fpc`) and document results.
       - [ ] **Extension Verification**:
-        - [ ] Verify command-line argument access routines (e.g., `argc`, `argv` wrappers).
+          - [x] Verify command-line argument access routines (e.g., `argc`, `argv` wrappers).
         - [ ] Validate system-dependent I/O procedures used in the change files.
         - [ ] Verify support for non-standard `GOTO` labels if used.
 - [ ] **Final Documentation**:
