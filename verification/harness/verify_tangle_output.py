@@ -35,6 +35,10 @@ class PascalNormalizer:
 
         return "".join(result)
 
+    def strip_strings(self, code):
+        """Removes Pascal string literals from the code."""
+        return re.sub(r"'([^']|'')*'", "''", code)
+
     def normalize_whitespace(self, code):
         """Replaces multiple whitespace characters with a single space and strips leading/trailing whitespace."""
         return re.sub(r'\s+', ' ', code).strip()

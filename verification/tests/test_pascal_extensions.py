@@ -1,7 +1,9 @@
 import pytest
 import os
+import re
 from pathlib import Path
 from verification.harness.verify_pascal_extensions import PascalExtensionValidator
+from verification.harness.verify_tangle_output import PascalNormalizer
 
 def verify_extension_usage(pascal_file, extensions, required_usage=None, required_declaration=None):
     if not os.path.exists(pascal_file):
@@ -60,3 +62,37 @@ def test_dvitype_extensions():
 
 def test_gftodvi_extensions():
     verify_extension_usage('local/mfware/gftodvi.p', ['argc', 'argv', 'flushstdout', 'setpaths', 'testaccess'])
+
+def test_pooltype_extensions():
+    verify_extension_usage('local/texware/pooltype.p', ['argc', 'argv'])
+
+def test_pascal_labels():
+    """
+    Verifies that all label declarations in Pascal files are within the standard range (1-9999).
+    """
+    pascal_files = list(Path('local').rglob('*.p'))
+    # Matches label declarations. We catch all text until the semicolon to verify it.
+    label_pattern = re.compile(r'\blabel\b\s*([^;]+);', re.IGNORECASE)
+    normalizer = PascalNormalizer()
+
+    for p_file in pascal_files:
+        # Skip binary files if any
+        try:
+            with open(p_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+        except UnicodeDecodeError:
+            continue
+
+        # Strip comments and strings to avoid matching them in label lists
+        clean_content = normalizer.strip_strings(normalizer.strip_comments(content))
+
+        matches = label_pattern.findall(clean_content)
+        for label_group in matches:
+            # Labels can be comma-separated: label 10, 20, 30;
+            labels = [l.strip() for l in label_group.split(',')]
+            for label in labels:
+                if not label: continue
+                # Verify it is numeric and within range
+                assert label.isdigit(), f"Non-numeric label '{label}' found in {p_file}. Group: {label_group}"
+                val = int(label)
+                assert 1 <= val <= 9999, f"Label '{label}' out of standard range (1-9999) in {p_file}"
