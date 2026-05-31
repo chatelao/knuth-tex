@@ -61,3 +61,31 @@ def test_no_const_section():
     code = "program Test; var x: integer; begin end."
     validator = TangleValidator(code)
     assert validator.extract_constants() == {}
+
+def test_extract_pool_checksum():
+    validator = TangleValidator("")
+    pool_content = "00string1\n00string2\n*123456789\n"
+    assert validator.extract_pool_checksum(pool_content) == "123456789"
+
+    pool_no_checksum = "00string1\n"
+    assert validator.extract_pool_checksum(pool_no_checksum) is None
+
+def test_extract_pascal_checksum():
+    # TeX-style checksum comparison
+    code = "if a <> 123456789 then bad_pool('! TEX.POOL doesn''t match; TANGLE me again.');"
+    validator = TangleValidator(code)
+    assert validator.extract_pascal_checksum() == "123456789"
+
+    # Metafont-style checksum comparison (lowercase tangle)
+    code_mf = "if a <> 987654321 then bad_pool('! MF.POOL doesn''t match; tangle me again.');"
+    validator_mf = TangleValidator(code_mf)
+    assert validator_mf.extract_pascal_checksum() == "987654321"
+
+    # Fallback pattern
+    code_fallback = "a := 0; if a <> 111222333 then halt;"
+    validator_fb = TangleValidator(code_fallback)
+    assert validator_fb.extract_pascal_checksum() == "111222333"
+
+    # No checksum found
+    validator_none = TangleValidator("program Test; begin end.")
+    assert validator_none.extract_pascal_checksum() is None
