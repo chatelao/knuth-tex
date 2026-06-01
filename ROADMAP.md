@@ -256,6 +256,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
   - [ ] **SAS**: Software Accomplishment Summary.
     - [x] Create `verification/results/sas.md` template.
     - [x] Finalize Section 1: System Overview and Verification Environment.
+    - [x] Finalize Section 2: Verification Process.
     - [x] Finalize Section 5: Document all deviations from the original verification plan.
     - [x] Finalize Section 3: Summary of Compliance with HLRs and LLRs.
     - [x] Finalize Section 4: Summary of all TQR (Tool Qualification) results.
