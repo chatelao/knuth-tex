@@ -242,7 +242,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - [x] Implement program header and label declaration verification.
       - [ ] **Structural Consistency**:
         - [ ] Map WEB modules to corresponding Pascal procedure/function definitions:
-          - [ ] Develop a module-to-procedure mapping extractor for WEB files.
+          - [x] Develop a module-to-procedure mapping extractor for WEB files.
           - [ ] Verify procedure signatures against WEB module definitions.
           - [ ] Validate module ordering and inclusion in generated Pascal.
         - [ ] Verify GOTO label mapping and block structure integrity.
