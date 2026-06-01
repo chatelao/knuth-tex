@@ -255,7 +255,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
           - [x] Verify command-line argument access routines (e.g., `argc`, `argv` wrappers).
         - [x] Validate system-dependent I/O procedures for utilities (TANGLE, WEAVE, DVItype, etc.).
         - [ ] Validate system-dependent I/O procedures for TeX/Metafont engines:
-          - [ ] Identify system-dependent I/O routines in `tex.web` and `mf.web`.
+          - [x] Identify system-dependent I/O routines in `tex.web` and `mf.web`.
           - [ ] Verify implementation and usage of `a_open_in`, `a_open_out`, and `a_close` across all engines.
         - [x] Verify support for non-standard `GOTO` labels if used (All labels verified as standard 1-9999).
 - [ ] **Final Documentation**:
