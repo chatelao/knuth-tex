@@ -117,11 +117,31 @@ class TangleValidator:
 
         return None
 
+    def verify_program_header(self, expected_name):
+        """
+        Verifies that the Pascal program has the expected header.
+        e.g., program TANGLE(input,output);
+        """
+        pattern = rf'\bprogram\s+{expected_name}\s*\(\s*input\s*,\s*output\s*\)\s*;'
+        match = re.search(pattern, self.clean_code, re.IGNORECASE)
+        return match is not None
+
+    def verify_label_declaration(self, expected_label):
+        """
+        Verifies that the Pascal program has the expected label declaration.
+        e.g., label 9999;
+        """
+        pattern = rf'\blabel\b\s*[^;]*?\b{expected_label}\b[^;]*?;'
+        match = re.search(pattern, self.clean_code, re.IGNORECASE)
+        return match is not None
+
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="TANGLE output validator")
     parser.add_argument("pascal_file", help="Path to the generated Pascal file")
     parser.add_argument("--pool", help="Path to the generated pool file for checksum verification")
+    parser.add_argument("--program", help="Expected program name in the Pascal header")
+    parser.add_argument("--label", help="Expected label in the label declaration")
     parser.add_argument("macros", nargs="*", help="Macro assignments in the form macro=value")
 
     args = parser.parse_args()
@@ -132,7 +152,23 @@ def main():
     validator = TangleValidator(code)
     all_ok = True
 
-    # 1. Verify macro expansions if provided
+    # 1. Verify program header if provided
+    if args.program:
+        success = validator.verify_program_header(args.program)
+        status = "OK" if success else "FAILED"
+        print(f"Program Header ({args.program}): {status}")
+        if not success:
+            all_ok = False
+
+    # 2. Verify label declaration if provided
+    if args.label:
+        success = validator.verify_label_declaration(args.label)
+        status = "OK" if success else "FAILED"
+        print(f"Label Declaration ({args.label}): {status}")
+        if not success:
+            all_ok = False
+
+    # 3. Verify macro expansions if provided
     if args.macros:
         expected_macros = {}
         for arg in args.macros:
@@ -147,7 +183,7 @@ def main():
             if not success:
                 all_ok = False
 
-    # 2. Verify pool checksum if provided
+    # 4. Verify pool checksum if provided
     if args.pool:
         try:
             with open(args.pool, 'r') as f:

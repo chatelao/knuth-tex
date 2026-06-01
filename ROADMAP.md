@@ -239,8 +239,12 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - [x] Verify numeric macro expansion for memory constants (e.g., `mem_max`, `mem_min`).
         - [x] Verify buffer size macro expansion (e.g., `buf_size`).
         - [x] Verify string pool (`.pool`) consistency with the generated Pascal source.
+        - [x] Implement program header and label declaration verification.
       - [ ] **Structural Consistency**:
-        - [ ] Map WEB modules to corresponding Pascal procedure/function definitions.
+        - [ ] Map WEB modules to corresponding Pascal procedure/function definitions:
+          - [ ] Develop a module-to-procedure mapping extractor for WEB files.
+          - [ ] Verify procedure signatures against WEB module definitions.
+          - [ ] Validate module ordering and inclusion in generated Pascal.
         - [ ] Verify GOTO label mapping and block structure integrity.
       - [ ] Perform manual spot-checks on complex module transitions in `tex.p` and `mf.p`.
     - [ ] **Pascal Compiler Validation**:
@@ -250,15 +254,18 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] **Extension Verification**:
           - [x] Verify command-line argument access routines (e.g., `argc`, `argv` wrappers).
         - [x] Validate system-dependent I/O procedures for utilities (TANGLE, WEAVE, DVItype, etc.).
-        - [ ] Validate system-dependent I/O procedures for TeX/Metafont engines.
+        - [ ] Validate system-dependent I/O procedures for TeX/Metafont engines:
+          - [ ] Identify system-dependent I/O routines in `tex.web` and `mf.web`.
+          - [ ] Verify implementation and usage of `a_open_in`, `a_open_out`, and `a_close` across all engines.
         - [x] Verify support for non-standard `GOTO` labels if used (All labels verified as standard 1-9999).
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
     - [x] Create `verification/results/sas.md` template.
     - [x] Finalize Section 1: System Overview and Verification Environment.
-    - [x] Finalize Section 5: Document all deviations from the original verification plan.
+    - [ ] Finalize Section 2: Software Configuration (Baseline and Environments).
     - [x] Finalize Section 3: Summary of Compliance with HLRs and LLRs.
     - [x] Finalize Section 4: Summary of all TQR (Tool Qualification) results.
+    - [x] Finalize Section 5: Document all deviations from the original verification plan.
     - [x] Finalize Section 6: Compile a final list of open/closed problem reports.
   - [x] **Traceability**: Generate the final Traceability Report (HLR/LLR/TC).
     - [x] Verify 100% bi-directional mapping between requirements and tests.

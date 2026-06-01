@@ -89,3 +89,27 @@ def test_extract_pascal_checksum():
     # No checksum found
     validator_none = TangleValidator("program Test; begin end.")
     assert validator_none.extract_pascal_checksum() is None
+
+def test_verify_program_header():
+    code = "program TANGLE(input,output); begin end."
+    validator = TangleValidator(code)
+    assert validator.verify_program_header("TANGLE") is True
+    assert validator.verify_program_header("WEAVE") is False
+
+    # Case insensitivity and whitespace
+    code_ws = "  PROGRAM  Tex ( input , output ) ; "
+    validator_ws = TangleValidator(code_ws)
+    assert validator_ws.verify_program_header("Tex") is True
+
+def test_verify_label_declaration():
+    code = "program Test; label 9999; begin end."
+    validator = TangleValidator(code)
+    assert validator.verify_label_declaration("9999") is True
+    assert validator.verify_label_declaration("1234") is False
+
+    # Multiple labels
+    code_multi = "label 10, 9999, 20;"
+    validator_multi = TangleValidator(code_multi)
+    assert validator_multi.verify_label_declaration("9999") is True
+    assert validator_multi.verify_label_declaration("10") is True
+    assert validator_multi.verify_label_declaration("30") is False
