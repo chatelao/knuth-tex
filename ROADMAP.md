@@ -244,7 +244,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - [ ] Map WEB modules to corresponding Pascal procedure/function definitions:
           - [x] Develop a module-to-procedure mapping extractor for WEB files.
           - [ ] Verify procedure signatures against WEB module definitions.
-          - [ ] Validate module ordering and inclusion in generated Pascal.
+          - [x] Validate module ordering and inclusion in generated Pascal.
         - [ ] Verify GOTO label mapping and block structure integrity.
       - [ ] Perform manual spot-checks on complex module transitions in `tex.p` and `mf.p`.
     - [ ] **Pascal Compiler Validation**:
