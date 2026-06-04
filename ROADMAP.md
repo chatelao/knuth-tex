@@ -243,10 +243,15 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] **Structural Consistency**:
         - [ ] Map WEB modules to corresponding Pascal procedure/function definitions:
           - [x] Develop a module-to-procedure mapping extractor for WEB files.
-          - [ ] Verify routine signatures in TANGLE Pascal output against `tangle.web`.
-          - [ ] Verify routine signatures in WEAVE Pascal output against `weave.web`.
-          - [ ] Develop a module sequence extractor for TANGLE-generated Pascal.
-          - [ ] Verify Pascal module sequence against WEB source order.
+          - [ ] Verify routine signatures:
+            - [ ] Develop a Pascal routine signature extractor.
+            - [ ] Implement signature comparison logic between WEB and Pascal.
+            - [ ] Verify TANGLE routine signatures against `tangle.web`.
+            - [ ] Verify WEAVE routine signatures against `weave.web`.
+          - [ ] Verify Pascal module sequence:
+            - [ ] Develop a Pascal module sequence extractor.
+            - [ ] Verify TANGLE module sequence against `tangle.web`.
+            - [ ] Verify WEAVE module sequence against `weave.web`.
         - [ ] Verify GOTO label mapping and block structure integrity:
           - [ ] Identify all `GOTO` statements and corresponding labels in WEB source.
           - [ ] Verify that every `GOTO` in the generated Pascal maps back to a valid WEB module transition.
@@ -261,8 +266,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - [x] Validate system-dependent I/O procedures for utilities (TANGLE, WEAVE, DVItype, etc.).
         - [ ] Validate system-dependent I/O procedures for TeX/Metafont engines:
           - [x] Identify system-dependent I/O routines in `tex.web` and `mf.web`.
-          - [ ] Verify implementation and usage of `a_open_in`, `a_open_out`, and `a_close` in TeX engine.
-          - [ ] Verify implementation and usage of `a_open_in`, `a_open_out`, and `a_close` in Metafont engine.
+          - [ ] Verify TeX engine I/O:
+            - [ ] Verify declaration and usage of `a_open_in`, `a_open_out`, and `a_close` in TeX Pascal source.
+          - [ ] Verify Metafont engine I/O:
+            - [ ] Verify declaration and usage of `a_open_in`, `a_open_out`, and `a_close` in Metafont Pascal source.
         - [x] Verify support for non-standard `GOTO` labels if used (All labels verified as standard 1-9999).
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
