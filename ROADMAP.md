@@ -243,8 +243,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
       - [ ] **Structural Consistency**:
         - [ ] Map WEB modules to corresponding Pascal procedure/function definitions:
           - [x] Develop a module-to-procedure mapping extractor for WEB files.
-          - [ ] Verify procedure signatures against WEB module definitions.
-          - [ ] Validate module ordering and inclusion in generated Pascal.
+          - [ ] Verify routine signatures in TANGLE Pascal output against `tangle.web`.
+          - [ ] Verify routine signatures in WEAVE Pascal output against `weave.web`.
+          - [ ] Develop a module sequence extractor for TANGLE-generated Pascal.
+          - [ ] Verify Pascal module sequence against WEB source order.
         - [ ] Verify GOTO label mapping and block structure integrity:
           - [ ] Identify all `GOTO` statements and corresponding labels in WEB source.
           - [ ] Verify that every `GOTO` in the generated Pascal maps back to a valid WEB module transition.
@@ -259,7 +261,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - [x] Validate system-dependent I/O procedures for utilities (TANGLE, WEAVE, DVItype, etc.).
         - [ ] Validate system-dependent I/O procedures for TeX/Metafont engines:
           - [x] Identify system-dependent I/O routines in `tex.web` and `mf.web`.
-          - [ ] Verify implementation and usage of `a_open_in`, `a_open_out`, and `a_close` across all engines.
+          - [ ] Verify implementation and usage of `a_open_in`, `a_open_out`, and `a_close` in TeX engine.
+          - [ ] Verify implementation and usage of `a_open_in`, `a_open_out`, and `a_close` in Metafont engine.
         - [x] Verify support for non-standard `GOTO` labels if used (All labels verified as standard 1-9999).
 - [ ] **Final Documentation**:
   - [ ] **SAS**: Software Accomplishment Summary.
