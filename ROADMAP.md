@@ -244,7 +244,7 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - [ ] Map WEB modules to corresponding Pascal procedure/function definitions:
           - [x] Develop a module-to-procedure mapping extractor for WEB files.
           - [ ] Verify routine signatures:
-            - [ ] Develop a Pascal routine signature extractor.
+            - [x] Develop a Pascal routine signature extractor.
             - [ ] Implement signature comparison logic between WEB and Pascal.
             - [ ] Verify TANGLE routine signatures against `tangle.web`.
             - [ ] Verify WEAVE routine signatures against `weave.web`.
