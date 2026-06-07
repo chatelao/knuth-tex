@@ -44,46 +44,81 @@ class PascalRoutineExtractor:
         """
         # Strip comments and strings
         clean_code = self.normalizer.strip_strings(self.normalizer.strip_comments(code))
-        # Replace newlines and multiple spaces with a single space to simplify regex matching
-        clean_code = re.sub(r'\s+', ' ', clean_code)
 
         signatures = []
 
-        # Regex to match: (procedure|function) name [(parameters)] [: return_type] ;
-        # Using [^;]*? for parameters to handle everything until the first semicolon of the declaration.
-        # But wait, parameters can contain semicolons: (a: integer; b: boolean)
-        # So we should look for balanced parentheses or at least until the closing paren if present.
+        # We need to find (procedure|function), then the name,
+        # then possibly parameters in (), then possibly : type, then ;
+        # The trick is that parameters can contain semicolons.
 
-        # Improved regex to handle parameter lists that may contain semicolons
-        # It looks for (procedure|function), name, then optionally a parenthesized group,
-        # then optionally a colon and type, then a semicolon.
         pattern = re.compile(
-            r'\b(procedure|function)\s+([a-zA-Z0-9_]+)\s*(\(.*?\))?\s*(:\s*[a-zA-Z0-9_]+)?\s*;',
+            r'\b(procedure|function)\s+([a-zA-Z0-9_]+)',
             re.IGNORECASE
         )
 
         for match in pattern.finditer(clean_code):
             kind = match.group(1).lower()
             name = match.group(2).lower()
-            params = match.group(3) if match.group(3) else ""
-            ret_type = match.group(4) if match.group(4) else ""
+
+            # Now we need to find the semicolon that ends the declaration.
+            # But we must be careful about nested parentheses.
+            pos = match.end()
+            rest = ""
+            stack = 0
+            found_semicolon = False
+            for i in range(pos, len(clean_code)):
+                char = clean_code[i]
+                if char == '(':
+                    stack += 1
+                elif char == ')':
+                    if stack > 0:
+                        stack -= 1
+                elif char == ';' and stack == 0:
+                    rest = clean_code[pos:i].strip()
+                    end_pos = i + 1
+                    found_semicolon = True
+                    break
+
+            if not found_semicolon:
+                continue
+
+            # Parse 'rest' into params and return_type
+            params = ""
+            ret_type = ""
+
+            if rest.startswith('('):
+                # Find matching parenthesis in 'rest'
+                p_stack = 0
+                for i, char in enumerate(rest):
+                    if char == '(':
+                        p_stack += 1
+                    elif char == ')':
+                        p_stack -= 1
+                        if p_stack == 0:
+                            params = rest[:i+1]
+                            after_params = rest[i+1:].strip()
+                            if after_params.startswith(':'):
+                                ret_type = after_params[1:].strip()
+                            break
+            elif rest.startswith(':'):
+                ret_type = rest[1:].strip()
 
             # Check for forward or external immediately following
-            # Look ahead in clean_code after the match
-            remaining = clean_code[match.end():].strip()
+            remaining = clean_code[end_pos:].strip()
             directive = None
-            if remaining.lower().startswith('forward'):
-                directive = 'forward'
-            elif remaining.lower().startswith('external'):
-                directive = 'external'
+            first_word_match = re.match(r'^([a-zA-Z0-9_]+)', remaining)
+            if first_word_match:
+                first_word = first_word_match.group(1).lower()
+                if first_word in ('forward', 'external'):
+                    directive = first_word
 
             signatures.append({
                 'kind': kind,
                 'name': name,
-                'params': params.strip(),
-                'return_type': ret_type.lstrip(':').strip(),
+                'params': self.normalizer.normalize_whitespace(params),
+                'return_type': self.normalizer.normalize_whitespace(ret_type),
                 'directive': directive,
-                'full_signature': match.group(0).strip()
+                'full_signature': self.normalizer.normalize_whitespace(clean_code[match.start():end_pos])
             })
 
         return signatures

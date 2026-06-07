@@ -12,15 +12,12 @@ def extract_web_modules(web_file):
         return []
 
     # Split into modules
-    # Modules start with @ followed by space, tab, newline or *
     module_regex = re.compile(r'^@[\s\*]', re.MULTILINE)
-
     module_starts = [m.start() for m in module_regex.finditer(content)]
 
-    # Standard WEB module numbering starts with the first @ in the file.
-    # Anything before that is ignored in terms of module numbering.
-
     mapping = []
+    # Simplified Pascal routine regex for WEB
+    # We want to capture the header up to the semicolon
     routine_regex = re.compile(r'\b(function|procedure)\s+([a-zA-Z0-9_]+)\b', re.IGNORECASE)
 
     for i, start in enumerate(module_starts):
@@ -28,14 +25,10 @@ def extract_web_modules(web_file):
         end = module_starts[i+1] if i+1 < len(module_starts) else len(content)
         module_content = content[start:end]
 
-        # We only care about Pascal routines defined in this module.
-        # Pascal parts usually start with @p or @<...@>=
         pascal_blocks = []
         pascal_starts = [m.start() for m in re.finditer(r'(?:@p|@<[^@]*@>=)', module_content)]
         for j, p_start in enumerate(pascal_starts):
             p_end = pascal_starts[j+1] if j+1 < len(pascal_starts) else len(module_content)
-            # Pascal block ends at next @ (not in string/comment)
-            # Heuristic: next @ followed by space/newline/p/< is next part.
             next_web = re.search(r'\n@[\s\*p<]', module_content[p_start+1:p_end])
             if next_web:
                 p_end = p_start + 1 + next_web.start()
@@ -45,10 +38,44 @@ def extract_web_modules(web_file):
             for match in routine_regex.finditer(block):
                 kind = match.group(1).lower()
                 name = match.group(2).lower()
+
+                # Extract the rest of the signature until the semicolon
+                pos = match.end()
+                rest = ""
+                stack = 0
+                for k in range(pos, len(block)):
+                    char = block[k]
+                    if char == '(':
+                        stack += 1
+                    elif char == ')':
+                        if stack > 0: stack -= 1
+                    elif char == ';' and stack == 0:
+                        rest = block[pos:k].strip()
+                        break
+
+                params = ""
+                ret_type = ""
+                if rest.startswith('('):
+                    p_stack = 0
+                    for k, char in enumerate(rest):
+                        if char == '(': p_stack += 1
+                        elif char == ')':
+                            p_stack -= 1
+                            if p_stack == 0:
+                                params = rest[:k+1]
+                                after_params = rest[k+1:].strip()
+                                if after_params.startswith(':'):
+                                    ret_type = after_params[1:].strip()
+                                break
+                elif rest.startswith(':'):
+                    ret_type = rest[1:].strip()
+
                 mapping.append({
                     'module': module_num,
                     'name': name,
-                    'kind': kind
+                    'kind': kind,
+                    'params': params,
+                    'return_type': ret_type
                 })
 
     return mapping
@@ -65,7 +92,10 @@ def main():
             print("No routines found.")
         else:
             for item in mapping:
-                print(f"Module {item['module']:4}: {item['kind'].capitalize():9} {item['name']}")
+                sig = f"Module {item['module']:4}: {item['kind'].capitalize():9} {item['name']}"
+                if item['params']: sig += f" {item['params']}"
+                if item['return_type']: sig += f": {item['return_type']}"
+                print(sig)
         print()
 
 if __name__ == "__main__":
