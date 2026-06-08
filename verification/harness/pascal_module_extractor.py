@@ -36,8 +36,18 @@ def extract_pascal_module_sequence(pascal_file):
             'pos': match.start()
         })
 
-    # Sort by position in the file
-    sequence.sort(key=lambda x: x['pos'])
+    # Sort by position in the file, then by type (end before start if same pos)
+    # This is important if we have something like {:178}{179:}
+    # Actually, they usually have different pos if they are separate tokens.
+    # If they are exactly at the same pos, we want the end of the previous one
+    # to be processed before the start of the next one.
+
+    def sort_key(item):
+        # type 'end' should come before 'start' if position is the same
+        type_priority = 0 if item['type'] == 'end' else 1
+        return (item['pos'], type_priority)
+
+    sequence.sort(key=sort_key)
 
     return sequence
 
