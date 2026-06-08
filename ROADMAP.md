@@ -254,7 +254,10 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
             - [x] Verify WEAVE module sequence against `weave.web`.
         - [ ] Verify GOTO label mapping and block structure integrity:
           - [x] Identify all `GOTO` statements and corresponding labels in WEB source.
+          - [x] Develop a Pascal GOTO extractor with WEB module mapping.
+          - [ ] Develop a tool to compare GOTO transitions between WEB and Pascal.
           - [ ] Verify that every `GOTO` in the generated Pascal maps back to a valid WEB module transition.
+          - [ ] Develop a tool to extract and compare Pascal/WEB block nesting structures.
           - [ ] Validate that block nesting (e.g., `begin...end`) in Pascal matches the WEB module structure.
       - [ ] Perform manual spot-checks on complex module transitions in `tex.p` and `mf.p`.
     - [ ] **Pascal Compiler Validation**:
