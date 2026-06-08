@@ -32,7 +32,7 @@ def identify_gotos(web_file):
             content = f.read()
     except Exception as e:
         print(f"Error reading {web_file}: {e}")
-        return [], []
+        return [], [], {}
 
     # Extract macros (@d)
     macros = {}
@@ -65,7 +65,6 @@ def identify_gotos(web_file):
         pascal_starts = [m.start() for m in re.finditer(r'(?:@p|@<[^@]*@>=)', module_content)]
         for j, p_start in enumerate(pascal_starts):
             p_end = pascal_starts[j+1] if j+1 < len(pascal_starts) else len(module_content)
-            # End also happens at next module start which we already handled by module_content
 
             block = module_content[p_start:p_end]
             clean_block = strip_web_comments(block)
@@ -92,10 +91,21 @@ def identify_gotos(web_file):
                     'target': target
                 })
 
-        # Also check macros for goto
-        # If a macro is @d return == goto exit, we might want to know that.
-        # But usually we want to find where 'return' is used.
-        # For now, let's just stick to literal gotos and maybe identify macros that ARE gotos.
+            # Also identify usages of macros that contain 'goto'
+            for macro_name, macro_val in macros.items():
+                if 'goto' in macro_val.lower():
+                    macro_use_regex = re.compile(rf'\b{re.escape(macro_name)}\b')
+                    for match in macro_use_regex.finditer(clean_block):
+                        line_no = content.count('\n', 0, start + p_start + match.start()) + 1
+                        target_match = goto_regex.search(macro_val)
+                        if target_match:
+                            target = target_match.group(1)
+                            gotos.append({
+                                'module': module_num,
+                                'line': line_no,
+                                'target': target,
+                                'macro': macro_name
+                            })
 
     return gotos, labels, macros
 
@@ -115,17 +125,8 @@ def main():
         print(f"\nFound {len(gotos)} GOTO statements:")
         for g in gotos:
             target = g['target']
-            resolved = ""
-            if target in macros:
-                resolved = f" (resolves to {macros[target]})"
-            print(f"  Module {g['module']:4} (Line {g['line']:5}): goto {target}{resolved}")
-
-        # Identify macros that contain goto
-        goto_macros = {name: val for name, val in macros.items() if 'goto' in val.lower()}
-        if goto_macros:
-            print(f"\nMacros containing GOTO:")
-            for name, val in goto_macros.items():
-                print(f"  @d {name} == {val}")
+            macro_info = f" (via macro {g['macro']})" if 'macro' in g else ""
+            print(f"  Module {g['module']:4} (Line {g['line']:5}): goto {target}{macro_info}")
 
 if __name__ == "__main__":
     main()
