@@ -250,8 +250,8 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
             - [x] Verify WEAVE routine signatures against `weave.web`.
           - [ ] Verify Pascal module sequence:
             - [x] Develop a Pascal module sequence extractor.
-            - [ ] Verify TANGLE module sequence against `tangle.web`.
-            - [ ] Verify WEAVE module sequence against `weave.web`.
+            - [x] Verify TANGLE module sequence against `tangle.web`.
+            - [x] Verify WEAVE module sequence against `weave.web`.
         - [ ] Verify GOTO label mapping and block structure integrity:
           - [ ] Identify all `GOTO` statements and corresponding labels in WEB source.
           - [ ] Verify that every `GOTO` in the generated Pascal maps back to a valid WEB module transition.
