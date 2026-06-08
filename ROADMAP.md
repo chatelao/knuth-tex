@@ -241,19 +241,19 @@ This roadmap outlines the steps required to achieve DO-178B Level A certificatio
         - [x] Verify string pool (`.pool`) consistency with the generated Pascal source.
         - [x] Implement program header and label declaration verification.
       - [ ] **Structural Consistency**:
-        - [ ] Map WEB modules to corresponding Pascal procedure/function definitions:
+        - [x] Map WEB modules to corresponding Pascal procedure/function definitions:
           - [x] Develop a module-to-procedure mapping extractor for WEB files.
-          - [ ] Verify routine signatures:
+          - [x] Verify routine signatures:
             - [x] Develop a Pascal routine signature extractor.
             - [x] Implement signature comparison logic between WEB and Pascal.
             - [x] Verify TANGLE routine signatures against `tangle.web`.
             - [x] Verify WEAVE routine signatures against `weave.web`.
-          - [ ] Verify Pascal module sequence:
+          - [x] Verify Pascal module sequence:
             - [x] Develop a Pascal module sequence extractor.
             - [x] Verify TANGLE module sequence against `tangle.web`.
             - [x] Verify WEAVE module sequence against `weave.web`.
         - [ ] Verify GOTO label mapping and block structure integrity:
-          - [ ] Identify all `GOTO` statements and corresponding labels in WEB source.
+          - [x] Identify all `GOTO` statements and corresponding labels in WEB source.
           - [ ] Verify that every `GOTO` in the generated Pascal maps back to a valid WEB module transition.
           - [ ] Validate that block nesting (e.g., `begin...end`) in Pascal matches the WEB module structure.
       - [ ] Perform manual spot-checks on complex module transitions in `tex.p` and `mf.p`.
