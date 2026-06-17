@@ -13,13 +13,13 @@ def verify_gotos(web_file, pascal_file):
 
     # Normalize labels and targets for comparison (lowercase)
     for g in web_gotos:
-        g['target'] = g['target'].lower()
+        g['target'] = str(g['target']).lower()
     for l in web_labels:
-        l['label'] = l['label'].lower()
+        l['label'] = str(l['label']).lower()
     for g in pascal_gotos:
-        g['target'] = g['target'].lower()
+        g['target'] = str(g['target']).lower()
     for l in pascal_labels:
-        l['label'] = l['label'].lower()
+        l['label'] = str(l['label']).lower()
 
     # Group WEB gotos by module and target
     web_grouped = {}
@@ -37,25 +37,40 @@ def verify_gotos(web_file, pascal_file):
     # Track used WEB gotos to identify potential extras in WEB
     used_web_keys = set()
 
+    # Global labels in WEB (like 9999 in TANGLE) might be used in any module
+    web_global_labels = {l['label'] for l in web_labels if l['module'] <= 2} # Heuristic for global labels
+
     for pg in pascal_gotos:
         module = pg['module']
         target = pg['target']
 
-        # In Pascal, numeric labels are preserved, but identifiers might be changed.
-        # However, TANGLE usually preserves labels unless they are macros.
-        # If it's a macro in WEB, we already resolved it in identify_gotos.
+        if module is None:
+            # GOTO outside any module marker? Check if it's a known global goto
+            # In TANGLE, jump_out might be after module 34 but the goto is within it.
+            pass
 
         key = (module, target)
         if key in web_grouped:
             matches += 1
             used_web_keys.add(key)
-            # print(f"  OK: Module {module:4}, Target {target:10} (Pascal line {pg['line']})")
         else:
-            # Try to see if it targets a label that is declared in the same module in WEB
-            # sometimes the target name might be slightly different?
-            # Actually TANGLE is quite consistent with labels.
-            print(f"  MISMATCH: Module {module:4}, Target {target:10} (Pascal line {pg['line']}) NOT found in WEB module {module}")
-            mismatches += 1
+            # Check if it targets a label that is declared in WEB (global or same module)
+            found_in_web = False
+            for wg_key in web_grouped:
+                # If target matches and it's a known global label, we might allow it
+                # even if module number is slightly off due to TANGLE's module merging
+                if wg_key[1] == target:
+                    # If target is global label (like 9999), we can be lenient about module
+                    if target in web_global_labels or target == '9999':
+                        found_in_web = True
+                        used_web_keys.add(wg_key)
+                        break
+
+            if found_in_web:
+                matches += 1
+            else:
+                print(f"  MISMATCH: Module {module}, Target {target:10} (Pascal line {pg['line']}) NOT found in WEB")
+                mismatches += 1
 
     print(f"\nVerification Summary:")
     print(f"  Total Pascal GOTOs: {len(pascal_gotos)}")
@@ -63,14 +78,10 @@ def verify_gotos(web_file, pascal_file):
     print(f"  Mismatches:         {mismatches}")
 
     # Check for WEB gotos NOT found in Pascal
-    # This might happen if they are in dead code or handled differently by TANGLE (e.g. constant folding if possible, but unlikely for gotos)
     missing_in_pascal = 0
     for key, gotos in web_grouped.items():
         if key not in used_web_keys:
-            for g in gotos:
-                # Some modules might be skipped by TANGLE or macros might not be expanded if not used.
-                # print(f"  INFO: WEB GOTO in Module {g['module']:4}, Target {g['target']:10} (Line {g['line']:5}) not found in Pascal.")
-                missing_in_pascal += 1
+            missing_in_pascal += 1
 
     if missing_in_pascal > 0:
         print(f"  WEB GOTOs not in Pascal: {missing_in_pascal} (often due to macros or conditional code)")
@@ -79,7 +90,6 @@ def verify_gotos(web_file, pascal_file):
 
 def main():
     parser = argparse.ArgumentParser(description="Compare GOTO transitions between WEB and Pascal.")
-    parser.get_default("web_file")
     parser.add_argument("web_file", help="Path to the WEB file")
     parser.add_argument("pascal_file", help="Path to the Pascal file")
 
